@@ -1,6 +1,6 @@
 {
   "name": "hueshift",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Visualization application framework for analysis engines.",
   "license": "ISC",
   "contributors": [
@@ -11,12 +11,12 @@
   ],
   "files": [
     "app/",
+    "bin/",
     "extensions/",
     "server/",
     "webpack/",
-    "cli.js",
+    "consts.js",
     "jsdoc.config.js",
-    "nodemon.js",
     "webpack.config.js"
   ],
   "main": "./bin/cli.js",
