@@ -38,7 +38,8 @@ const devServer = nodemon({
   ],
   env: {
     'NODE_ENV': 'development'
-  }
+  },
+  quiet: true
 });
 devServer.on('start', () => consoleLog('server started'));
 devServer.on('crash', () => consoleError('server crashed'));
