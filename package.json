@@ -1,10 +1,13 @@
 {
   "name": "hueshift",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Visualization application framework for analysis engines.",
   "license": "ISC",
   "contributors": [
-    { "name": "Clark Ren", "email": "cry3rn@gmail.com" }
+    {
+      "name": "Clark Ren",
+      "email": "cry3rn@gmail.com"
+    }
   ],
   "files": [
     "app/",
