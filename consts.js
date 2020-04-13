@@ -17,8 +17,21 @@ function moduleExists(modulePath) {
   }
 }
 
+/**
+ * Convert relative path to absolute path
+ * @param {String} basePath base path
+ * @param {String} relativePath relative path
+ * @returns {String} absolute path
+ */
+function convertPath(basePath, relativePath) {
+  if (path.isAbsolute(relativePath))
+    return relativePath;
+
+  return path.resolve(basePath, relativePath);
+}
+
 // read config and provide defaults
-const frameworkConfigPath = path.resolve(exports.PACKAGE_PATH, 'framework.config.js');
+const frameworkConfigPath = convertPath(exports.PACKAGE_PATH, process.env.hs_config);
 const fconfig = moduleExists(frameworkConfigPath) ? require(frameworkConfigPath) : {};
 const {
   fext = {},
@@ -33,19 +46,6 @@ const WEBPACK_CONFIG = webpack.config || path.join(FEXT_PATH, 'webpack.config.js
 const WEBPACK_BUILD = webpack.build || 'build';
 const SERVER_HOSTNAME = server.hostname || 'localhost';
 const SERVER_PORT = server.port || 8086;
-
-/**
- * Convert relative path to absolute path
- * @param {String} basePath base path
- * @param {String} relativePath relative path
- * @returns {String} absolute path
- */
-function convertPath(basePath, relativePath) {
-  if (path.isAbsolute(relativePath))
-    return relativePath;
-
-  return path.resolve(basePath, relativePath);
-}
 
 exports.FEXT_PATH = convertPath(exports.PACKAGE_PATH, FEXT_PATH);
 exports.FEXT_CONFIG_PATH = convertPath(exports.PACKAGE_PATH, FEXT_CONFIG);
