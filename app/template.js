@@ -1,7 +1,8 @@
 const path = require('path');
 
 // need to use relative path instead of process.cwd()
-const { headTemplate, bodyTemplate } = require('../../fext/webpack.config.js');
+const { headTemplate, bodyTemplate } = require(path.resolve(process.cwd(), 'fext/webpack.config.js'));
+//const { headTemplate, bodyTemplate } = require('../../fext/webpack.config.js');
 
 /**
  * @param {Object} templateParams html webpack plugin template parameters
