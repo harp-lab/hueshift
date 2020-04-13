@@ -21,7 +21,7 @@ yargs
   })
   .command('dev', 'start development environment', () => {}, function(argv) {
     // start dev server
-    const nodemonPath = path.resolve('nodemon.js');
+    const nodemonPath = path.resolve(__dirname, 'nodemon.js');
     child_process.spawn('node', [nodemonPath], { stdio: 'inherit' });
 
     // start dev client
