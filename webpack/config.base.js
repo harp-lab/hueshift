@@ -30,7 +30,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!hueshift)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
+        exclude: /node_modules\/(?!hueshift)/,
         use: [
           'style-loader',
           'css-loader',
