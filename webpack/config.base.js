@@ -1,9 +1,9 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
-const packageDir = path.resolve(__dirname).split('/node_modules')[0];
-const fconfig = require(path.resolve(packageDir, 'framework.config.js'));
-const package = require(path.resolve(packageDir, 'package.json'));
+const { PACKAGE_PATH } = require('../consts.js');
+const { FEXT_DIR, BUILD_DIR } = require(path.resolve(PACKAGE_PATH, 'framework.config.js'));
+const package = require(path.resolve(PACKAGE_PATH, 'package.json'));
 
 const frameworkDir = path.resolve(__dirname, '..');
 const appDir = path.resolve(frameworkDir, 'app');
@@ -23,7 +23,7 @@ module.exports = {
       'components': path.resolve(appDir, 'components'),
       'library': path.resolve(appDir, 'library'),
       'store': path.resolve(appDir, 'store'),
-      'fext': fconfig.FEXT_DIR
+      'fext': FEXT_DIR
     }
   },
   module: {
@@ -60,7 +60,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     chunkFilename: '[name].[contenthash].js',
-    path: fconfig.BUILD_DIR
+    path: BUILD_DIR
   },
   optimization: {
     moduleIds: 'hashed',

@@ -1,6 +1,6 @@
 {
   "name": "hueshift",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Visualization application framework for analysis engines.",
   "license": "ISC",
   "contributors": [
@@ -19,8 +19,8 @@
     "nodemon.js",
     "webpack.config.js"
   ],
-  "main": "cli.js",
-  "bin": "cli.js",
+  "main": "./bin/cli.js",
+  "bin": "./bin/cli.js",
   "scripts": {
     "postinstall": "npm install webpack && npm install webpack-dev-server && npm install jsdoc"
   },

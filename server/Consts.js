@@ -1,9 +1,12 @@
 const path = require('path');
 const chalk = require('chalk');
-
-const packageDir = path.resolve(__dirname).split('/node_modules')[0];
-const fconfig = require(path.resolve(packageDir, 'framework.config.js'));
-const fext = require(fconfig.FEXT_CONFIG);
+const { PACKAGE_PATH } = require('../consts.js');
+const {
+  ROOT_DIR, ENGINE_DIR, BUILD_DIR,
+  SERVER_HOSTNAME, SERVER_PORT,
+  FEXT_CONFIG
+} = require(path.resolve(PACKAGE_PATH, 'framework.config.js'));
+const fext = require(FEXT_CONFIG);
 
 // environment
 exports.ENV = process.env.NODE_ENV || 'production';
@@ -14,9 +17,9 @@ if (exports.ENV == 'development') {
 }
 
 // path
-exports.ROOT_DIR = fconfig.ROOT_DIR;
-exports.ENGINE_DIR = fconfig.ENGINE_DIR;
-exports.BUILD_DIR = fconfig.BUILD_DIR;
+exports.ROOT_DIR = ROOT_DIR;
+exports.ENGINE_DIR = ENGINE_DIR;
+exports.BUILD_DIR = BUILD_DIR;
 exports.SERVER_DIR = __dirname;
 exports.DATA_DIR = path.resolve(exports.SERVER_DIR, 'data');
 exports.INPUT_DIR = path.resolve(exports.DATA_DIR, 'input');
@@ -27,8 +30,8 @@ exports.fext = fext;
 exports.ENGINE_DISABLED = !fext.engine;
 
 // server
-exports.HOSTNAME = fconfig.SERVER_HOSTNAME;
-exports.PORT = fconfig.SERVER_PORT;
+exports.HOSTNAME = SERVER_HOSTNAME;
+exports.PORT = SERVER_PORT;
 
 // log
 exports.SERVER_LOG_TAG = chalk.blackBright('[srv]');

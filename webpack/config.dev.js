@@ -1,11 +1,11 @@
 const path = require('path');
-const packageDir = path.resolve(__dirname).split('/node_modules')[0];
-const fconfig = require(path.resolve(packageDir, 'framework.config.js'));
+const { PACKAGE_PATH } = require('../consts.js');
+const { SERVER_HOSTNAME, SERVER_PORT } = require(path.resolve(PACKAGE_PATH, 'framework.config.js'));
 
 module.exports = {
   devServer: {
     proxy: {
-      '/api': `http://${fconfig.SERVER_HOSTNAME}:${fconfig.SERVER_PORT}`
+      '/api': `http://${SERVER_HOSTNAME}:${SERVER_PORT}`
     }
   }
 };

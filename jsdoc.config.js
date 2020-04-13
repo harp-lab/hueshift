@@ -5,7 +5,7 @@ module.exports = {
   recurseDepth: 100,
   source: {
     include: [
-      'framework',
+      'fext',
       'package.json',
       'README.md'
     ]

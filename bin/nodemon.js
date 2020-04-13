@@ -1,9 +1,8 @@
 const path = require('path');
 const chalk = require('chalk');
 const nodemon = require('nodemon');
-
-const packageDir = path.resolve(__dirname).split('/node_modules')[0];
-const fconfig = require(path.resolve(packageDir, 'framework.config.js'));
+const { PACKAGE_PATH } = require('../consts.js');
+const fconfig = require(path.resolve(PACKAGE_PATH, 'framework.config.js'));
 
 const FRAMEWORK_DIR = __dirname;
 const SERVER_DIR = path.resolve(FRAMEWORK_DIR, 'server');
