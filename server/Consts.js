@@ -1,12 +1,10 @@
 const path = require('path');
 const chalk = require('chalk');
-const { PACKAGE_PATH } = require('../consts.js');
 const {
-  ROOT_DIR, ENGINE_DIR, BUILD_DIR,
+  PACKAGE_PATH, BUILD_PATH,
   SERVER_HOSTNAME, SERVER_PORT,
-  FEXT_CONFIG
-} = require(path.resolve(PACKAGE_PATH, 'framework.config.js'));
-const fext = require(FEXT_CONFIG);
+  ENGINE_PATH, FEXT_CONFIG, ENGINE_DISABLED
+} = require('../consts.js');
 
 // environment
 exports.ENV = process.env.NODE_ENV || 'production';
@@ -17,17 +15,17 @@ if (exports.ENV == 'development') {
 }
 
 // path
-exports.ROOT_DIR = ROOT_DIR;
-exports.ENGINE_DIR = ENGINE_DIR;
-exports.BUILD_DIR = BUILD_DIR;
+exports.ROOT_DIR = PACKAGE_PATH;
+exports.ENGINE_DIR = ENGINE_PATH;
+exports.BUILD_DIR = BUILD_PATH;
 exports.SERVER_DIR = __dirname;
 exports.DATA_DIR = path.resolve(exports.SERVER_DIR, 'data');
 exports.INPUT_DIR = path.resolve(exports.DATA_DIR, 'input');
 exports.OUTPUT_DIR = path.resolve(exports.DATA_DIR, 'output');
 exports.SAVE_DIR = path.resolve(exports.DATA_DIR, 'save');
 
-exports.fext = fext;
-exports.ENGINE_DISABLED = !fext.engine;
+exports.fext = FEXT_CONFIG;
+exports.ENGINE_DISABLED = ENGINE_DISABLED;
 
 // server
 exports.HOSTNAME = SERVER_HOSTNAME;

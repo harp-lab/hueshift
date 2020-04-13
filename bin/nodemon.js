@@ -2,7 +2,6 @@ const path = require('path');
 const chalk = require('chalk');
 const nodemon = require('nodemon');
 const { PACKAGE_PATH, FRAMEWORK_PATH } = require('../consts.js');
-const fconfig = require(path.resolve(PACKAGE_PATH, 'framework.config.js'));
 
 const SERVER_DIR = path.resolve(FRAMEWORK_PATH, 'server');
 const NODEMON_LOG_TAG = chalk.blackBright('[ndm]');
@@ -46,7 +45,7 @@ devServer.on('crash', () => consoleError('server crashed'));
 devServer.on('restart', function(files) {
   let message = 'server restarting...';
   for (const filePath of files) {
-    const relPath = `./${path.relative(fconfig.ROOT_DIR, filePath)}`;
+    const relPath = `./${path.relative(PACKAGE_PATH, filePath)}`;
     const coloredPath = chalk.bold(relPath);
     message += `\n  ${coloredPath}`;
   }

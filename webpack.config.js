@@ -1,7 +1,5 @@
-const path = require('path');
 const merge = require('webpack-merge');
-const consts = require('./consts.js');
-const fconfig = require(path.resolve(consts.PACKAGE_PATH, 'framework.config.js'));
+const { FEXT_WEBPACK_CONFIG } = require('./consts.js');
 
 const { fenv } = process.env;
 let config;
@@ -14,6 +12,4 @@ switch (fenv) {
     break;
 }
 
-const { config: fextWebpackConfig } = require(fconfig.WEBPACK_CONFIG);
-
-module.exports = merge(require('./webpack/config.base.js'), config, fextWebpackConfig);
+module.exports = merge(require('./webpack/config.base.js'), config, FEXT_WEBPACK_CONFIG);
