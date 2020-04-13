@@ -1,6 +1,6 @@
 {
   "name": "hueshift",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Visualization application framework for analysis engines.",
   "license": "ISC",
   "contributors": [
@@ -24,9 +24,7 @@
     "fs-extra": "^9.0.0",
     "jsdoc": "^3.6.4",
     "nodemon": "^2.0.3",
-    "yargs": "^15.3.1"
-  },
-  "devDependencies": {
+    "yargs": "^15.3.1",
     "@babel/core": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "@material-ui/core": "^4.9.10",
