@@ -17,17 +17,22 @@ function moduleExists(modulePath) {
   }
 }
 
+// read config and provide defaults
 const frameworkConfigPath = path.resolve(exports.PACKAGE_PATH, 'framework.config.js');
 const fconfig = moduleExists(frameworkConfigPath) ? require(frameworkConfigPath) : {};
 const {
-  FEXT_DIR = 'fext',
-  BUILD_DIR = 'build',
-  ENGINE_DIR = 'engine',
-  FEXT_CONFIG = 'fext.config.js',
-  SERVER_HOSTNAME = 'localhost',
-  SERVER_PORT = 8086,
-  WEBPACK_CONFIG = 'webpack.config.js'
+  fext = {},
+  engine = {},
+  webpack = {},
+  server = {}
 } = fconfig;
+const FEXT_PATH = fext.path || 'fext';
+const FEXT_CONFIG = fext.config || path.join(FEXT_PATH, 'fext.config.js');
+const ENGINE_PATH = engine.path || path.join(FEXT_PATH, 'engine');
+const WEBPACK_CONFIG = webpack.config || path.join(FEXT_PATH, 'webpack.config.js');
+const WEBPACK_BUILD = webpack.build || 'build';
+const SERVER_HOSTNAME = server.hostname || 'localhost';
+const SERVER_PORT = server.port || 8086;
 
 /**
  * Convert relative path to absolute path
@@ -42,17 +47,17 @@ function convertPath(basePath, relativePath) {
   return path.resolve(basePath, relativePath);
 }
 
-exports.FEXT_PATH = convertPath(exports.PACKAGE_PATH, FEXT_DIR);
-exports.FEXT_CONFIG_PATH = convertPath(exports.FEXT_PATH, FEXT_CONFIG);
+exports.FEXT_PATH = convertPath(exports.PACKAGE_PATH, FEXT_PATH);
+exports.FEXT_CONFIG_PATH = convertPath(exports.PACKAGE_PATH, FEXT_CONFIG);
 exports.FEXT_CONFIG = moduleExists(exports.FEXT_CONFIG_PATH) ? require(exports.FEXT_CONFIG_PATH) : {};
-const fextWebpackConfigPath = convertPath(exports.FEXT_PATH, WEBPACK_CONFIG);
+const fextWebpackConfigPath = convertPath(exports.PACKAGE_PATH, WEBPACK_CONFIG);
 const { config: fextWebpackConfig } = moduleExists(fextWebpackConfigPath) ? require(fextWebpackConfigPath) : {};
 exports.FEXT_WEBPACK_CONFIG = fextWebpackConfig || {};
 
-exports.BUILD_PATH = convertPath(exports.PACKAGE_PATH, BUILD_DIR);
+exports.BUILD_PATH = convertPath(exports.PACKAGE_PATH, WEBPACK_BUILD);
 
 exports.ENGINE_DISABLED = !exports.FEXT_CONFIG.engine;
-exports.ENGINE_PATH = convertPath(exports.FEXT_PATH, ENGINE_DIR);
+exports.ENGINE_PATH = convertPath(exports.PACKAGE_PATH, ENGINE_PATH);
 
 exports.SERVER_HOSTNAME = SERVER_HOSTNAME;
 exports.SERVER_PORT = SERVER_PORT;
