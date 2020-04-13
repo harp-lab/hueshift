@@ -1,6 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
-const fconfig = require(path.resolve(process.cwd(), 'framework.config.js'));
+const packageDir = path.resolve(__dirname).split('/node_modules')[0];
+const fconfig = require(path.resolve(packageDir, 'framework.config.js'));
 
 const { fenv } = process.env;
 let config;

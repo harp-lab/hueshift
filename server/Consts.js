@@ -1,7 +1,8 @@
 const path = require('path');
 const chalk = require('chalk');
 
-const fconfig = require(path.resolve(process.cwd(), 'framework.config.js'));
+const packageDir = path.resolve(__dirname).split('/node_modules')[0];
+const fconfig = require(path.resolve(packageDir, 'framework.config.js'));
 const fext = require(fconfig.FEXT_CONFIG);
 
 // environment

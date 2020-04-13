@@ -15,7 +15,6 @@ yargs
     child_process.spawn(
       'npx', ['webpack', '--config', webpackConfigPath],
       {
-        cwd: process.cwd(),
         env: {...process.env, fenv: 'production' },
         stdio: 'inherit'
       }
@@ -31,7 +30,6 @@ yargs
     child_process.spawn(
       'npx', ['webpack-dev-server', '--config', webpackConfigPath],
       {
-        cwd: process.cwd(),
         env: { ...process.env, fenv: 'development' },
         stdio: 'inherit'
       }
