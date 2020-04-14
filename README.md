@@ -18,7 +18,7 @@ Framework Extensions (FEXTs) allow applications to hook into hueshift. Most hues
 #### Engine
 #### Configurations
 
-[npm]: //img.shields.io/npm/v/hueshift
-[npm-url]: //www.npmjs.com/package/hueshift
-[node]: //img.shields.io/node/v/hueshift
-[node-url]: //nodejs.org
+[npm]: https://img.shields.io/npm/v/hueshift
+[npm-url]: https://www.npmjs.com/package/hueshift
+[node]: https://img.shields.io/node/v/hueshift
+[node-url]: https://nodejs.org
