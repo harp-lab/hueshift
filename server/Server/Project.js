@@ -40,7 +40,7 @@ class Project {
   }
 
   /**
-   * @param {} analysisInput project analysis input
+   * @param {*} analysisInput project analysis input
    */
   setAnalysisInput(analysisInput) {
     switch (this.status) {

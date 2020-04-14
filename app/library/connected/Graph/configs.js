@@ -55,7 +55,7 @@ export function cyConfig(theme) {
 /**
  * map cytoscape element style to data
  * @param {String} property style property
- * @param {} defaultValue default style value
+ * @param {*} defaultValue default style value
  */
 export function getStyle(property, defaultValue) {
   return element => {
