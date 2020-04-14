@@ -1,3 +1,5 @@
+const { LIBRARY_PATH, STORE_PATH } = require('./consts.js');
+
 module.exports = {
   plugins: [
     'plugins/markdown'
@@ -5,6 +7,8 @@ module.exports = {
   recurseDepth: 100,
   source: {
     include: [
+      LIBRARY_PATH,
+      STORE_PATH,
       'fext',
       'package.json',
       'README.md'

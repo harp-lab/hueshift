@@ -1,4 +1,7 @@
 # hueshift
+[![npm][npm]][npm-url]
+[![node][node]][node-url]
+
 hueshift is a visualization application framework. Its main purpose is to provide a common scaffolding for different analysis engines.
 
 ## Install
@@ -14,3 +17,8 @@ Framework Extensions (FEXTs) allow applications to hook into hueshift. Most hues
 #### Component Layouts
 #### Engine
 #### Configurations
+
+[npm]: //img.shields.io/npm/v/hueshift
+[npm-url]: //www.npmjs.com/package/hueshift
+[node]: //img.shields.io/node/v/hueshift
+[node-url]: //nodejs.org

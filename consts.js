@@ -2,6 +2,11 @@ const path = require('path');
 
 exports.FRAMEWORK_PATH = path.resolve(__dirname);
 exports.PACKAGE_PATH = exports.FRAMEWORK_PATH.split('/node_modules')[0];
+exports.APP_PATH = path.resolve(exports.FRAMEWORK_PATH, 'app');
+exports.EXTENSIONS_PATH = path.resolve(exports.FRAMEWORK_PATH, 'extensions');
+exports.LIBRARY_PATH = path.resolve(exports.APP_PATH, 'library');
+exports.STORE_PATH = path.resolve(exports.APP_PATH, 'store');
+exports.COMPONENTS_PATH = path.resolve(exports.APP_PATH, 'components');
 
 /**
  * check module exists

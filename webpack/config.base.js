@@ -1,27 +1,28 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
-const { PACKAGE_PATH, BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH } = require('../consts.js');
+const {
+  APP_PATH, EXTENSIONS_PATH, COMPONENTS_PATH, LIBRARY_PATH, STORE_PATH,
+  PACKAGE_PATH,
+  BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH
+} = require('../consts.js');
 const { version } = require(path.resolve(PACKAGE_PATH, 'package.json'));
 
-const frameworkDir = path.resolve(__dirname, '..');
-const appDir = path.resolve(frameworkDir, 'app');
-
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-  template: path.resolve(appDir, 'template.js')
+  template: path.resolve(APP_PATH, 'template.js')
 });
 const EnvironmentPluginConfig = new EnvironmentPlugin({
   VERSION: version
 });
 
 module.exports = {
-  entry: path.resolve(appDir, 'index.js'),
+  entry: APP_PATH,
   resolve: {
     alias: {
-      'extensions': path.resolve(frameworkDir, 'extensions'),
-      'components': path.resolve(appDir, 'components'),
-      'library': path.resolve(appDir, 'library'),
-      'store': path.resolve(appDir, 'store'),
+      'extensions': EXTENSIONS_PATH,
+      'components': COMPONENTS_PATH,
+      'library': LIBRARY_PATH,
+      'store': STORE_PATH,
       'fext': FEXT_PATH,
       'fext-config': FEXT_CONFIG_PATH
     }
