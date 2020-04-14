@@ -1,10 +1,5 @@
 import { reqReactElement } from 'extensions/checks';
-let layouts;
-try {
-  layouts = require('fext/layouts');
-} catch(err) {
-  layouts = {};
-}
+import * as layouts from 'fext/layouts';
 
 const path = 'fext/layouts';
 export const EditorLayout = reqReactElement(layouts, 'EditorLayout', path);

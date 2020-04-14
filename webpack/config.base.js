@@ -1,7 +1,7 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
-const { PACKAGE_PATH, BUILD_PATH, FEXT_PATH } = require('../consts.js');
+const { PACKAGE_PATH, BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH } = require('../consts.js');
 const { version } = require(path.resolve(PACKAGE_PATH, 'package.json'));
 
 const frameworkDir = path.resolve(__dirname, '..');
@@ -22,7 +22,8 @@ module.exports = {
       'components': path.resolve(appDir, 'components'),
       'library': path.resolve(appDir, 'library'),
       'store': path.resolve(appDir, 'store'),
-      'fext': FEXT_PATH
+      'fext': FEXT_PATH,
+      'fext-config': FEXT_CONFIG_PATH
     }
   },
   module: {

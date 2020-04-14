@@ -1,10 +1,5 @@
 import { reqFunction, reqFunctionFactory, reqReduxAction } from 'extensions/checks';
-let hooks;
-try {
-  hooks = require('fext/store/hooks');
-} catch(err) {
-  hooks = {};
-}
+import * as hooks from 'fext/store/hooks';
 
 const path = 'fext/store/hooks';
 

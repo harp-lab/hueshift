@@ -68,8 +68,8 @@ const SERVER_HOSTNAME = getValue(fconfig, 'server.hostname', 'localhost');
 const SERVER_PORT = getValue(fconfig, 'server.port', 8086);
 
 exports.FEXT_PATH = convertPath(FEXT_PATH);
-const fextConfigPath = convertPath(FEXT_CONFIG_PATH);
-exports.FEXT_CONFIG = moduleExists(fextConfigPath) ? require(fextConfigPath) : {};
+exports.FEXT_CONFIG_PATH = convertPath(FEXT_CONFIG_PATH);
+exports.FEXT_CONFIG = moduleExists(exports.FEXT_CONFIG_PATH) ? require(exports.FEXT_CONFIG_PATH) : {};
 const fextWebpackConfigPath = convertPath(WEBPACK_CONFIG_PATH);
 const { config: fextWebpackConfig } = moduleExists(fextWebpackConfigPath) ? require(fextWebpackConfigPath) : {};
 exports.FEXT_WEBPACK_CONFIG = fextWebpackConfig || {};
