@@ -1,9 +1,9 @@
 const merge = require('webpack-merge');
 const { FEXT_WEBPACK_CONFIG } = require('./consts.js');
 
-const { fenv } = process.env;
+const { HS_WEBPACK_MODE } = process.env;
 let config;
-switch (fenv) {
+switch (HS_WEBPACK_MODE) {
   case 'development':
     config = require('./webpack/config.dev.js')
     break;

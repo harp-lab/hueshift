@@ -62,7 +62,7 @@ function getValue(object, path, defaultValue) {
 }
 
 // read config and provide defaults
-const frameworkConfigPath = convertPath(process.env.hs_config);
+const frameworkConfigPath = convertPath(process.env.HS_CONFIG);
 const fconfig = moduleExists(frameworkConfigPath) ? require(frameworkConfigPath) : {};
 const FEXT_PATH = getValue(fconfig, 'fext.path', 'fext');
 const FEXT_CONFIG_PATH = getValue(fconfig, 'fext.config', path.join(FEXT_PATH, 'fext.config.js'));

@@ -22,7 +22,7 @@
   "main": "./bin/cli.js",
   "bin": "./bin/cli.js",
   "scripts": {
-    "postinstall": "npm install webpack && npm install webpack-dev-server && npm install jsdoc"
+    
   },
   "dependencies": {
     "@babel/core": "^7.9.0",

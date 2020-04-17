@@ -3,71 +3,53 @@ const child_process = require('child_process');
 const path = require('path');
 const yargs = require('yargs');
 
-const FRAMEWORK_PATH = path.resolve(__dirname, '..');
+const CLI_PATH = path.resolve(__dirname);
+const NODEMON_PATH = path.resolve(CLI_PATH, 'nodemon.js');
+const FRAMEWORK_PATH = path.resolve(CLI_PATH, '..');
+const SERVER_PATH = path.resolve(FRAMEWORK_PATH, 'server');
+const WEBPACK_CONFIG_PATH = path.resolve(FRAMEWORK_PATH, 'webpack.config.js');
+const JSDOC_CONFIG_PATH = path.resolve(FRAMEWORK_PATH, 'jsdoc.config.js');
+
+const NODE_MODULES_BIN_PATH = path.resolve(FRAMEWORK_PATH, 'node_modules', '.bin');
+const WEBPACK_BIN_PATH = path.resolve(NODE_MODULES_BIN_PATH, 'webpack');
+const JSDOC_BIN_PATH = path.resolve(NODE_MODULES_BIN_PATH, 'jsdoc');
+const WEBPACK_DEV_SERVER_PATH = path.resolve(NODE_MODULES_BIN_PATH, 'webpack-dev-server');
+
+/**
+ * spawn child process
+ * @param {Object} yargv yargv object
+ * @param {String} command process command
+ * @param {Array<String>} args process arguments
+ * @param {Object} env process environment
+ */
+function spawn(yargv, command, args = [], env = {}) {
+  child_process.spawn(
+    command, args, {
+      env: {
+        ...process.env,
+        HS_CONFIG: yargv.config,
+        ...env
+      },
+      stdio: 'inherit'
+    });
+}
 
 yargs
   .command('start', 'start application', () => {}, function(argv) {
-    const serverPath = path.resolve(FRAMEWORK_PATH, 'server');
-    child_process.spawn(
-      'node', [serverPath],
-      {
-        env: {
-          ...process.env,
-          hs_config: argv.config
-        },
-        stdio: 'inherit'
-      });
+    spawn(argv, 'node', [SERVER_PATH]);
   })
   .command('build', 'build application', () => {}, function(argv) {
-    const webpackConfigPath = path.resolve(FRAMEWORK_PATH, 'webpack.config.js');
-    child_process.spawn(
-      'npx', ['webpack', '--config', webpackConfigPath],
-      {
-        env: {
-          ...process.env,
-          hs_config: argv.config,
-          fenv: 'production'
-        },
-        stdio: 'inherit'
-      });
+    spawn(argv, 'node', [WEBPACK_BIN_PATH, '--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'production' });
   })
   .command('dev', 'start development environment', () => {}, function(argv) {
     // start dev server
-    const nodemonPath = path.resolve(__dirname, 'nodemon.js');
-    child_process.spawn(
-      'node', [nodemonPath],
-      {
-        env: {
-          ...process.env,
-          hs_config: argv.config
-        },
-        stdio: 'inherit'
-      });
+    spawn(argv, 'node', [NODEMON_PATH]);
 
     // start dev client
-    const webpackConfigPath = path.resolve(FRAMEWORK_PATH, 'webpack.config.js');
-    child_process.spawn(
-      'npx', ['webpack-dev-server', '--config', webpackConfigPath],
-      {
-        env: {
-          ...process.env,
-          hs_config: argv.config,
-          fenv: 'development'
-        },
-        stdio: 'inherit'
-      });
+    spawn(argv, 'node', [WEBPACK_DEV_SERVER_PATH, '--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'development' });
   })
   .command('docs', 'generate documentation', () => {}, function(argv) {
-    const jsdocConfigPath = path.resolve(FRAMEWORK_PATH, 'jsdoc.config.js');
-    child_process.spawn(
-      'npx', ['jsdoc', '-c', jsdocConfigPath],
-      {
-        env: {
-          ...process.env,
-          hs_config: argv.config,
-        },
-        stdio: 'inherit'
-      });
+    spawn(argv, 'node', [JSDOC_BIN_PATH, '-c', JSDOC_CONFIG_PATH]);
   })
   .option('config', {
     alias: 'c',
