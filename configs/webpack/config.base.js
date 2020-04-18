@@ -13,7 +13,8 @@ const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
   template: path.resolve(APP_PATH, 'template.js')
 });
 const EnvironmentPluginConfig = new EnvironmentPlugin({
-  VERSION: version
+  VERSION: version,
+  FEXT_PATH
 });
 
 module.exports = {
