@@ -1,6 +1,7 @@
 const path = require('path');
+const { HS_CONFIG } = process.env;
 
-exports.FRAMEWORK_PATH = path.resolve(__dirname);
+exports.FRAMEWORK_PATH = path.resolve(__dirname, '..');
 exports.PACKAGE_PATH = exports.FRAMEWORK_PATH.split('/node_modules')[0];
 exports.APP_PATH = path.resolve(exports.FRAMEWORK_PATH, 'app');
 exports.EXTENSIONS_PATH = path.resolve(exports.FRAMEWORK_PATH, 'extensions');
@@ -62,7 +63,7 @@ function getValue(object, path, defaultValue) {
 }
 
 // read config and provide defaults
-const frameworkConfigPath = convertPath(process.env.HS_CONFIG);
+const frameworkConfigPath = convertPath(HS_CONFIG);
 const fconfig = moduleExists(frameworkConfigPath) ? require(frameworkConfigPath) : {};
 const FEXT_PATH = getValue(fconfig, 'fext.path', 'fext');
 const FEXT_CONFIG_PATH = getValue(fconfig, 'fext.config', path.join(FEXT_PATH, 'fext.config.js'));

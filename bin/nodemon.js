@@ -1,7 +1,8 @@
 const path = require('path');
 const chalk = require('chalk');
 const nodemon = require('nodemon');
-const { PACKAGE_PATH, FRAMEWORK_PATH } = require('../consts.js');
+const { HS_CONSTS } = process.env;
+const { PACKAGE_PATH, FRAMEWORK_PATH } = require(HS_CONSTS);
 
 const SERVER_DIR = path.resolve(FRAMEWORK_PATH, 'server');
 const NODEMON_LOG_TAG = chalk.blackBright('[ndm]');

@@ -1,11 +1,12 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
+const { HS_CONSTS } = process.env;
 const {
   APP_PATH, EXTENSIONS_PATH, COMPONENTS_PATH, LIBRARY_PATH, STORE_PATH,
   PACKAGE_PATH,
   BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH
-} = require('../consts.js');
+} = require(HS_CONSTS);
 const { version } = require(path.resolve(PACKAGE_PATH, 'package.json'));
 
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({

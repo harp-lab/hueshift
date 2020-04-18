@@ -12,12 +12,9 @@
   "files": [
     "app/",
     "bin/",
+    "configs/",
     "extensions/",
-    "server/",
-    "webpack/",
-    "consts.js",
-    "jsdoc.config.js",
-    "webpack.config.js"
+    "server/"
   ],
   "main": "./bin/cli.js",
   "bin": "./bin/cli.js",

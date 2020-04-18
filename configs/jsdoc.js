@@ -1,4 +1,5 @@
-const { LIBRARY_PATH, STORE_PATH } = require('./consts.js');
+const { HS_CONSTS } = process.env;
+const { LIBRARY_PATH, STORE_PATH } = require(HS_CONSTS);
 
 module.exports = {
   plugins: [

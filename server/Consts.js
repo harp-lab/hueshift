@@ -1,10 +1,11 @@
 const path = require('path');
 const chalk = require('chalk');
+const { HS_CONSTS } = process.env;
 const {
   PACKAGE_PATH, BUILD_PATH,
   SERVER_HOSTNAME, SERVER_PORT,
   ENGINE_PATH, FEXT_CONFIG, ENGINE_DISABLED
-} = require('../consts.js');
+} = require(HS_CONSTS);
 
 // environment
 exports.ENV = process.env.NODE_ENV || 'production';
