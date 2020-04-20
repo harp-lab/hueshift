@@ -1,6 +1,5 @@
 import { reqReactElement } from 'extensions/checks';
-import { fextRequire } from 'extensions/utilities';
-const layouts = fextRequire('layouts');
+import * as layouts from 'fext-layouts';
 
 const path = 'fext/layouts';
 

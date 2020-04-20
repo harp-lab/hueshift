@@ -5,7 +5,7 @@ const { HS_CONSTS } = process.env;
 const {
   APP_PATH, EXTENSIONS_PATH, COMPONENTS_PATH, LIBRARY_PATH, STORE_PATH,
   PACKAGE_PATH,
-  BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH
+  BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH, FEXT_LAYOUTS_PATH, FEXT_STORE_HOOKS_PATH, FEXT_STORE_REDUCERS_PATH
 } = require(HS_CONSTS);
 const { version } = require(path.resolve(PACKAGE_PATH, 'package.json'));
 
@@ -26,7 +26,10 @@ module.exports = {
       'library': LIBRARY_PATH,
       'store': STORE_PATH,
       'fext': FEXT_PATH,
-      'fext-config': FEXT_CONFIG_PATH
+      'fext-config': FEXT_CONFIG_PATH,
+      'fext-layouts': FEXT_LAYOUTS_PATH,
+      'fext-store-hooks': FEXT_STORE_HOOKS_PATH,
+      'fext-store-reducers': FEXT_STORE_REDUCERS_PATH
     }
   },
   module: {

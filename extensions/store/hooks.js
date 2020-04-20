@@ -1,6 +1,5 @@
 import { reqFunction, reqFunctionFactory, reqReduxAction } from 'extensions/checks';
-import { fextRequire } from 'extensions/utilities';
-const hooks = fextRequire('store/hooks');
+import * as hooks from 'fext-store-hooks';
 
 const path = 'fext/store/hooks';
 
