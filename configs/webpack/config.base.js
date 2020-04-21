@@ -13,8 +13,7 @@ const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
   template: path.resolve(APP_PATH, 'template.js')
 });
 const EnvironmentPluginConfig = new EnvironmentPlugin({
-  VERSION: version,
-  FEXT_PATH
+  VERSION: version
 });
 
 module.exports = {
@@ -25,7 +24,6 @@ module.exports = {
       'components': COMPONENTS_PATH,
       'library': LIBRARY_PATH,
       'store': STORE_PATH,
-      'fext': FEXT_PATH,
       'fext-config': FEXT_CONFIG_PATH,
       'fext-layouts': FEXT_LAYOUTS_PATH,
       'fext-store-hooks': FEXT_STORE_HOOKS_PATH,
