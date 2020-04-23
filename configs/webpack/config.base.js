@@ -4,16 +4,20 @@ const { EnvironmentPlugin } = require('webpack');
 const { HS_CONSTS } = process.env;
 const {
   APP_PATH, EXTENSIONS_PATH, COMPONENTS_PATH, LIBRARY_PATH, STORE_PATH,
-  PACKAGE_PATH,
-  BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH, FEXT_LAYOUTS_PATH, FEXT_STORE_HOOKS_PATH, FEXT_STORE_REDUCERS_PATH
+  VERSION,
+  BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH, FEXT_LAYOUTS_PATH, FEXT_STORE_HOOKS_PATH, FEXT_STORE_REDUCERS_PATH,
+  FEXT_WEBPACK_HEAD_TEMPLATE, FEXT_WEBPACK_BODY_TEMPLATE
 } = require(HS_CONSTS);
-const { version } = require(path.resolve(PACKAGE_PATH, 'package.json'));
 
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
-  template: path.resolve(APP_PATH, 'template.js')
+  template: path.resolve(APP_PATH, 'template.js'),
+  templateParameters: {
+    'headTemplate': FEXT_WEBPACK_HEAD_TEMPLATE ? FEXT_WEBPACK_HEAD_TEMPLATE() : '',
+    'bodyTemplate': FEXT_WEBPACK_BODY_TEMPLATE ? FEXT_WEBPACK_BODY_TEMPLATE() : ''
+  }
 });
 const EnvironmentPluginConfig = new EnvironmentPlugin({
-  VERSION: version
+  VERSION: VERSION || -1
 });
 
 module.exports = {

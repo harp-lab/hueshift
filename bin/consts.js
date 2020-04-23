@@ -83,6 +83,9 @@ function getValue(object, path, defaultValue) {
   };
 }
 
+const packageJsonPath = path.resolve(exports.PACKAGE_PATH, 'package.json');
+exports.VERSION = moduleExists(packageJsonPath) ? require(packageJsonPath).version : undefined;
+
 // read config and provide defaults
 const frameworkConfigPath = convertPath(HS_CONFIG);
 const fconfig = moduleExists(frameworkConfigPath) ? require(frameworkConfigPath) : {};
@@ -102,8 +105,10 @@ exports.FEXT_PATH = convertPath(FEXT_PATH);
 exports.FEXT_CONFIG_PATH = convertPath(FEXT_CONFIG_PATH);
 exports.FEXT_CONFIG = moduleExists(exports.FEXT_CONFIG_PATH) ? require(exports.FEXT_CONFIG_PATH) : {};
 const fextWebpackConfigPath = convertPath(WEBPACK_CONFIG_PATH);
-const { config: fextWebpackConfig } = moduleExists(fextWebpackConfigPath) ? require(fextWebpackConfigPath) : {};
+const { config: fextWebpackConfig, headTemplate, bodyTemplate } = moduleExists(fextWebpackConfigPath) ? require(fextWebpackConfigPath) : {};
 exports.FEXT_WEBPACK_CONFIG = fextWebpackConfig || {};
+exports.FEXT_WEBPACK_HEAD_TEMPLATE = headTemplate;
+exports.FEXT_WEBPACK_BODY_TEMPLATE = bodyTemplate;
 exports.FEXT_LAYOUTS_PATH = convertPath(FEXT_LAYOUTS_PATH);
 exports.FEXT_STORE_HOOKS_PATH = convertPath(FEXT_STORE_HOOKS_PATH);
 exports.FEXT_STORE_REDUCERS_PATH = convertPath(FEXT_STORE_REDUCERS_PATH);

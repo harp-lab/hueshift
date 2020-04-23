@@ -1,15 +1,14 @@
 const path = require('path');
 
 // need to use relative path instead of process.cwd()
-const { headTemplate, bodyTemplate } = require('../../../fext/webpack.config.js');
 
 /**
  * @param {Object} templateParams html webpack plugin template parameters
  * @returns {String} html output
  */
 module.exports = function(templateParams) {
-  const header = Header();
-  const body = Body();
+  const header = Header(templateParams);
+  const body = Body(templateParams);
   return `
     <!DOCTYPE html>
     <html>
@@ -21,20 +20,22 @@ module.exports = function(templateParams) {
 /**
  * @returns {String} html output
  */
-function Header() {
+function Header(templateParams) {
+  const { headTemplate } = templateParams;
   return `
     <head>
-      ${ headTemplate ? headTemplate() : '' }
+      ${ headTemplate }
     </head>`;
 }
 
 /**
  * @returns {String} html output
  */
-function Body() {
+function Body(templateParams) {
+  const { bodyTemplate } = templateParams;
   return `
     <body>
-      ${ bodyTemplate ? bodyTemplate() : '' }
+      ${ bodyTemplate }
       <div id="app"></div>
     </body>`;
 }

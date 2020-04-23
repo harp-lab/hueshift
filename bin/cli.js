@@ -28,7 +28,7 @@ const JSDOC_BIN_PATH = path.resolve(NODE_MODULES_BIN_PATH, 'jsdoc');
  * @param {Object} env process environment
  */
 function spawn(yargv, command, args = [], env = {}) {
-  child_process.spawn(
+  const child = child_process.spawn(
     command, args, {
       env: {
         ...process.env,
@@ -38,6 +38,8 @@ function spawn(yargv, command, args = [], env = {}) {
       },
       stdio: 'inherit'
     });
+
+  process.on('SIGTERM', signal => child.kill(signal));
 }
 
 yargs
