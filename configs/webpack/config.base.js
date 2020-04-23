@@ -24,6 +24,7 @@ module.exports = {
       'components': COMPONENTS_PATH,
       'library': LIBRARY_PATH,
       'store': STORE_PATH,
+      'fext': FEXT_PATH,
       'fext-config': FEXT_CONFIG_PATH,
       'fext-layouts': FEXT_LAYOUTS_PATH,
       'fext-store-hooks': FEXT_STORE_HOOKS_PATH,

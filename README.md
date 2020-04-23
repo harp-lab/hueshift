@@ -1,8 +1,8 @@
 # hueshift
 [![npm][npm]][npm-url]
+
 [![node][node]][node-url]
 [![deps][deps]][deps-url]
-
 
 hueshift is a visualization application framework. Its main purpose is to provide a common scaffolding for different analysis engines.
 

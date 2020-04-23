@@ -1,8 +1,8 @@
 const path = require('path');
-const { HS_CONFIG } = process.env;
+const { PWD, HS_CONFIG } = process.env;
 
 exports.FRAMEWORK_PATH = path.resolve(__dirname, '..');
-exports.PACKAGE_PATH = exports.FRAMEWORK_PATH.split('/node_modules')[0];
+exports.PACKAGE_PATH = PWD;
 exports.APP_PATH = path.resolve(exports.FRAMEWORK_PATH, 'app');
 exports.EXTENSIONS_PATH = path.resolve(exports.FRAMEWORK_PATH, 'extensions');
 exports.LIBRARY_PATH = path.resolve(exports.APP_PATH, 'library');
@@ -87,12 +87,12 @@ function getValue(object, path, defaultValue) {
 const frameworkConfigPath = convertPath(HS_CONFIG);
 const fconfig = moduleExists(frameworkConfigPath) ? require(frameworkConfigPath) : {};
 const FEXT_PATH = getValue(fconfig, 'fext.path', 'fext');
-const FEXT_CONFIG_PATH = reqModule(getValue(fconfig, 'fext.config', path.resolve('fext.config.js')));
-const FEXT_LAYOUTS_PATH = reqModule(getValue(fconfig, 'fext.layouts', path.resolve('layouts')));
-const FEXT_STORE_HOOKS_PATH = reqModule(getValue(fconfig, 'fext.store.hooks', path.resolve('store', 'hooks')));
-const FEXT_STORE_REDUCERS_PATH = reqModule(getValue(fconfig, 'fext.store.reducers', path.resolve('store', 'reducers')));
-const ENGINE_PATH = getValue(fconfig, 'engine.path', path.resolve('engine'));
-const WEBPACK_CONFIG_PATH = getValue(fconfig, 'webpack.config', path.resolve('webpack.config.js'));
+const FEXT_CONFIG_PATH = reqModule(getValue(fconfig, 'fext.config', path.join(FEXT_PATH, 'fext.config.js')));
+const FEXT_LAYOUTS_PATH = reqModule(getValue(fconfig, 'fext.layouts', path.join(FEXT_PATH, 'layouts')));
+const FEXT_STORE_HOOKS_PATH = reqModule(getValue(fconfig, 'fext.store.hooks', path.join(FEXT_PATH, 'store', 'hooks')));
+const FEXT_STORE_REDUCERS_PATH = reqModule(getValue(fconfig, 'fext.store.reducers', path.join(FEXT_PATH, 'store', 'reducers')));
+const ENGINE_PATH = getValue(fconfig, 'engine.path', path.join(FEXT_PATH, 'engine'));
+const WEBPACK_CONFIG_PATH = getValue(fconfig, 'webpack.config', path.join(FEXT_PATH, 'webpack.config.js'));
 const WEBPACK_BUILD_PATH = getValue(fconfig, 'webpack.build', 'build');
 
 const SERVER_HOSTNAME = getValue(fconfig, 'server.hostname', 'localhost');
