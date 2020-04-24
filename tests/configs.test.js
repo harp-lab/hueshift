@@ -1,7 +1,7 @@
 const child_process = require('child_process');
 const path = require('path');
 
-const frameworkPath = path.resolve(__dirname, '..');
+const frameworkPath = process.cwd();
 
 test('dev environment without hueshift.config.js', async (done) => {
   const binPath = path.resolve(frameworkPath, 'bin', 'cli.js');
@@ -38,6 +38,12 @@ test('consts without hueshift.config.js', () => {
 
   const expected = {
     PACKAGE_PATH: __dirname,
+    FRAMEWORK_PATH: frameworkPath,
+    APP_PATH: path.resolve(frameworkPath, 'app'),
+    EXTENSIONS_PATH: path.resolve(frameworkPath, 'extensions'),
+    LIBRARY_PATH: path.resolve(frameworkPath, 'app', 'library'),
+    STORE_PATH: path.resolve(frameworkPath, 'app', 'store'),
+    COMPONENTS_PATH: path.resolve(frameworkPath, 'app', 'components'),
     version: -1,
     fext: {
       path: reqAbsolutePath(getObjectValue(defaults, 'fext.path')),
