@@ -20,7 +20,7 @@
   "main": "./bin/cli.js",
   "bin": "./bin/cli.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --config 'configs/jest.config.js'"
   },
   "dependencies": {
     "@babel/core": "^7.9.0",

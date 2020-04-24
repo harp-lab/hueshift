@@ -1,9 +1,9 @@
 const path = require('path');
-const { getObjectValue, reqAbsolutePath } = require(path.resolve('utilities'));
-const { PWD, HS_CONFIG } = process.env;
-
+const { HS_CONFIG } = process.env;
 exports.FRAMEWORK_PATH = path.resolve(__dirname, '..');
-exports.PACKAGE_PATH = PWD;
+const { getObjectValue, reqAbsolutePath } = require(path.resolve(exports.FRAMEWORK_PATH, 'utilities'));
+
+exports.PACKAGE_PATH = process.cwd();
 exports.APP_PATH = path.resolve(exports.FRAMEWORK_PATH, 'app');
 exports.EXTENSIONS_PATH = path.resolve(exports.FRAMEWORK_PATH, 'extensions');
 exports.LIBRARY_PATH = path.resolve(exports.APP_PATH, 'library');
