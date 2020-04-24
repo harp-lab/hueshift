@@ -4,20 +4,19 @@ const { EnvironmentPlugin } = require('webpack');
 const { HS_CONSTS } = process.env;
 const {
   APP_PATH, EXTENSIONS_PATH, COMPONENTS_PATH, LIBRARY_PATH, STORE_PATH,
-  VERSION,
-  BUILD_PATH, FEXT_PATH, FEXT_CONFIG_PATH, FEXT_LAYOUTS_PATH, FEXT_STORE_HOOKS_PATH, FEXT_STORE_REDUCERS_PATH,
-  FEXT_WEBPACK_HEAD_TEMPLATE, FEXT_WEBPACK_BODY_TEMPLATE
+  version,
+  fext
 } = require(HS_CONSTS);
 
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
   template: path.resolve(APP_PATH, 'template.js'),
   templateParameters: {
-    'headTemplate': FEXT_WEBPACK_HEAD_TEMPLATE ? FEXT_WEBPACK_HEAD_TEMPLATE() : '',
-    'bodyTemplate': FEXT_WEBPACK_BODY_TEMPLATE ? FEXT_WEBPACK_BODY_TEMPLATE() : ''
+    headTemplate: fext.webpack.headTemplate,
+    bodyTemplate: fext.webpack.bodyTemplate
   }
 });
 const EnvironmentPluginConfig = new EnvironmentPlugin({
-  VERSION: VERSION || -1
+  VERSION: version
 });
 
 module.exports = {
@@ -28,11 +27,11 @@ module.exports = {
       'components': COMPONENTS_PATH,
       'library': LIBRARY_PATH,
       'store': STORE_PATH,
-      'fext': FEXT_PATH,
-      'fext-config': FEXT_CONFIG_PATH,
-      'fext-layouts': FEXT_LAYOUTS_PATH,
-      'fext-store-hooks': FEXT_STORE_HOOKS_PATH,
-      'fext-store-reducers': FEXT_STORE_REDUCERS_PATH
+      'fext': fext.path,
+      'fext-config': fext.configPath,
+      'fext-layouts': fext.layouts,
+      'fext-store-hooks': fext.store.hooks,
+      'fext-store-reducers': fext.store.reducers
     }
   },
   module: {
@@ -69,7 +68,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     chunkFilename: '[name].[contenthash].js',
-    path: BUILD_PATH
+    path: fext.webpack.build
   },
   optimization: {
     moduleIds: 'hashed',

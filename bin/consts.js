@@ -1,4 +1,5 @@
 const path = require('path');
+const { getObjectValue, reqAbsolutePath } = require(path.resolve('utilities'));
 const { PWD, HS_CONFIG } = process.env;
 
 exports.FRAMEWORK_PATH = path.resolve(__dirname, '..');
@@ -16,7 +17,7 @@ EMPTY_MODULE_PATH = path.resolve(exports.EXTENSIONS_PATH, 'empty');
  * @returns {Boolean}
  */
 function moduleExists(modulePath) {
-  const absolutePath = convertPath(modulePath);
+  const absolutePath = reqAbsolutePath(modulePath);
   try {
     require(absolutePath);
     return true;
@@ -28,18 +29,6 @@ function moduleExists(modulePath) {
       return true;
     }
   }
-}
-
-/**
- * convert relative path to absolute path with package path as base
- * @param {String} relativePath relative path
- * @returns {String} absolute path
- */
-function convertPath(relativePath) {
-  if (path.isAbsolute(relativePath))
-    return relativePath;
-
-  return path.resolve(exports.PACKAGE_PATH, relativePath);
 }
 
 /**
@@ -55,68 +44,52 @@ function reqModule(modulePath) {
   }
 }
 
+const defaults = require(path.resolve(exports.FRAMEWORK_PATH, 'configs', 'default.config.js'));
 /**
- * get value from object given key path
- * @param {Object} object data object
+ * get value from config with default values from 'default.config.js'
+ * @param {Object} config 
  * @param {(String|Array<String>)} path key path
- * @param {*} defaultValue default value
  * @returns {*} value
  */
-function getValue(object, path, defaultValue) {
-  let keyArray;
-  if (typeof path === 'string') {
-    keyArray = path.split('.');
-  } else if (path instanceof Array) {
-    keyArray = path;
-  }
-
-  const [key, ...remKeyArray] = keyArray;
-  const value = object[key];
-  if (value) {
-    if (remKeyArray.length === 0) {
-      return value;
-    } else {
-      return getValue(value, remKeyArray, defaultValue);
-    }
-  } else {
-    return defaultValue
-  };
+function getConfigValue(config, path) {
+  const defaultValue = getObjectValue(defaults, path);
+  return getObjectValue(config, path, defaultValue);
 }
 
 const packageJsonPath = path.resolve(exports.PACKAGE_PATH, 'package.json');
-exports.VERSION = moduleExists(packageJsonPath) ? require(packageJsonPath).version : undefined;
+exports.version = moduleExists(packageJsonPath) ? require(packageJsonPath).version : -1;
 
 // read config and provide defaults
-const frameworkConfigPath = convertPath(HS_CONFIG);
+const frameworkConfigPath = reqAbsolutePath(HS_CONFIG);
 const fconfig = moduleExists(frameworkConfigPath) ? require(frameworkConfigPath) : {};
-const FEXT_PATH = getValue(fconfig, 'fext.path', 'fext');
-const FEXT_CONFIG_PATH = reqModule(getValue(fconfig, 'fext.config', path.join(FEXT_PATH, 'fext.config.js')));
-const FEXT_LAYOUTS_PATH = reqModule(getValue(fconfig, 'fext.layouts', path.join(FEXT_PATH, 'layouts')));
-const FEXT_STORE_HOOKS_PATH = reqModule(getValue(fconfig, 'fext.store.hooks', path.join(FEXT_PATH, 'store', 'hooks')));
-const FEXT_STORE_REDUCERS_PATH = reqModule(getValue(fconfig, 'fext.store.reducers', path.join(FEXT_PATH, 'store', 'reducers')));
-const ENGINE_PATH = getValue(fconfig, 'engine.path', path.join(FEXT_PATH, 'engine'));
-const WEBPACK_CONFIG_PATH = getValue(fconfig, 'webpack.config', path.join(FEXT_PATH, 'webpack.config.js'));
-const WEBPACK_BUILD_PATH = getValue(fconfig, 'webpack.build', 'build');
 
-const SERVER_HOSTNAME = getValue(fconfig, 'server.hostname', 'localhost');
-const SERVER_PORT = getValue(fconfig, 'server.port', 8086);
-
-exports.FEXT_PATH = convertPath(FEXT_PATH);
-exports.FEXT_CONFIG_PATH = convertPath(FEXT_CONFIG_PATH);
-exports.FEXT_CONFIG = moduleExists(exports.FEXT_CONFIG_PATH) ? require(exports.FEXT_CONFIG_PATH) : {};
-const fextWebpackConfigPath = convertPath(WEBPACK_CONFIG_PATH);
-const { config: fextWebpackConfig, headTemplate, bodyTemplate } = moduleExists(fextWebpackConfigPath) ? require(fextWebpackConfigPath) : {};
-exports.FEXT_WEBPACK_CONFIG = fextWebpackConfig || {};
-exports.FEXT_WEBPACK_HEAD_TEMPLATE = headTemplate;
-exports.FEXT_WEBPACK_BODY_TEMPLATE = bodyTemplate;
-exports.FEXT_LAYOUTS_PATH = convertPath(FEXT_LAYOUTS_PATH);
-exports.FEXT_STORE_HOOKS_PATH = convertPath(FEXT_STORE_HOOKS_PATH);
-exports.FEXT_STORE_REDUCERS_PATH = convertPath(FEXT_STORE_REDUCERS_PATH);
-
-exports.BUILD_PATH = convertPath(WEBPACK_BUILD_PATH);
-
-exports.ENGINE_DISABLED = !exports.FEXT_CONFIG.engine;
-exports.ENGINE_PATH = convertPath(ENGINE_PATH);
-
-exports.SERVER_HOSTNAME = SERVER_HOSTNAME;
-exports.SERVER_PORT = SERVER_PORT;
+let fext = {
+  path: reqAbsolutePath(getConfigValue(fconfig, 'fext.path')),
+  configPath: reqAbsolutePath(reqModule(getConfigValue(fconfig, 'fext.config')))
+};
+fext.config = moduleExists(fext.configPath) ? require(fext.configPath) : {}
+const webpackConfigPath = reqAbsolutePath(getConfigValue(fconfig, 'webpack.config'));
+const { config: webpackConfig, headTemplate, bodyTemplate } = moduleExists(webpackConfigPath) ? require(webpackConfigPath) : {};
+fext = {
+  ...fext,
+  layouts: reqAbsolutePath(reqModule(getConfigValue(fconfig, 'fext.layouts'))),
+  store: {
+    hooks: reqAbsolutePath(reqModule(getConfigValue(fconfig, 'fext.store.hooks'))),
+    reducers: reqAbsolutePath(reqModule(getConfigValue(fconfig, 'fext.store.reducers')))
+  },
+  webpack: {
+    config: webpackConfig || {},
+    build: reqAbsolutePath(getConfigValue(fconfig, 'webpack.build')),
+    headTemplate: headTemplate ? headTemplate() : '',
+    bodyTemplate: bodyTemplate ? bodyTemplate() : ''
+  },
+  engine: {
+    disabled: !fext.config.engine,
+    path: reqAbsolutePath(getConfigValue(fconfig, 'engine.path'))
+  },
+  server: {
+    hostname: getConfigValue(fconfig, 'server.hostname'),
+    port: getConfigValue(fconfig, 'server.port')
+  }
+};
+exports.fext = fext;

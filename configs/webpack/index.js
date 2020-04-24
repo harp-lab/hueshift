@@ -1,7 +1,8 @@
 const merge = require('webpack-merge');
 const path = require('path');
 const { HS_CONSTS, HS_WEBPACK_MODE } = process.env;
-const { FEXT_WEBPACK_CONFIG } = require(HS_CONSTS);
+const { fext } = require(HS_CONSTS);
+const FEXT_WEBPACK_CONFIG = fext.webpack.config;
 
 const WEBPACK_CONFIG_PATH = path.resolve(__dirname);
 const BASE_CONFIG_PATH = path.resolve(WEBPACK_CONFIG_PATH, 'config.base.js');

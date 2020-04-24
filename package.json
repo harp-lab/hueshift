@@ -14,7 +14,8 @@
     "bin/",
     "configs/",
     "extensions/",
-    "server/"
+    "server/",
+    "utilities/"
   ],
   "main": "./bin/cli.js",
   "bin": "./bin/cli.js",

@@ -1,9 +1,10 @@
 const child_process = require('child_process');
 const path = require('path');
+const { getObjectValue, reqAbsolutePath } = require(path.resolve('utilities'));
 
 const binPath = path.resolve('bin', 'cli.js');
 
-test('compile without hueshift.config.js', async (done) => {
+test('dev environment without hueshift.config.js', async (done) => {
   const bin = child_process.spawn(
     binPath, ['dev'], {
       env: { PWD: __dirname }
@@ -28,3 +29,42 @@ test('compile without hueshift.config.js', async (done) => {
     done();
   }
 }, 60000);
+
+test('consts without hueshift.config.js', () => {
+  process.env.PWD = __dirname;
+  process.env.HS_CONFIG = 'hueshift.config.js';
+  const consts = require(path.resolve('bin', 'consts.js'));
+
+  const defaults = require(path.resolve('configs', 'default.config.js'));
+  const emptyExtensionPath = path.resolve('extensions', 'empty');
+
+  const expected = {
+    PACKAGE_PATH: __dirname,
+    version: -1,
+    fext: {
+      path: reqAbsolutePath(getObjectValue(defaults, 'fext.path')),
+      configPath: emptyExtensionPath,
+      config: {},
+      layouts: emptyExtensionPath,
+      store: {
+        hooks: emptyExtensionPath,
+        reducers: emptyExtensionPath
+      },
+      webpack: {
+        config: {},
+        build: reqAbsolutePath(getObjectValue(defaults, 'webpack.build')),
+        headTemplate: '',
+        bodyTemplate: ''
+      },
+      engine: {
+        disabled: true,
+        path: reqAbsolutePath(getObjectValue(defaults, 'engine.path'))
+      },
+      server: {
+        hostname: getObjectValue(defaults, 'server.hostname'),
+        port: getObjectValue(defaults, 'server.port')
+      }
+    }
+  }
+  expect(consts).toMatchObject(expected);
+});
