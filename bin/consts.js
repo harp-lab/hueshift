@@ -60,7 +60,7 @@ const packageJsonPath = path.resolve(exports.PACKAGE_PATH, 'package.json');
 exports.version = moduleExists(packageJsonPath) ? require(packageJsonPath).version : -1;
 
 // read config and provide defaults
-const frameworkConfigPath = reqAbsolutePath(HS_CONFIG);
+const frameworkConfigPath = reqAbsolutePath(HS_CONFIG || '');
 const fconfig = moduleExists(frameworkConfigPath) ? require(frameworkConfigPath) : {};
 
 let fext = {

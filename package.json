@@ -15,10 +15,12 @@
     "configs/",
     "extensions/",
     "server/",
-    "utilities/"
+    "utilities/",
+    "!*.test.js"
   ],
   "main": "./bin/cli.js",
   "bin": "./bin/cli.js",
+  "repository": "github:harp-lab/hueshift",
   "scripts": {
     "test": "jest --config 'configs/jest.config.js'"
   },
