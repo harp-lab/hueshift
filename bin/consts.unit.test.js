@@ -2,11 +2,11 @@ const path = require('path');
 const frameworkPath = process.cwd();
 
 beforeEach(() => {
+  process.chdir(__dirname); // change cwd to test path resolution
   jest.resetModules();
 });
 
 test('defaults without provided hueshift.config.js', () => {
-  process.chdir(__dirname); // change cwd to test path resolution
   const { getObjectValue, reqAbsolutePath } = require(path.resolve(frameworkPath, 'utilities'));
 
   const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js'));
@@ -51,8 +51,6 @@ test('defaults without provided hueshift.config.js', () => {
 });
 
 test('required module paths resolve with provided hueshift.config.js', () => {
-  process.chdir(__dirname);
-
   // provide mocked test config
   process.env.HS_CONFIG = './hs_config';
   jest.mock('./hs_config', () => {
@@ -85,6 +83,37 @@ test('required module paths resolve with provided hueshift.config.js', () => {
       store: {
         hooks: path.resolve('/test', 'store', 'hooks'),
         reducers: path.resolve('/test', 'store', 'reducers')
+      }
+    }
+  });
+});
+
+test('engine enabled with provided hueshift.config.js', () => {
+  // provide mocked test configs
+  process.env.HS_CONFIG = './hs_config';
+  jest.mock('./hs_config', () => {
+    const path = require('path');
+    return {
+      fext: {
+        config: path.resolve('/test', 'fext.config.js'),
+      },
+      engine: {
+        path: path.resolve('/test', 'engine')
+      }
+    };
+  }, { virtual: true });
+  jest.mock('/test/fext.config.js', () => {
+    return {
+      engine: () => {}
+    };
+  }, { virtual: true });
+
+  const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js'));
+  expect(consts).toMatchObject({
+    fext: {
+      engine: {
+        disabled: false,
+        path: path.resolve('/test', 'engine')
       }
     }
   });
