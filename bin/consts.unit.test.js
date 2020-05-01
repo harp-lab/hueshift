@@ -1,6 +1,10 @@
 const path = require('path');
 const frameworkPath = process.cwd();
 
+beforeEach(() => {
+  jest.resetModules();
+});
+
 test('defaults without provided hueshift.config.js', () => {
   process.chdir(__dirname); // change cwd to test path resolution
   const { getObjectValue, reqAbsolutePath } = require(path.resolve(frameworkPath, 'utilities'));
@@ -44,4 +48,44 @@ test('defaults without provided hueshift.config.js', () => {
     }
   }
   expect(consts).toMatchObject(expected);
+});
+
+test('required module paths resolve with provided hueshift.config.js', () => {
+  process.chdir(__dirname);
+
+  // provide mocked test config
+  process.env.HS_CONFIG = './hs_config';
+  jest.mock('./hs_config', () => {
+    const path = require('path');
+    return {
+      fext: {
+        path: '/test/fext',
+        config: path.resolve('/test', 'fext.config.js'),
+        layouts: path.resolve('/test', 'layouts'),
+        store: {
+          hooks: path.resolve('/test', 'store', 'hooks'),
+          reducers: path.resolve('/test', 'store', 'reducers')
+        }
+      }
+    };
+  }, { virtual: true });
+
+  // mock all modules
+  jest.mock('/test/fext.config.js', () => ({}), { virtual: true });
+  jest.mock('/test/layouts', () => ({}), { virtual: true });
+  jest.mock('/test/store/hooks', () => ({}), { virtual: true });
+  jest.mock('/test/store/reducers', () => ({}), { virtual: true });
+
+  const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js'));
+  expect(consts).toMatchObject({
+    fext: {
+      path: '/test/fext',
+      configPath: path.resolve('/test', 'fext.config.js'),
+      layouts: path.resolve('/test', 'layouts'),
+      store: {
+        hooks: path.resolve('/test', 'store', 'hooks'),
+        reducers: path.resolve('/test', 'store', 'reducers')
+      }
+    }
+  });
 });
