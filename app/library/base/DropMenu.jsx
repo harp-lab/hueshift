@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
 import { IconButton } from 'library/base';
@@ -29,7 +29,7 @@ function DropMenu(props) {
   });
 
   return (
-    <Fragment>
+    <>
       <IconButton
         icon={ <MoreVert /> }
         size='medium'
@@ -49,7 +49,7 @@ function DropMenu(props) {
         onClose={ close } >
         { elems }
       </Menu>
-    </Fragment>);
+    </>);
 }
 
 export default DropMenu;

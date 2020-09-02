@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Toolbar, Typography } from '@material-ui/core';
 import { withTheme } from '@material-ui/styles';
 
@@ -27,12 +27,12 @@ function PanelViewer(props) {
   const content = [...savedPanels, ...unsavedPanels];
 
   return (
-    <Fragment>
+    <>
       <ViewerLabel content={ label } />
       <div style={{ overflowY: 'auto' }}>
         { content }
       </div>
-    </Fragment>);
+    </>);
 }
 
 function ViewerLabel(props) {

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { IconButton, Popover, Tooltip } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 
@@ -16,7 +16,7 @@ function IconPopover(props) {
   }
 
   return (
-    <Fragment>
+    <>
       <Tooltip title={ tooltip }>
         <IconButton
           size='small'
@@ -31,7 +31,7 @@ function IconPopover(props) {
         classes={{ paper: classes.paper }}>
         { children }
       </Popover>
-    </Fragment>);
+    </>);
 }
 
 export default withStyles({

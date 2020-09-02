@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppBar as MUIAppBar, Button, Toolbar, Typography } from '@material-ui/core';
 import { makeStyles, withTheme } from '@material-ui/styles';
@@ -25,18 +25,18 @@ function AppBar() {
     case LIST_VIEW:
       leftElems = <ProjectListButton />;
       rightElems = (
-        <Fragment>
+        <>
           <ImportButton />
           <AppBarButton
             content='new project'
             onClick={ () => dispatch(createProject()) } />
           <LogoutButton />
-        </Fragment>);
+        </>);
       break;
     case PROJECT_VIEW:
       leftElems = <ProjectListButton />;
       rightElems = (
-        <Fragment>
+        <>
           <AppBarButton
             content='fork project'
             onClick={ () => dispatch(forkProject(selectedProjectId)) } />
@@ -44,7 +44,7 @@ function AppBar() {
             content='export project'
             onClick={ () => dispatch(exportData(selectedProjectId)) } />
           <LogoutButton />
-        </Fragment>);
+        </>);
       break;
   }
   
@@ -90,7 +90,7 @@ function ImportButton() {
   const dispatch = useDispatch();
 
   return (
-    <Fragment>
+    <>
       <AppBarButton
         content='import'
         onClick={ () => input.current.click() } />
@@ -99,7 +99,7 @@ function ImportButton() {
         onInput={ () => dispatch(importFiles(input.current.files)) }
         type='file'
         hidden />
-    </Fragment>);
+    </>);
 }
 function AppBarButton(props) {
   const { content, theme, onClick } = props;

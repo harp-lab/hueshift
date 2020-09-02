@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 function Spacer(props) {
   const { children, childrenStyle, noDiv } = props;
@@ -11,7 +11,7 @@ function Spacer(props) {
 
   let element;
   if (noDiv)
-    element = <Fragment>{ spacedChildren }</Fragment>;
+    element = <>{ spacedChildren }</>;
   else
     element = <div>{ spacedChildren }</div>;
   return element;
