@@ -1,6 +1,6 @@
 {
   "name": "hueshift",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Visualization application framework for analysis engines.",
   "license": "ISC",
   "contributors": [
