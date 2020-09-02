@@ -14,12 +14,6 @@ const JSDOC_CONFIG_PATH = path.resolve(CONFIGS_PATH, 'jsdoc.js');
 
 const SERVER_PATH = path.resolve(FRAMEWORK_PATH, 'server');
 
-// call dependencies from module local 'node_modules/.bin/'
-const NODE_MODULES_BIN_PATH = path.resolve(FRAMEWORK_PATH, 'node_modules', '.bin');
-const WEBPACK_BIN_PATH = path.resolve(NODE_MODULES_BIN_PATH, 'webpack');
-const WEBPACK_DEV_SERVER_BIN_PATH = path.resolve(NODE_MODULES_BIN_PATH, 'webpack-dev-server');
-const JSDOC_BIN_PATH = path.resolve(NODE_MODULES_BIN_PATH, 'jsdoc');
-
 /**
  * spawn child process
  * @param {Object} yargv yargv object
@@ -47,17 +41,17 @@ yargs
     spawn(argv, 'node', [SERVER_PATH]);
   })
   .command('build', 'build application', () => {}, function(argv) {
-    spawn(argv, 'node', [WEBPACK_BIN_PATH, '--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'production' });
+    spawn(argv, 'webpack', ['--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'production' });
   })
   .command('dev', 'start development environment', () => {}, function(argv) {
     // start dev server
     spawn(argv, 'node', [NODEMON_PATH]);
 
     // start dev client
-    spawn(argv, 'node', [WEBPACK_DEV_SERVER_BIN_PATH, '--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'development' });
+    spawn(argv, 'webpack-dev-server', ['--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'development' });
   })
   .command('docs', 'generate documentation', () => {}, function(argv) {
-    spawn(argv, 'node', [JSDOC_BIN_PATH, '-c', JSDOC_CONFIG_PATH]);
+    spawn(argv, 'jsdoc', ['-c', JSDOC_CONFIG_PATH]);
   })
   .option('config', {
     alias: 'c',

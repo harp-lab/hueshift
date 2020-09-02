@@ -1,4 +1,4 @@
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const path = require('path');
 const { HS_CONSTS, HS_WEBPACK_MODE } = process.env;
 const { fext } = require(HS_CONSTS);
