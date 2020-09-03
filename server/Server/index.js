@@ -1,4 +1,4 @@
-const child_process = require('child_process');
+const childProcess = require('child_process');
 const chalk = require('chalk');
 const express = require('express');
 
@@ -7,7 +7,7 @@ const {
   ENGINE_DISABLED,
   WATCHER_ACTION_PROCESS, WATCHER_ACTION_CANCEL, WATCHER_PATH,
   BUILD_DIR,
-  LOG_TYPE_HTTP, INIT_LOG_TYPE, LOG_TYPE_PROJ, LOG_TYPE_WATCHER, ENGINE_LOG_TYPE, LOG_TYPE_SYS
+  LOG_TYPE_HTTP, INIT_LOG_TYPE, LOG_TYPE_PROJ, LOG_TYPE_WATCHER, ENGINE_LOG_TYPE, LOG_TYPE_SYS,
 } = require('../Consts');
 const { consoleLog, consoleError } = require('../Global');
 
@@ -20,6 +20,7 @@ class Server {
     this.projects = {};
     this.init();
   }
+
   async init() {
     this.db = new Database();
     await this.db.init();
@@ -31,12 +32,14 @@ class Server {
 
   /** initialize data directories */
   async initData() {
-    for (const projectId of this.db.getProjectIds()) {
-      const data = await this.db.getProject(projectId);
-      const project = new Project();
-      this.projects[projectId] = project;
-      project.import(data);
-    }
+    const promises = this.db.getProjectIds()
+      .map(async (projectId) => {
+        const data = await this.db.getProject(projectId);
+        const project = new Project();
+        this.projects[projectId] = project;
+        project.import(data);
+      });
+    return Promise.all(promises);
   }
 
   /** initialize server process */
@@ -44,15 +47,15 @@ class Server {
     const app = express();
     app.use(express.json());
     app.use(express.static(BUILD_DIR));
-    
+
     // logging
     app.all('*', (req, res, next) => {
-      const path = req.path;
+      const { path } = req;
       const method = chalk.yellowBright(req.method);
       consoleLog(LOG_TYPE_HTTP, `${path} ${method}`);
-      res.on('finish', function() {
+      res.on('finish', () => {
         const status = chalk.bold(res.statusCode);
-        consoleLog(LOG_TYPE_HTTP, `${path} ${method} (${status})`)
+        consoleLog(LOG_TYPE_HTTP, `${path} ${method} (${status})`);
       });
       next();
     });
@@ -60,9 +63,9 @@ class Server {
     // api request routing
     app.use('/api/:userId', UserRouter(this));
 
-    app.listen(PORT, function() {
+    app.listen(PORT, () => {
       const address = chalk.blueBright(`${HOSTNAME}:${PORT}`);
-      consoleLog(INIT_LOG_TYPE, `server listening at ${address}`)
+      consoleLog(INIT_LOG_TYPE, `server listening at ${address}`);
     });
   }
 
@@ -77,9 +80,9 @@ class Server {
     }
 
     const options = { stdio: [0, 1, 2, 'ipc'] };
-    const watcher = child_process.fork(WATCHER_PATH, [], options);
-    watcher.on('message', async data => {
-      const action = data.action;
+    const watcher = childProcess.fork(WATCHER_PATH, [], options);
+    watcher.on('message', async (data) => {
+      const { action } = data;
       switch (action) {
         case WATCHER_ACTION_PROCESS: {
           this.db.setStage(data.id, this.db.STAGES.done);
@@ -97,33 +100,33 @@ class Server {
         }
       }
     });
-    watcher.on('close', code => {
+    watcher.on('close', (code) => {
       consoleError(LOG_TYPE_WATCHER, `crashed (${code}) - restarting`);
       this.initWatcher();
     });
-    
+
     this.watcher = watcher;
   }
 
   /**
    * send watcher process message
-   * @param {String} fileId 
+   * @param {String} fileId
    */
   notifyWatcher(fileId) {
     this.watcher.send({
       id: fileId,
-      action: WATCHER_ACTION_PROCESS
+      action: WATCHER_ACTION_PROCESS,
     });
   }
 
   /**
    * send watcher cancel message
-   * @param {String} fileId 
+   * @param {String} fileId
    */
   cancelWatcher(fileId) {
     this.watcher.send({
       id: fileId,
-      action: WATCHER_ACTION_CANCEL
+      action: WATCHER_ACTION_CANCEL,
     });
   }
 
@@ -150,17 +153,22 @@ class Server {
   async saveProject(projectId, data) {
     const status = chalk.bold('saving');
     consoleLog(LOG_TYPE_SYS, `project ${projectId} ${status}`);
-
-    const project  = this.projects[projectId];
+    const project = this.projects[projectId];
     const { name, analysisInput } = data;
+
+    async function setProject(database) {
+      if (name !== undefined) { project.name = name; }
+      await database.setProject(projectId, project.export());
+    }
+
     switch (project.status) {
       case project.STATUSES.empty:
       case project.STATUSES.edit:
         project.setAnalysisInput(analysisInput);
+        await setProject(this.db);
+        break;
       default:
-        if (name !== undefined)
-          project.name = name;
-        await this.db.setProject(projectId, project.export());
+        await setProject(this.db);
         break;
     }
   }
@@ -189,7 +197,7 @@ class Server {
 
     const status = chalk.bold('processing');
     consoleLog(LOG_TYPE_PROJ, `${projectId} ${status}`);
-    
+
     const project = this.projects[projectId];
     switch (project.status) {
       case project.STATUSES.empty:
@@ -227,7 +235,7 @@ class Server {
         this.cancelWatcher(projectId);
         break;
       default:
-        consoleError(LOG_TYPE_PROJ, `${projectId} ${project.status} status`)
+        consoleError(LOG_TYPE_PROJ, `${projectId} ${project.status} status`);
         break;
     }
   }
@@ -239,12 +247,13 @@ class Server {
   getProjectList(userId) {
     const list = {};
     for (const [id, project] of Object.entries(this.projects)) {
-      if (project.userId == userId)
+      if (project.userId === userId) {
         list[id] = {
           status: project.status,
           name: project.name,
-          analysis: project.analysis
-        }
+          analysis: project.analysis,
+        };
+      }
     }
     return list;
   }

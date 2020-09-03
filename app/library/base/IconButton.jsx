@@ -3,7 +3,7 @@ import { IconButton as MUIIconButton, Tooltip } from '@material-ui/core';
 
 /**
  * Icon button with tooltip
- * @param {Object} props 
+ * @param {Object} props
  * @param {ReactElement} props.icon React icon element
  * @param {String} [props.size = 'small'] button icon size
  * @param {String} [props.tooltip] button tooltip
@@ -12,20 +12,25 @@ import { IconButton as MUIIconButton, Tooltip } from '@material-ui/core';
 function IconButton(props) {
   const {
     icon,
-    size='small',
+    size = 'small',
     tooltip,
-    onClick } = props;
+    onClick,
+  } = props;
   let elem = (
     <MUIIconButton
-      size={ size }
-      onClick={ onClick }>
+      size={size}
+      onClick={onClick}
+    >
       { icon }
-    </MUIIconButton>);
-  if (tooltip)
+    </MUIIconButton>
+  );
+  if (tooltip) {
     elem = (
-      <Tooltip title={ tooltip }>
+      <Tooltip title={tooltip}>
         { elem }
-      </Tooltip>);
+      </Tooltip>
+    );
+  }
   return elem;
 }
 

@@ -1,19 +1,17 @@
 import React from 'react';
 
-function Spacer(props) {
-  const { children, childrenStyle, noDiv } = props;
-  const spacedChildren = React.Children.map(children, child => {
-    if (child) {
-      const style = { ...child.props.style, ...childrenStyle };
-      return React.cloneElement(child, { style });
-    }
+function Spacer({ children, childrenStyle, noDiv }) {
+  const spacedChildren = React.Children.map(children, (child) => {
+    const style = { ...child.props.style, ...childrenStyle };
+    return React.cloneElement(child, { style });
   });
 
   let element;
-  if (noDiv)
+  if (noDiv) {
     element = <>{ spacedChildren }</>;
-  else
+  } else {
     element = <div>{ spacedChildren }</div>;
+  }
   return element;
 }
 

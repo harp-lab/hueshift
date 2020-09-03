@@ -2,12 +2,12 @@ import { createSelector } from 'reselect';
 import { getProjectAnalysisOutput, getProjectMetadata } from './projects';
 
 export const getGraphs = createSelector(
-  state => getProjectAnalysisOutput(state),
-  analysisOutput => analysisOutput.graphs
+  (state) => getProjectAnalysisOutput(state),
+  (analysisOutput) => analysisOutput.graphs,
 );
 export const getGraphIds = createSelector(
-  state => getGraphs(state),
-  graphs => Object.keys(graphs)
+  (state) => getGraphs(state),
+  (graphs) => Object.keys(graphs),
 );
 
 /**
@@ -17,7 +17,7 @@ export const getGraphIds = createSelector(
  */
 export const getGraphsMetadata = createSelector(
   getProjectMetadata,
-  metadata => metadata.graphs
+  (metadata) => metadata.graphs,
 );
 
 /**
@@ -29,7 +29,7 @@ export const getGraphsMetadata = createSelector(
 export const getGraphMetadata = createSelector(
   (state, graphId, projectId) => graphId,
   (state, graphId, projectId) => getGraphsMetadata(state, projectId),
-  (graphId, metadata) => metadata[graphId] || {}
+  (graphId, metadata) => metadata[graphId] || {},
 );
 
 /**
@@ -39,7 +39,7 @@ export const getGraphMetadata = createSelector(
  */
 export const getSelectedNodes = createSelector(
   getGraphMetadata,
-  metadata => metadata.selectedNodes || []
+  (metadata) => metadata.selectedNodes || [],
 );
 
 /**
@@ -49,7 +49,7 @@ export const getSelectedNodes = createSelector(
  */
 export const getSelectedEdges = createSelector(
   getGraphMetadata,
-  metadata => metadata.selectedEdges || []
+  (metadata) => metadata.selectedEdges || [],
 );
 
 /**
@@ -59,7 +59,7 @@ export const getSelectedEdges = createSelector(
  */
 export const getHoveredNodes = createSelector(
   getGraphMetadata,
-  metadata => metadata.hoveredNodes || []
+  (metadata) => metadata.hoveredNodes || [],
 );
 
 /**
@@ -69,7 +69,7 @@ export const getHoveredNodes = createSelector(
  */
 export const getSuggestedNodes = createSelector(
   getGraphMetadata,
-  metadata => metadata.suggestedNodes || []
+  (metadata) => metadata.suggestedNodes || [],
 );
 
 /**
@@ -78,7 +78,7 @@ export const getSuggestedNodes = createSelector(
  */
 export const getGraphPositions = createSelector(
   (state, graphId) => getGraphMetadata(state, graphId),
-  metadata => metadata.positions
+  (metadata) => metadata.positions,
 );
 
 /**
@@ -89,7 +89,7 @@ export const getGraphPositions = createSelector(
  */
 export const getGraphViewers = createSelector(
   getGraphMetadata,
-  metadata => metadata.viewers || 0
+  (metadata) => metadata.viewers || 0,
 );
 
 /**
@@ -98,15 +98,14 @@ export const getGraphViewers = createSelector(
  */
 export const getViewedGraphIds = createSelector(
   getGraphsMetadata,
-  graphs => {
+  (graphs) => {
     const viewedGraphs = {};
     for (const [graphId, metadata] of Object.entries(graphs)) {
       const { viewers } = metadata;
-      if (viewers > 0)
-        viewedGraphs[graphId] = true;
+      if (viewers > 0) { viewedGraphs[graphId] = true; }
     }
     return viewedGraphs;
-  }
+  },
 );
 
 /**
@@ -114,8 +113,8 @@ export const getViewedGraphIds = createSelector(
  * @returns {String} focused graph id
  */
 export const getFocusedGraph = createSelector(
-  state => getProjectMetadata(state),
-  metadata => metadata.focusedGraph
+  (state) => getProjectMetadata(state),
+  (metadata) => metadata.focusedGraph,
 );
 
 /**
@@ -125,7 +124,19 @@ export const getFocusedGraph = createSelector(
 export const isFocusedGraph = createSelector(
   (state, graphId) => graphId,
   (state, graphId) => getFocusedGraph(state),
-  (graphId, focusedGraphId) => graphId === focusedGraphId
+  (graphId, focusedGraphId) => graphId === focusedGraphId,
+);
+
+/**
+ * Get graph data
+ * @param {Object} state
+ * @param {String} graphId graph id
+ * @returns {Object} graph data
+ */
+export const getGraph = createSelector(
+  (state, graphId) => getGraphs(state),
+  (state, graphId) => graphId,
+  (graphs, graphId) => graphs[graphId],
 );
 
 export function getGraphNodes(store, graphId) {
@@ -137,18 +148,6 @@ export function getGraphNodes(store, graphId) {
   }
   return nodeIds;
 }
-
-/**
- * Get graph data
- * @param {Object} state
- * @param {String} graphId graph id
- * @returns {Object} graph data
- */
-export const getGraph = createSelector(
-  (state, graphId) => getGraphs(state),
-  (state, graphId) => graphId,
-  (graphs, graphId) => graphs[graphId]
-);
 
 /**
  * Get graph reference data
@@ -167,5 +166,5 @@ export const getGraphRefData = createSelector(
       default:
         return analysisOutput.configs;
     }
-  }
+  },
 );

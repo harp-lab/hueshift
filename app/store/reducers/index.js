@@ -16,7 +16,7 @@ function reducer(state = {}, action) {
       const { projectId } = action.payload;
       return {
         ...state,
-        selectedProjectId: projectId
+        selectedProjectId: projectId,
       };
     }
     default: {
@@ -24,8 +24,8 @@ function reducer(state = {}, action) {
       return {
         ...state,
         notifications: notificationsReducer(notifications, action),
-        projects: projectsReducer(projects, action)
-      }
+        projects: projectsReducer(projects, action),
+      };
     }
   }
 }

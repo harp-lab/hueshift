@@ -1,22 +1,40 @@
 import store from 'store';
-import { setTitle, queueSnackbar } from 'store/actions';
-import { process, downloadProject } from 'store/apis';
+import { downloadProject } from 'store/apis';
 import { PROCESS_STATUS, COMPLETE_STATUS, CLIENT_LOCAL_STATUS } from 'store/consts';
 import { getProject, getProjectServerStatus } from 'store/selectors';
 import {
   ADD_PROJECT, SET_PROJECT_DATA, DEL_PROJECT, DEL_PROJECTS, SEL_PROJECT,
-  SET_METADATA, SET_STATUS
+  SET_METADATA, SET_STATUS,
 } from 'store/actionTypes';
 
 import { generateMetadataHook } from 'extensions/store/hooks';
+import { setTitle } from './app';
+import { queueSnackbar } from './notifications';
 
-export const addProject = projectId => ({
+export const setStatus = (projectId, data) => ({
+  type: SET_STATUS,
+  payload: { projectId, data },
+});
+
+/**
+ * Set client status of project
+ * @param {String} projectId project id
+ * @param {String} status client status
+ * @returns {Function} dispatch
+ */
+export function setClientStatus(projectId, status) {
+  return (dispatch) => {
+    dispatch(setStatus(projectId, { client: status }));
+  };
+}
+
+export const addProject = (projectId) => ({
   type: ADD_PROJECT,
-  payload: { projectId }
+  payload: { projectId },
 });
 export const setProjectData = (projectId, data) => ({
   type: SET_PROJECT_DATA,
-  payload: { projectId, data }
+  payload: { projectId, data },
 });
 
 /**
@@ -24,13 +42,13 @@ export const setProjectData = (projectId, data) => ({
  * @param {String} projectId project id
  * @returns {Object} action
  */
-export const deleteProjectLocal = projectId => ({
+export const deleteProjectLocal = (projectId) => ({
   type: DEL_PROJECT,
-  payload: { projectId }
+  payload: { projectId },
 });
 
 export const delProjects = () => ({
-  type: DEL_PROJECTS
+  type: DEL_PROJECTS,
 });
 
 /**
@@ -38,7 +56,7 @@ export const delProjects = () => ({
  * @returns {Object} dispatch
  */
 export function selProject(projectId) {
-  return dispatch => {
+  return (dispatch) => {
     if (projectId) {
       const state = store.getState();
       const { name } = getProject(state, projectId);
@@ -46,36 +64,35 @@ export function selProject(projectId) {
     } else {
       dispatch(setTitle(undefined));
     }
-    
+
     dispatch({
       type: SEL_PROJECT,
-      payload: { projectId }
+      payload: { projectId },
     });
-  }
-};
+  };
+}
 
 /**
  * Import project data files
- * @param {Array} files 
+ * @param {Array} files
  * @returns {Function} dispatch
  */
 export function importFiles(files) {
-  return dispatch => {
-    if (files.length === 0)
-      dispatch(queueSnackbar('No files dropped'));
+  return (dispatch) => {
+    if (files.length === 0) { dispatch(queueSnackbar('No files dropped')); }
     for (const file of files) {
       dispatch(importFile(file));
     }
   };
-};
+}
 
 /**
  * Import project data file
- * @param {File} file 
+ * @param {File} file
  * @returns {Function} dispatch
  */
 export function importFile(file) {
-  return dispatch => {
+  return (dispatch) => {
     const fr = new FileReader();
     fr.onload = () => {
       try {
@@ -85,13 +102,13 @@ export function importFile(file) {
         const filename = file.name;
         const reGroups = filename.match(re);
         if (reGroups) {
-          const [_, name, ext] = reGroups;
+          const [, name, ext] = reGroups;
           let projectId;
           if (name) projectId = name;
           else projectId = ext;
           dispatch(importData(projectId, json));
         }
-      } catch(err) {
+      } catch (err) {
         const { name, message } = err;
         switch (err.constructor) {
           case SyntaxError:
@@ -114,9 +131,9 @@ export function importFile(file) {
  * @returns {Function} dispatch
  */
 export function importData(projectId, data) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(addProject(projectId));
-    //process(data) // TODO separate out secondary processing
+    // process(data) // TODO separate out secondary processing
     dispatch(setProjectData(projectId, data));
     dispatch(setStatus(projectId, COMPLETE_STATUS));
     dispatch(setClientStatus(projectId, CLIENT_LOCAL_STATUS));
@@ -129,7 +146,7 @@ export function importData(projectId, data) {
  * @returns {Function} async dispatch
  */
 export function exportData(projectId) {
-  return async function(dispatch) {
+  return async function dispatcher(dispatch) {
     await dispatch(downloadProject(projectId));
     const state = store.getState();
     const serverStatus = getProjectServerStatus(state, projectId);
@@ -139,12 +156,12 @@ export function exportData(projectId) {
         break;
       default: {
         // create blob
-        const state = store.getState();
         const data = getProject(state, projectId);
         const filteredData = {};
         for (const [key, value] of Object.entries(data)) {
-          if (['analysis', 'status', 'analysisInput', 'analysisOutput', 'processed'].includes(key))
+          if (['analysis', 'status', 'analysisInput', 'analysisOutput', 'processed'].includes(key)) {
             filteredData[key] = value;
+          }
         }
         const json = JSON.stringify(filteredData, null, 2);
         const blob = new Blob([json], { type: 'application/json' });
@@ -155,7 +172,7 @@ export function exportData(projectId) {
         const elem = document.createElement('a');
         Object.assign(elem, {
           href,
-          download: file
+          download: file,
         });
         document.body.appendChild(elem);
         elem.click();
@@ -174,43 +191,12 @@ export function exportData(projectId) {
  * @returns {Function} dispatch
  */
 export function generateMetadata(projectId) {
-  return function(dispatch) {
+  return function dispatcher(dispatch) {
     dispatch(generateMetadataHook(projectId));
   };
 }
 
 export const setMetadata = (projectId, data) => ({
   type: SET_METADATA,
-  payload: { projectId, data }
+  payload: { projectId, data },
 });
-
-export const setStatus = (projectId, data) => ({
-  type: SET_STATUS,
-  payload: { projectId, data }
-});
-
-/**
- * Set client status of project
- * @param {String} projectId project id
- * @param {String} status client status
- * @returns {Function} dispatch
- */
-export function setClientStatus(projectId, status) {
-  return dispatch => {
-    dispatch(setStatus(projectId, { client: status }));
-  };
-}
-export function selectAsts(astIds) {
-  const state = store.getState();
-  const projectId = getSelectedProjectId(state);
-  return setMetadata(projectId, {
-    selectedAsts: astIds
-  });
-}
-export function hoverAsts(astIds) {
-  const state = store.getState();
-  const projectId = getSelectedProjectId(state);
-  return setMetadata(projectId, {
-    hoveredAsts: astIds
-  });
-}

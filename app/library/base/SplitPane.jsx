@@ -8,19 +8,20 @@ function SplitPane(props) {
   const [resize, setResize] = useState(false);
 
   const child1Props = children[0].props;
-  const child1Size = parseInt(child1Props.width || child1Props.height);
+  const child1Size = Number(child1Props.width || child1Props.height);
   const [size, setSize] = useState(child1Size);
 
   function drag(evt) {
     if (resize) {
       unfocus();
       const bounds = splitElem.current.getBoundingClientRect();
-      let size;
-      if (horizontal)
-        size = (evt.clientY - bounds.y) / bounds.height * 100;
-      else
-        size = (evt.clientX - bounds.x) / bounds.width * 100;
-      setSize(size);
+      let dragSize;
+      if (horizontal) {
+        dragSize = (evt.clientY - bounds.y) / (bounds.height * 100);
+      } else {
+        dragSize = (evt.clientX - bounds.x) / (bounds.width * 100);
+      }
+      setSize(dragSize);
     }
   }
   function startDrag() { setResize(true); }
@@ -30,7 +31,8 @@ function SplitPane(props) {
     if (selection) selection.removeAllRanges();
   }
 
-  let childProp, resizerProp, cursor;
+  let childProp; let resizerProp; let
+    cursor;
   if (horizontal) {
     childProp = 'height';
     resizerProp = 'horizontal';
@@ -44,49 +46,56 @@ function SplitPane(props) {
 
   return (
     <div
-      ref={ splitElem }
+      ref={splitElem}
       style={{
         display: 'flex',
         flexDirection: horizontal ? 'column' : 'row',
         flex: '1 1 auto',
         cursor: resize ? cursor : 'default', // TODO make cursor styling apply for all inner elements
         minHeight: 0,
-        ...style
+        ...style,
       }}
-      onMouseMove={ drag }
-      onMouseUp={ stopDrag }
-      onMouseLeave={ stopDrag }>
-        <SplitPaneContext.Provider value={{ [childProp]: `${size}%` }}>
-          { pane1 }
-        </SplitPaneContext.Provider>
-        <Resizer
-          { ...{ [resizerProp]: true } }
-          onMouseDown={ startDrag } />
-        <SplitPaneContext.Provider value={{ [childProp]: `${100 - size}%` }}>
-          { pane2 }
-        </SplitPaneContext.Provider>
-    </div>);
+      onMouseMove={drag}
+      onMouseUp={stopDrag}
+      onMouseLeave={stopDrag}
+    >
+      <SplitPaneContext.Provider value={{ [childProp]: `${size}%` }}>
+        { pane1 }
+      </SplitPaneContext.Provider>
+      <Resizer
+        {...{ [resizerProp]: true }}
+        onMouseDown={startDrag}
+      />
+      <SplitPaneContext.Provider value={{ [childProp]: `${100 - size}%` }}>
+        { pane2 }
+      </SplitPaneContext.Provider>
+    </div>
+  );
 }
 
 function Resizer(props) {
   const { horizontal, onMouseDown } = props;
   let style;
-  if (horizontal)
+  if (horizontal) {
     style = {
       height: 5,
-      cursor: 'ns-resize'
+      cursor: 'ns-resize',
     };
-  else
+  } else {
     style = {
       width: 5,
-      cursor: 'ew-resize'
+      cursor: 'ew-resize',
     };
-  return <div
-    style={{
-      backgroundColor: 'darkgray',
-      ...style
-    }}
-    onMouseDown={ onMouseDown } />;
+  }
+  return (
+    <div
+      style={{
+        backgroundColor: 'darkgray',
+        ...style,
+      }}
+      onMouseDown={onMouseDown}
+    />
+  );
 }
 
 export default SplitPane;

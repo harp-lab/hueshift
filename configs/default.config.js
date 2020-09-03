@@ -5,18 +5,18 @@ module.exports = {
     layouts: 'fext/layouts',
     store: {
       hooks: 'fext/store/hooks',
-      reducers: 'fext/store/reducers'
-    }
+      reducers: 'fext/store/reducers',
+    },
   },
   engine: {
-    path: 'fext/engine'
+    path: 'fext/engine',
   },
   webpack: {
     config: 'fext/webpack.config.js',
-    build: 'build'
+    build: 'build',
   },
   server: {
     hostname: 'localhost',
-    port: 8086
-  }
+    port: 8086,
+  },
 };

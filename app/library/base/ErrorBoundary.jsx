@@ -3,16 +3,17 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import { Refresh } from '@material-ui/icons';
 import { PaneMessage } from 'library/base';
 
-function ErrorWrapper(props) {
-  const { children } = props;
+function ErrorWrapper({ children }) {
   const [errorKey, setErrorKey] = useState(0);
 
   return (
     <ErrorBoundary
-      key={ errorKey }
-      onReset={ () => setErrorKey(errorKey + 1) }>
+      key={errorKey}
+      onReset={() => setErrorKey(errorKey + 1)}
+    >
       { children }
-    </ErrorBoundary>);
+    </ErrorBoundary>
+  );
 }
 
 class ErrorBoundary extends Component {
@@ -20,16 +21,24 @@ class ErrorBoundary extends Component {
     super(props);
     this.state = { error: false };
   }
-  static getDerivedStateFromError(error) {
+
+  static getDerivedStateFromError() {
     return { error: true };
   }
-  componentDidCatch(error, errorInfo) {}
+
+  componentDidCatch() {}
+
   render() {
     const { children, onReset } = this.props;
-    if (this.state.error)
-      return <PaneMessage
-        content='Error caught'
-        buttons={ <RefreshButton onClick={ onReset } /> } />;
+    const { error } = this.state;
+    if (error) {
+      return (
+        <PaneMessage
+          content="Error caught"
+          buttons={<RefreshButton onClick={onReset} />}
+        />
+      );
+    }
     return children;
   }
 }
@@ -37,13 +46,15 @@ class ErrorBoundary extends Component {
 function RefreshButton(props) {
   const { onClick } = props;
   return (
-    <Tooltip title={ 'Restart' }>
+    <Tooltip title="Restart">
       <IconButton
-        size='small'
-        onClick={ onClick }>
+        size="small"
+        onClick={onClick}
+      >
         <Refresh />
       </IconButton>
-    </Tooltip>);
+    </Tooltip>
+  );
 }
 
 export default ErrorWrapper;

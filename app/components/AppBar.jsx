@@ -1,16 +1,20 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { AppBar as MUIAppBar, Button, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar as MUIAppBar, Button, Toolbar, Typography,
+} from '@material-ui/core';
 import { makeStyles, withTheme } from '@material-ui/styles';
 import { createProject, forkProject } from 'store/apis';
-import { logout, selProject, importFiles, exportData } from 'store/actions';
+import {
+  logout, selProject, importFiles, exportData,
+} from 'store/actions';
 import { LIST_VIEW, PROJECT_VIEW } from 'store/consts';
 import { getView, getTitle, getSelectedProjectId } from 'store/selectors';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   appbar: {
-    zIndex: theme.zIndex.drawer + 1
-  }
+    zIndex: theme.zIndex.drawer + 1,
+  },
 }));
 
 function AppBar() {
@@ -20,7 +24,8 @@ function AppBar() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  let leftElems, rightElems;
+  let leftElems; let
+    rightElems;
   switch (view) {
     case LIST_VIEW:
       leftElems = <ProjectListButton />;
@@ -28,62 +33,76 @@ function AppBar() {
         <>
           <ImportButton />
           <AppBarButton
-            content='new project'
-            onClick={ () => dispatch(createProject()) } />
+            content="new project"
+            onClick={() => dispatch(createProject())}
+          />
           <LogoutButton />
-        </>);
+        </>
+      );
       break;
     case PROJECT_VIEW:
       leftElems = <ProjectListButton />;
       rightElems = (
         <>
           <AppBarButton
-            content='fork project'
-            onClick={ () => dispatch(forkProject(selectedProjectId)) } />
+            content="fork project"
+            onClick={() => dispatch(forkProject(selectedProjectId))}
+          />
           <AppBarButton
-            content='export project'
-            onClick={ () => dispatch(exportData(selectedProjectId)) } />
+            content="export project"
+            onClick={() => dispatch(exportData(selectedProjectId))}
+          />
           <LogoutButton />
-        </>);
+        </>
+      );
       break;
   }
-  
+
   const appbarElem = (
     <MUIAppBar
-      position='static'
-      className={ classes.appbar }>
+      position="static"
+      className={classes.appbar}
+    >
       <Toolbar>
         { leftElems }
         <Typography
-          variant='h6'
-          color='inherit'
+          variant="h6"
+          color="inherit"
           style={{
             flex: '1 1 auto',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            textAlign: 'center'
-          }}>
+            textAlign: 'center',
+          }}
+        >
           { title }
         </Typography>
         { rightElems }
       </Toolbar>
-    </MUIAppBar>);
-  
+    </MUIAppBar>
+  );
+
   return appbarElem;
 }
 export default AppBar;
 
 function ProjectListButton() {
   const dispatch = useDispatch();
-  return <AppBarButton
-    content='project list'
-    onClick={ () => dispatch(selProject(undefined)) } />;
+  return (
+    <AppBarButton
+      content="project list"
+      onClick={() => dispatch(selProject(undefined))}
+    />
+  );
 }
 function LogoutButton() {
   const dispatch = useDispatch();
-  return <AppBarButton
-    content='logout'
-    onClick={ userId => dispatch(logout(userId)) } />
+  return (
+    <AppBarButton
+      content="logout"
+      onClick={(userId) => dispatch(logout(userId))}
+    />
+  );
 }
 function ImportButton() {
   const input = useRef(undefined);
@@ -92,24 +111,29 @@ function ImportButton() {
   return (
     <>
       <AppBarButton
-        content='import'
-        onClick={ () => input.current.click() } />
+        content="import"
+        onClick={() => input.current.click()}
+      />
       <input
-        ref={ input }
-        onInput={ () => dispatch(importFiles(input.current.files)) }
-        type='file'
-        hidden />
-    </>);
+        ref={input}
+        onInput={() => dispatch(importFiles(input.current.files))}
+        type="file"
+        hidden
+      />
+    </>
+  );
 }
-function AppBarButton(props) {
+
+const AppBarButton = withTheme((props) => {
   const { content, theme, onClick } = props;
   return (
     <Button
-      onClick={ onClick }
-      color='inherit'
-      variant='outlined'
-      style={{ margin: theme.spacing(1) }}>
+      onClick={onClick}
+      color="inherit"
+      variant="outlined"
+      style={{ margin: theme.spacing(1) }}
+    >
       { content }
-    </Button>);
-}
-AppBarButton = withTheme(AppBarButton);
+    </Button>
+  );
+});

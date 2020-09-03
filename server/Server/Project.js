@@ -9,7 +9,7 @@ const allowedDataKeys = [
   'name',
   'analysis',
   'analysisInput',
-  'analysisOutput'
+  'analysisOutput',
 ];
 
 class Project {
@@ -19,13 +19,13 @@ class Project {
   constructor(userId) {
     this.userId = userId;
     this.dirPath = Consts.SAVE_DIR;
-    
+
     this.STATUSES = {
       empty: 'empty',
       edit: 'edit',
       process: 'process',
       done: 'done',
-      error: 'error'
+      error: 'error',
     };
     this.status = this.STATUSES.empty;
   }
@@ -48,10 +48,7 @@ class Project {
       case this.STATUSES.edit:
       case this.STATUSES.process:
         this.analysisInput = analysisInput;
-        if (!analysisInput)
-          this.status = this.STATUSES.empty;
-        else
-          this.status = this.STATUSES.edit;
+        if (!analysisInput) { this.status = this.STATUSES.empty; } else { this.status = this.STATUSES.edit; }
         break;
       default:
         consoleError(Consts.LOG_TYPE_SYS, 'project analysis input import rejected - immutable');

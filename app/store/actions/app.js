@@ -1,23 +1,23 @@
 import { SET_USER, SET_TITLE } from 'store/actionTypes';
-import { selProject, delProjects } from 'store/actions';
+import { selProject, delProjects } from './projects';
 
-const setUser = userId => ({
+const setUser = (userId) => ({
   type: SET_USER,
-  payload: { userId }
+  payload: { userId },
 });
 export function login(userId) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(setUser(userId));
   };
 }
-export function logout(userId) {
-  return dispatch => {
+export function logout() {
+  return (dispatch) => {
     dispatch(setUser(undefined));
     dispatch(selProject(undefined));
     dispatch(delProjects());
   };
 }
-export const setTitle = title => ({
+export const setTitle = (title) => ({
   type: SET_TITLE,
-  payload: { title }
-})
+  payload: { title },
+});

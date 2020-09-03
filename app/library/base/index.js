@@ -1,5 +1,5 @@
 export { default as DropMenu } from './DropMenu';
-export { default as DebugItem } from './DebugItem'
+export { default as DebugItem } from './DebugItem';
 export { default as DebugPopover } from './DebugPopover';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as IconButton } from './IconButton';
@@ -10,7 +10,7 @@ export { default as Loading } from './Loading';
 export { default as Pane } from './Pane';
 export { default as PaneContent } from './PaneContent';
 export { default as PaneContext } from './PaneContext';
-export { default as PaneToolbar } from './PaneToolbar'
+export { default as PaneToolbar } from './PaneToolbar';
 export { default as PaneToolbarDrawer } from './PaneToolbarDrawer';
 export { default as PaneMessage } from './PaneMessage';
 export { default as PanelTable } from './PanelTable';

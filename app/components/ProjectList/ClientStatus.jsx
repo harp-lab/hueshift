@@ -4,25 +4,25 @@ import { ListItemIcon, Tooltip } from '@material-ui/core';
 import {
   CloudDone as CloudDoneIcon,
   CloudDownload as CloudDownloadIcon,
-  CloudOff as CloudOffIcon
+  CloudOff as CloudOffIcon,
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { CLIENT_WAITING_STATUS, CLIENT_DOWNLOADED_STATUS, CLIENT_LOCAL_STATUS } from 'store/consts';
 import { getProjectClientStatus } from 'store/selectors';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: { color: theme.palette.text.secondary },
-  tooltip: { textTransform: 'capitalize' }
+  tooltip: { textTransform: 'capitalize' },
 }));
 
 /**
  * Display project client status
- * @param {Object} props 
+ * @param {Object} props
  * @param {String} props.projectId project id
  */
 function ClientStatus(props) {
   const { projectId } = props;
-  const status = useSelector(state => getProjectClientStatus(state, projectId));
+  const status = useSelector((state) => getProjectClientStatus(state, projectId));
   const classes = useStyles();
 
   let elem;
@@ -40,15 +40,17 @@ function ClientStatus(props) {
       elem = status;
       break;
   }
-  
+
   return (
     <ListItemIcon>
       <Tooltip
-        title={ status }
-        classes={{ tooltip: classes.tooltip }}>
+        title={status}
+        classes={{ tooltip: classes.tooltip }}
+      >
         { elem }
       </Tooltip>
-    </ListItemIcon>);
+    </ListItemIcon>
+  );
 }
 
 export default ClientStatus;

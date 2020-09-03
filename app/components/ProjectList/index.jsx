@@ -25,23 +25,28 @@ function ProjectList() {
     const refresh = await dispatch(getList());
     if (refresh) updateTimeout.current = setTimeout(update, 1000);
   }
-  
+
   const projectList = projectIds.map(
-    projectId => <Item
-      key={ projectId }
-      projectId={ projectId } />
+    (projectId) => (
+      <Item
+        key={projectId}
+        projectId={projectId}
+      />
+    ),
   );
-  
+
   return (
     <DropImport>
       <List
         style={{
           height: '100%',
-          overflowY: 'auto'
-        }}>
+          overflowY: 'auto',
+        }}
+      >
         { projectList }
       </List>
-    </DropImport>);
+    </DropImport>
+  );
 }
 
 export default ProjectList;

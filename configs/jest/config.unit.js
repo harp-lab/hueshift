@@ -1,6 +1,20 @@
 const base = require('./config.base');
 
-module.exports = {
+const config = {
   ...base,
-  testMatch: ['**/(*.)+unit.test.js']
+  testMatch: ['**/(*.)+unit.test.js'],
+};
+
+module.exports = {
+  projects: [
+    {
+      displayName: 'test',
+      ...config,
+    },
+    {
+      displayName: 'lint',
+      runner: 'jest-runner-eslint',
+      ...config,
+    },
+  ],
 };

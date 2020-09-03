@@ -11,8 +11,8 @@ function NodeData(id, data) {
     data: {
       id,
       label: id,
-      ...data
-    }
+      ...data,
+    },
   };
 }
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const child_process = require('child_process');
+const childProcess = require('child_process');
 const path = require('path');
 const yargs = require('yargs');
 
@@ -22,41 +22,42 @@ const SERVER_PATH = path.resolve(FRAMEWORK_PATH, 'server');
  * @param {Object} env process environment
  */
 function spawn(yargv, command, args = [], env = {}) {
-  const child = child_process.spawn(
+  const child = childProcess.spawn(
     command, args, {
       env: {
         ...process.env,
         HS_CONFIG: yargv.config,
         HS_CONSTS: HS_CONSTS_PATH,
-        ...env
+        ...env,
       },
-      stdio: 'inherit'
-    });
+      stdio: 'inherit',
+    },
+  );
 
-  process.on('SIGTERM', signal => child.kill(signal));
+  process.on('SIGTERM', (signal) => child.kill(signal));
 }
 
-yargs
-  .command('start', 'start application', () => {}, function(argv) {
+yargs // eslint-disable-line
+  .command('start', 'start application', () => {}, (argv) => {
     spawn(argv, 'node', [SERVER_PATH]);
   })
-  .command('build', 'build application', () => {}, function(argv) {
+  .command('build', 'build application', () => {}, (argv) => {
     spawn(argv, 'webpack', ['--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'production' });
   })
-  .command('dev', 'start development environment', () => {}, function(argv) {
+  .command('dev', 'start development environment', () => {}, (argv) => {
     // start dev server
     spawn(argv, 'node', [NODEMON_PATH]);
 
     // start dev client
     spawn(argv, 'webpack-dev-server', ['--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'development' });
   })
-  .command('docs', 'generate documentation', () => {}, function(argv) {
+  .command('docs', 'generate documentation', () => {}, (argv) => {
     spawn(argv, 'jsdoc', ['-c', JSDOC_CONFIG_PATH]);
   })
   .option('config', {
     alias: 'c',
     default: 'hueshift.config.js',
     describe: 'config file',
-    type: 'string'
+    type: 'string',
   })
   .argv;

@@ -3,7 +3,7 @@ const { LIBRARY_PATH, STORE_PATH } = require(HS_CONSTS);
 
 module.exports = {
   plugins: [
-    'plugins/markdown'
+    'plugins/markdown',
   ],
   recurseDepth: 100,
   source: {
@@ -12,11 +12,11 @@ module.exports = {
       STORE_PATH,
       'fext',
       'package.json',
-      'README.md'
-    ]
+      'README.md',
+    ],
   },
   opts: {
     destination: 'docs',
-    recurse: true
-  }
+    recurse: true,
+  },
 };

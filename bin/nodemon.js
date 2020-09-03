@@ -1,6 +1,7 @@
 const path = require('path');
 const chalk = require('chalk');
 const nodemon = require('nodemon');
+
 const { HS_CONSTS } = process.env;
 const { PACKAGE_PATH, FRAMEWORK_PATH } = require(HS_CONSTS);
 
@@ -31,19 +32,19 @@ const devServer = nodemon({
   script: path.resolve(SERVER_DIR),
   delay: '1500',
   watch: [
-    SERVER_DIR
+    SERVER_DIR,
   ],
   ignore: [
-    path.resolve(SERVER_DIR, 'data')
+    path.resolve(SERVER_DIR, 'data'),
   ],
   env: {
-    'NODE_ENV': 'development'
+    NODE_ENV: 'development',
   },
-  quiet: true
+  quiet: true,
 });
 devServer.on('start', () => consoleLog('server started'));
 devServer.on('crash', () => consoleError('server crashed'));
-devServer.on('restart', function(files) {
+devServer.on('restart', (files) => {
   let message = 'server restarting...';
   for (const filePath of files) {
     const relPath = `./${path.relative(PACKAGE_PATH, filePath)}`;
@@ -52,7 +53,7 @@ devServer.on('restart', function(files) {
   }
   consoleLog(message);
 });
-devServer.on('quit', function() {
+devServer.on('quit', () => {
   process.exit();
 });
 

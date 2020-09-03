@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
   setFocusedGraph,
   selectNodes, unselectNodes, hoverNodes, selectEdges,
-} from 'store/actions'
+} from 'store/actions';
 
 const TAP_EVENT = 'tap';
 const SELECT_EVENT = 'select';
@@ -23,7 +23,7 @@ export default function useEventHandlers(cy, graphId, eventData) {
 
   /**
    * toggle eventsEnabled flag to disable event handlers while executing callback
-   * @param {Function} callback 
+   * @param {Function} callback
    */
   function ignoreEvents(callback) {
     enabledRef.current = false;
@@ -43,10 +43,8 @@ export default function useEventHandlers(cy, graphId, eventData) {
 /**
  * @param {Object} cy cytoscape instance
  * @param {String} graphId graph id
- * @param {Object} enabledRef event enabled flag
- * @param {Object} eventData event handler data
  */
-function useTapEvent(cy, graphId, enabledRef, eventData) {
+function useTapEvent(cy, graphId) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -70,25 +68,22 @@ function useSelectEvent(cy, graphId, enabledRef, eventData) {
 
   useEffect(() => {
     cy.off(SELECT_EVENT);
-    cy.on(SELECT_EVENT, 'node', evt => {
+    cy.on(SELECT_EVENT, 'node', (evt) => {
       if (enabledRef.current) {
         const node = evt.target;
         const nodeId = node.id();
         dispatch(selectNodes(graphId, [nodeId]));
-        if (onNodeSelect)
-          onNodeSelect(nodeId);
+        if (onNodeSelect) { onNodeSelect(nodeId); }
       }
     });
-    cy.on(SELECT_EVENT, 'edge', evt => {
+    cy.on(SELECT_EVENT, 'edge', (evt) => {
       if (enabledRef.current) {
         const edge = evt.target;
         if (edgePredicate(edge)) {
           const edgeId = edge.id();
           dispatch(selectEdges(graphId, [edgeId]));
-          if (onEdgeSelect)
-            onEdgeSelect(edgeId);
-        } else
-          edge.unselect();
+          if (onEdgeSelect) { onEdgeSelect(edgeId); }
+        } else { edge.unselect(); }
       }
     });
   }, [graphId]);
@@ -108,22 +103,20 @@ function useUnselectEvent(cy, graphId, enabledRef, eventData) {
 
   useEffect(() => {
     cy.off(UNSELECT_EVENT);
-    cy.on(UNSELECT_EVENT, 'node', evt => {
+    cy.on(UNSELECT_EVENT, 'node', (evt) => {
       if (enabledRef.current) {
         const node = evt.target;
         const nodeId = node.id();
         dispatch(unselectNodes(graphId, [nodeId]));
-        if (onNodeUnselect)
-          onNodeUnselect(nodeId);
+        if (onNodeUnselect) { onNodeUnselect(nodeId); }
       }
     });
-    cy.on(UNSELECT_EVENT, 'edge', evt => {
+    cy.on(UNSELECT_EVENT, 'edge', (evt) => {
       if (enabledRef.current) {
         const edge = evt.target;
         const edgeId = edge.id();
         dispatch(selectEdges(graphId, []));
-        if (onEdgeUnselect)
-          onEdgeUnselect(edgeId);
+        if (onEdgeUnselect) { onEdgeUnselect(edgeId); }
       }
     });
   }, [graphId]);
@@ -132,15 +125,13 @@ function useUnselectEvent(cy, graphId, enabledRef, eventData) {
 /**
  * @param {Object} cy cytoscape instance
  * @param {String} graphId graph id
- * @param {Object} enabledRef events enabled flag
- * @param {Object} eventData event handler data
  */
-function useMouseoverEvent(cy, graphId, enabledRef, eventData) {
+function useMouseoverEvent(cy, graphId) {
   const dispatch = useDispatch();
 
   useEffect(() => {
     cy.off(MOUSEOVER_EVENT);
-    cy.on(MOUSEOVER_EVENT, 'node', evt => {
+    cy.on(MOUSEOVER_EVENT, 'node', (evt) => {
       const node = evt.target;
       const nodeId = node.id();
       dispatch(hoverNodes(graphId, [nodeId]));
@@ -151,15 +142,13 @@ function useMouseoverEvent(cy, graphId, enabledRef, eventData) {
 /**
  * @param {Object} cy cytoscape instance
  * @param {String} graphId graph id
- * @param {Object} enabledRef events enabled flag
- * @param {Object} eventData event handler data
  */
-function useMouseoutEvent(cy, graphId, enabledRef, eventData) {
+function useMouseoutEvent(cy, graphId) {
   const dispatch = useDispatch();
 
   useEffect(() => {
     cy.off(MOUSEOUT_EVENT);
-    cy.on(MOUSEOUT_EVENT, 'node', evt => {
+    cy.on(MOUSEOUT_EVENT, 'node', () => {
       dispatch(hoverNodes(graphId, []));
     });
   }, [graphId]);

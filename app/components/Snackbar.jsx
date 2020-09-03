@@ -13,10 +13,11 @@ function Snackbar() {
 
   // update on store change
   useEffect(() => {
-    if (message)
+    if (message) {
       setTimer(setTimeout(() => {
         update();
       }, 20000));
+    }
   }, [message]);
 
   function update() {
@@ -24,23 +25,26 @@ function Snackbar() {
     dispatch(dequeueSnackbar());
   }
   function handleClose(evt, reason) {
-    if (reason !== 'clickaway')
-      update();
+    if (reason !== 'clickaway') { update(); }
   }
 
-  return <MUISnackbar
-    open={ Boolean(message) }
-    onClose={ handleClose }
-    action={[
-      <IconButton
-        key='close'
-        onClick={ update }
-        color='inherit' >
-        <CloseIcon />
-      </IconButton>
-    ]}
-    autoHideDuration={ 20000 }
-    message={ message }
-    anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }} />;
+  return (
+    <MUISnackbar
+      open={Boolean(message)}
+      onClose={handleClose}
+      action={[
+        <IconButton
+          key="close"
+          onClick={update}
+          color="inherit"
+        >
+          <CloseIcon />
+        </IconButton>,
+      ]}
+      autoHideDuration={20000}
+      message={message}
+      anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+    />
+  );
 }
 export default Snackbar;

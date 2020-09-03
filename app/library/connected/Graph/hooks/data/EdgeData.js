@@ -18,9 +18,9 @@ function EdgeData(id, source, target, data) {
       label,
       source,
       target,
-      style
-    }
-  }
+      style,
+    },
+  };
 }
 
 export default EdgeData;

@@ -2,62 +2,59 @@ import store from 'store';
 import {
   QUEUE_SNACKBAR, DEQUEUE_SNACKBAR,
   SET_LOADING,
-  SET_DIALOG
+  SET_DIALOG,
 } from 'store/actionTypes';
 import { isDevEnv } from 'store/selectors';
 
-export const queueSnackbar = text => ({
+export const queueSnackbar = (text) => ({
   type: QUEUE_SNACKBAR,
-  payload: { text }
+  payload: { text },
 });
 export const dequeueSnackbar = () => ({
-  type: DEQUEUE_SNACKBAR
+  type: DEQUEUE_SNACKBAR,
 });
 
-
 /**
- * @param {String} message 
+ * @param {String} message
  * @returns {Function} dispatch
  */
 export function consoleLog(message) {
-  return function(dispatch) {
-    console.log(`${message}`)
+  return function dispatcher() {
+    console.log(`${message}`);
   };
 }
 
 /**
- * @param {String} message 
+ * @param {String} message
  * @returns {Function} dispatch
  */
 export function consoleInfo(message) {
-  return function(dispatch) {
+  return function dispatcher() {
     const state = store.getState();
     const devEnv = isDevEnv(state);
-    if (devEnv)
-      console.info(`${message}`)
+    if (devEnv) { console.info(`${message}`); }
   };
 }
 
 /**
- * @param {String} message 
+ * @param {String} message
  * @returns {Function} dispatch
  */
 export function consoleWarn(message) {
-  return function(dispatch) {
+  return function dispatcher() {
     const state = store.getState();
     const devEnv = isDevEnv(state);
-    if (devEnv)
-      console.warn(`${message}`)
+    if (devEnv) { console.warn(`${message}`); }
   };
 }
 
 /**
- * @param {String} message 
+ * @param {String} message
  * @returns {Function} dispatch
  */
 export function consoleError(message) {
-  return function(dispatch) {
-    console.error(`${message}`)
+  return function dispatcher() {
+    console.error(`${message}`);
   };
 }
 
@@ -66,18 +63,18 @@ export function consoleError(message) {
  * @returns {Function} dispatch
  */
 export function warnDeprecate(functionName) {
-  return function(dispatch) {
+  return function dispatcher(dispatch) {
     dispatch(consoleWarn(`${functionName}() deprecated`));
-  }
+  };
 }
 
 export const showLoading = () => ({
   type: SET_LOADING,
-  payload: { loading: true }
+  payload: { loading: true },
 });
 export const hideLoading = () => ({
   type: SET_LOADING,
-  payload: { loading: false }
+  payload: { loading: false },
 });
 
 /**
@@ -89,13 +86,13 @@ function setDialogFactory(dialogId) {
    * @param {String} projectId project id
    * @returns {Object} action
    */
-  return function(projectId) {
+  return function dispatcher(projectId) {
     return {
       type: SET_DIALOG,
       payload: {
         dialogId,
-        data: projectId
-      }
+        data: projectId,
+      },
     };
   };
 }

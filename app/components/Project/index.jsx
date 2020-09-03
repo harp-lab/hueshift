@@ -5,7 +5,7 @@ import { downloadProject } from 'store/apis';
 import { getSelectedProjectId, getProjectServerStatus, getProjectClientStatus } from 'store/selectors';
 import {
   EMPTY_STATUS, EDIT_STATUS, PROCESS_STATUS, COMPLETE_STATUS, ERROR_STATUS,
-  CLIENT_DOWNLOADED_STATUS, CLIENT_LOCAL_STATUS
+  CLIENT_DOWNLOADED_STATUS, CLIENT_LOCAL_STATUS,
 } from 'store/consts';
 
 import { EditorLayout, ProjectLayout } from 'extensions/layouts';
@@ -44,15 +44,15 @@ function Project() {
       viewElement = <EditorLayout />;
       break;
     case PROCESS_STATUS:
-      viewElement = <Loading status='Processing' />;
+      viewElement = <Loading status="Processing" />;
       break;
     case COMPLETE_STATUS:
       viewElement = <VisualView />;
       break;
     case ERROR_STATUS:
-      viewElement = <Editor error />;
+      viewElement = <EditorLayout error />;
       break;
-  };
+  }
   return viewElement;
 }
 
@@ -66,7 +66,7 @@ function VisualView() {
       view = <ProjectLayout />;
       break;
     default:
-      view = <Loading status='Downloading' />;
+      view = <Loading status="Downloading" />;
       break;
   }
 

@@ -1,5 +1,6 @@
 const fse = require('fs-extra');
 const fs = require('fs');
+
 const fsp = fs.promises;
 const path = require('path');
 
@@ -16,7 +17,7 @@ class Database {
     this.STAGES = {
       edit: 'edit',
       process: 'process',
-      done: 'done'
+      done: 'done',
     };
     this.projects = {};
   }
@@ -35,9 +36,9 @@ class Database {
     await fsp.mkdir(PROCESS_DIR, options);
     await fsp.mkdir(EDIT_DIR, options);
 
-    for (const stage of Object.values(this.STAGES)) {
-      await this.initStage(stage);
-    }
+    const promises = Object.values(this.STAGES)
+      .map((stage) => this.initStage(stage));
+    await Promise.all(promises);
   }
 
   /**
@@ -45,19 +46,19 @@ class Database {
    * @param {String} stage project stage
    */
   async initStage(stage) {
-    const path = this.stagePath(stage);
-    const fileList = await fsp.readdir(path);
+    const stagePath = this.stagePath(stage);
+    const fileList = await fsp.readdir(stagePath);
     for (const projectId of fileList) {
       this.projects[projectId] = stage;
     }
   }
 
   /**
-   * @param {String} path file path
+   * @param {String} filePath file path
    * @param {Object} data file data
    */
-  async write(path, data) {
-    const file = await fsp.open(path, 'w');
+  static async write(filePath, data) {
+    const file = await fsp.open(filePath, 'w');
     await file.writeFile(JSON.stringify(data));
     await file.close();
   }
@@ -66,21 +67,23 @@ class Database {
    * @param {String} oldPath old file path
    * @param {String} newPath new file path
    */
-  async move(oldPath, newPath) {
+  static async move(oldPath, newPath) {
     await fsp.rename(oldPath, newPath);
   }
 
   /**
-   * @param {String} path file path
+   * @param {String} projectId project id
+   * @param {String} filePath file path
    * @returns {Object} file data
    */
-  async read(path) {
-    let file, json;
+  static async read(projectId, filePath) {
+    let file;
+    let json;
     try {
-      file = await fsp.open(path);
-      const data = await file.readFile({encoding: 'utf-8'});
+      file = await fsp.open(filePath);
+      const data = await file.readFile({ encoding: 'utf-8' });
       json = JSON.parse(data);
-    } catch(err) {
+    } catch (err) {
       switch (err.code) {
         case 'ENOENT':
           consoleError(DATA_LOG_TYPE, `project ${projectId} not found`);
@@ -91,8 +94,8 @@ class Database {
       }
     } finally {
       await file.close();
-      return json;
     }
+    return json;
   }
 
   getProjectIds() {
@@ -106,8 +109,7 @@ class Database {
   getStageProjectIds(stage) {
     const projectIds = {};
     for (const [projectId, projectStage] of Object.entries(this.projects)) {
-      if (projectStage === stage)
-        projectIds[projectId] = stage;
+      if (projectStage === stage) { projectIds[projectId] = stage; }
     }
     return projectIds;
   }
@@ -118,8 +120,8 @@ class Database {
    */
   async getProject(projectId) {
     const stage = this.getStage(projectId);
-    const path = this.path(projectId, stage);
-    return await this.read(path);
+    const projectPath = this.path(projectId, stage);
+    return Database.read(projectId, projectPath);
   }
 
   /**
@@ -128,19 +130,19 @@ class Database {
    * @param {String} stage project stage
    */
   async setProject(projectId, data, stage = this.STAGES.edit) {
-    const path = this.path(projectId, stage);
-    await this.write(path, data);
+    const projectPath = this.path(projectId, stage);
+    await Database.write(projectPath, data);
     this.projects[projectId] = stage;
   }
 
   /**
-   * 
+   *
    * @param {String} projectId project id
    */
   async deleteProject(projectId) {
     const stage = this.getStage(projectId);
-    const path = this.path(projectId, stage);
-    await fsp.unlink(path);
+    const projectPath = this.path(projectId, stage);
+    await fsp.unlink(projectPath);
     delete this.projects[projectId];
   }
 
@@ -169,7 +171,7 @@ class Database {
     const oldPath = this.path(projectId, oldStage);
     this.setStage(projectId, newStage);
     const newPath = this.path(projectId, newStage);
-    await this.move(oldPath, newPath);
+    await Database.move(oldPath, newPath);
   }
 
   /**
@@ -187,22 +189,22 @@ class Database {
    * @returns {String} stage directory path
    */
   stagePath(stage) {
-    let path;
+    let directoryPath;
     switch (stage) {
       case this.STAGES.edit:
-        path = EDIT_DIR;
+        directoryPath = EDIT_DIR;
         break;
       case this.STAGES.process:
-        path = PROCESS_DIR;
+        directoryPath = PROCESS_DIR;
         break;
       case this.STAGES.done:
-        path = DONE_DIR;
+        directoryPath = DONE_DIR;
         break;
       default:
         // throw invalid stage
         break;
     }
-    return path;
+    return directoryPath;
   }
 }
 

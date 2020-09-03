@@ -3,27 +3,26 @@ import { ErrorBoundary, PaneContext, SplitPaneContext } from 'library/base';
 
 /**
  * base ui layout component
- * @param {Object} props 
+ * @param {Object} props
  * @param {String} props.overflow overflow css style
  * @param {Object} props.style css style override
  */
 function Pane(props) {
   const { overflow, children, style } = props;
   const [toolbarWidth, setToolbarWidth] = useState(0);
-  const updateToolbar = useCallback(elem => {
-    if (elem)
-      setToolbarWidth(elem.offsetWidth);
+  const updateToolbar = useCallback((elem) => {
+    if (elem) { setToolbarWidth(elem.offsetWidth); }
   }, []);
 
   // get PaneContent and PaneToolbar children
-  let content, toolbar;
-  React.Children.forEach(children, child => {
+  let content; let
+    toolbar;
+  React.Children.forEach(children, (child) => {
     const { type } = child;
     if (type.name === 'PaneContent') {
       content = child;
     } else if (type.$$typeof && type.$$typeof === Symbol.for('react.forward_ref')) {
-      if (type.render.name === 'PaneToolbar')
-        toolbar = child;
+      if (type.render.name === 'PaneToolbar') { toolbar = child; }
     }
   });
 
@@ -34,26 +33,31 @@ function Pane(props) {
     toolbar = React.cloneElement(toolbar, { ref: updateToolbar });
     elem = (
       <ContentContainer
-        overflow={ overflow }
+        overflow={overflow}
         style={{
-          flexDirection: 'row'
-        }}>
+          flexDirection: 'row',
+        }}
+      >
         <PaneContext.Provider
           value={{
-            toolbarWidth
-          }}>
+            toolbarWidth,
+          }}
+        >
           { content }
           { toolbar }
         </PaneContext.Provider>
-      </ContentContainer>);
+      </ContentContainer>
+    );
   } else {
     // default output
     elem = (
       <ContentContainer
-        overflow={ overflow }
-        style={ style }>
+        overflow={overflow}
+        style={style}
+      >
         { children }
-      </ContentContainer>);
+      </ContentContainer>
+    );
   }
 
   return elem;
@@ -62,7 +66,7 @@ function Pane(props) {
 export default Pane;
 
 /**
- * @param {Object} props 
+ * @param {Object} props
  * @param {String} [props.overflow = 'hidden']
  * @param {String} [props.height = '100%']
  * @param {String} [props.width = '100%']
@@ -71,10 +75,11 @@ export default Pane;
 function ContentContainer(props) {
   const {
     overflow = 'hidden',
-    children, style } = props;
+    children, style,
+  } = props;
   const {
     height = '100%',
-    width = '100%'
+    width = '100%',
   } = useContext(SplitPaneContext);
 
   return (
@@ -84,19 +89,23 @@ function ContentContainer(props) {
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          height, width,
-          overflow
+          height,
+          width,
+          overflow,
         },
-        ...style
-      }}>
+        ...style,
+      }}
+    >
       <SplitPaneContext.Provider
         value={{
           height: '100%',
-          width: '100%'
-        }}>
+          width: '100%',
+        }}
+      >
         <ErrorBoundary>
           { children }
         </ErrorBoundary>
       </SplitPaneContext.Provider>
-    </div>);
+    </div>
+  );
 }

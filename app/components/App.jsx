@@ -13,10 +13,10 @@ import Project from './Project';
 import Theme from './Theme';
 import Snackbar from './Snackbar';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   message: {
-    zIndex: theme.zIndex.drawer + 1
-  }
+    zIndex: theme.zIndex.drawer + 1,
+  },
 }));
 
 function App() {
@@ -35,33 +35,36 @@ function App() {
       viewElem = <Project />;
       break;
   }
-  
+
   return (
-    <ThemeProvider theme={ Theme }>
+    <ThemeProvider theme={Theme}>
       <VersionOverlay />
       <div
         // remove default drag/drop behavior
-        onDragEnter={ evt => evt.preventDefault() }
-        onDragOver={ evt => {
+        onDragEnter={(evt) => evt.preventDefault()}
+        onDragOver={(evt) => {
           evt.preventDefault();
+          /* eslint-disable no-param-reassign */
           evt.dataTransfer.dropEffect = 'none';
         }}
-        onDrop={ evt => evt.preventDefault() }
+        onDrop={(evt) => evt.preventDefault()}
 
         style={{
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
-          overflow: 'hidden'
-        }}>
-        { (devEnv && <Message content='Development Server'/>) }
+          overflow: 'hidden',
+        }}
+      >
+        { (devEnv && <Message content="Development Server" />) }
         <AppBar />
         { viewElem }
         <Snackbar />
         <DeleteDialog />
         <RenameDialog />
       </div>
-    </ThemeProvider>);
+    </ThemeProvider>
+  );
 }
 export default App;
 
@@ -76,18 +79,21 @@ function VersionOverlay() {
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         pointerEvents: 'none',
-        zIndex: -1
-      }}>
+        zIndex: -1,
+      }}
+    >
       <Typography
-        variant='caption'
-        color='textSecondary'
-        style={{ padding: 5 }}>
+        variant="caption"
+        color="textSecondary"
+        style={{ padding: 5 }}
+      >
         { process.env.VERSION }
       </Typography>
-    </div>);
+    </div>
+  );
 }
 
-function Message(props) {
+const Message = withTheme((props) => {
   const { content, theme } = props;
   const classes = useStyles();
 
@@ -97,10 +103,11 @@ function Message(props) {
         display: 'flex',
         justifyContent: 'center',
         backgroundColor: theme.palette.warn.main,
-        color: theme.palette.warn.contrastText
+        color: theme.palette.warn.contrastText,
       }}
-      className={ classes.message }>
+      className={classes.message}
+    >
       { content }
-    </Typography>);
-}
-Message = withTheme(Message);
+    </Typography>
+  );
+});

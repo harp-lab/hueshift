@@ -5,7 +5,7 @@ import { IconButton } from 'library/base';
 
 /**
  * Icon button with dropdown menu
- * @param {Object} props 
+ * @param {Object} props
  * @param {Array} props.items array of menu item Objects with 'label' and 'callback' props
  */
 function DropMenu(props) {
@@ -15,28 +15,31 @@ function DropMenu(props) {
   function open(evt) { setAnchor(evt.currentTarget); }
   function close() { setAnchor(undefined); }
 
-  const elems = items.map(item => {
+  const elems = items.map((item) => {
     const { label, callback } = item;
     return (
       <MenuItem
-        key={ label }
-        onClick={ () => {
+        key={label}
+        onClick={() => {
           close();
           callback();
-        }}>
+        }}
+      >
         { label }
-      </MenuItem>);
+      </MenuItem>
+    );
   });
 
   return (
     <>
       <IconButton
-        icon={ <MoreVert /> }
-        size='medium'
-        onClick={ open } />
+        icon={<MoreVert />}
+        size="medium"
+        onClick={open}
+      />
       <Menu
-        anchorEl={ anchor }
-        getContentAnchorEl={ undefined }
+        anchorEl={anchor}
+        getContentAnchorEl={undefined}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center',
@@ -45,11 +48,13 @@ function DropMenu(props) {
           vertical: 'top',
           horizontal: 'center',
         }}
-        open={ Boolean(anchor) }
-        onClose={ close } >
+        open={Boolean(anchor)}
+        onClose={close}
+      >
         { elems }
       </Menu>
-    </>);
+    </>
+  );
 }
 
 export default DropMenu;

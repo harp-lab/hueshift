@@ -10,10 +10,12 @@ function DebugPopover(props) {
 
   return (
     <IconPopover
-      icon={ <BugReport /> }
-      tooltip='Show debug'>
-      <DebugItem item={ item } />
-    </IconPopover>);
+      icon={<BugReport />}
+      tooltip="Show debug"
+    >
+      <DebugItem item={item} />
+    </IconPopover>
+  );
 }
 
 export default DebugPopover;

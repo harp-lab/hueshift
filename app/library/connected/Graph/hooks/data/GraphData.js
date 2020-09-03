@@ -21,7 +21,7 @@ function GraphData(graphId, graphData) {
   function exportNode(nodeId) {
     const data = {
       entrypoint: start.includes(nodeId) ? true : undefined,
-      ...getNodeData(nodeId)
+      ...getNodeData(nodeId),
     };
 
     cyData.push(NodeData(nodeId, data));
@@ -42,8 +42,7 @@ function GraphData(graphId, graphData) {
     exportNode(parentId);
 
     for (const [childId, edgeData] of Object.entries(children)) {
-      if (!graph[childId])
-        exportNode(childId);
+      if (!graph[childId]) { exportNode(childId); }
       exportEdge(parentId, childId, edgeData);
     }
   }

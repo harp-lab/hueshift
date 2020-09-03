@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getSelectedNodes, getSelectedEdges, getHoveredNodes, getSuggestedNodes } from 'store/selectors';
+import {
+  getSelectedNodes, getSelectedEdges, getHoveredNodes, getSuggestedNodes,
+} from 'store/selectors';
 
 export default function useMetadata(cy, graphId, ignoreEvents) {
-  const selectedNodes = useSelector(state => getSelectedNodes(state, graphId));
-  const selectedEdges = useSelector(state => getSelectedEdges(state, graphId));
-  const hoveredNodes = useSelector(state => getHoveredNodes(state, graphId));
-  const suggestedNodes = useSelector(state => getSuggestedNodes(state, graphId));
+  const selectedNodes = useSelector((state) => getSelectedNodes(state, graphId));
+  const selectedEdges = useSelector((state) => getSelectedEdges(state, graphId));
+  const hoveredNodes = useSelector((state) => getHoveredNodes(state, graphId));
+  const suggestedNodes = useSelector((state) => getSuggestedNodes(state, graphId));
 
   /**
    * @param {Array<String>} elemIds cytoscape element ids
@@ -61,7 +63,7 @@ export default function useMetadata(cy, graphId, ignoreEvents) {
   useEffect(() => {
     ignoreEvents(() => select([...selectedNodes, ...selectedEdges]));
     return () => {
-      ignoreEvents(() => unselect([...selectedNodes, selectedEdges]))
+      ignoreEvents(() => unselect([...selectedNodes, selectedEdges]));
     };
   }, [selectedNodes, selectedEdges]);
   useEffect(() => {

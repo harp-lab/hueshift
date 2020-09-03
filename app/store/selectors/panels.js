@@ -9,5 +9,5 @@ import { getProjectMetadata } from './projects';
 export const getPanels = createSelector(
   (state, panelType) => getProjectMetadata(state),
   (state, panelType) => panelType,
-  (metadata, panelType) => metadata.panels[panelType] || {}
+  (metadata, panelType) => metadata.panels[panelType] || {},
 );

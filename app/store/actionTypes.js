@@ -17,7 +17,6 @@ export const SET_PANEL = 'SET_PANEL';
 export const SET_PANELS = 'SET_PANELS';
 export const REFRESH_PANELS = 'REFRESH_PANELS';
 
-
 export const SET_PROJECTS = 'SET_PROJECTS';
 export const SET_PROJECT = 'SET_PROJECT';
 export const DEL_PROJECT = 'DEL_PROJECT';

@@ -4,7 +4,7 @@ import metadataReducer from './metadata';
 const initialState = {
   status: 'empty',
   analysisInput: '',
-  metadata: metadataReducer(undefined, { type: 'INIT' })
+  metadata: metadataReducer(undefined, { type: 'INIT' }),
 };
 
 function projectReducer(state = initialState, action) {
@@ -13,14 +13,14 @@ function projectReducer(state = initialState, action) {
       const { data } = action.payload;
       return {
         ...state,
-        ...data
+        ...data,
       };
-    };
+    }
     default: {
       const { metadata } = state;
       return {
         ...state,
-        metadata: metadataReducer(metadata, action)
+        metadata: metadataReducer(metadata, action),
       };
     }
   }

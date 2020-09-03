@@ -11,17 +11,13 @@ function ProjectRouter(server) {
 
   /** project id check */
   router.all('*', (req, res, next) => {
-    const projectId = req.params.projectId;
-    if (server.projects[projectId])
-      next();
-    else
-      res.status(404).end();
+    const { projectId } = req.params;
+    if (server.projects[projectId]) { next(); } else { res.status(404).end(); }
   });
-
 
   /** send project analysis input */
   router.get('/code', (req, res) => {
-    const projectId = req.params.projectId;
+    const { projectId } = req.params;
     const project = server.projects[projectId];
     res.json({ id: projectId, analysisInput: project.analysisInput })
       .status(200).end();
@@ -29,7 +25,7 @@ function ProjectRouter(server) {
 
   /** send project analysis output */
   router.get('/data', (req, res) => {
-    const projectId = req.params.projectId;
+    const { projectId } = req.params;
     const project = server.projects[projectId];
     switch (project.status) {
       case project.STATUSES.done:
@@ -48,12 +44,11 @@ function ProjectRouter(server) {
 
   /** store project analysis input */
   router.post('/save', async (req, res) => {
-    const projectId = req.params.projectId;
+    const { projectId } = req.params;
     const data = req.body;
     await server.saveProject(projectId, data);
     res.status(202).end();
   });
-
 
   /** clear project data */
   router.post('/clear', async (req, res) => {
@@ -84,15 +79,16 @@ function ProjectRouter(server) {
       return;
     }
 
-    const projectId = req.params.projectId;
+    const { projectId } = req.params;
     const project = server.projects[projectId];
     switch (project.status) {
-      case project.STATUSES.edit:
+      case project.STATUSES.edit: {
         const options = req.body;
         project.analysis = options.analysis;
         await server.processProject(projectId);
         res.status(200).end();
         break;
+      }
       default:
         res.status(412).end();
         break;
@@ -105,8 +101,8 @@ function ProjectRouter(server) {
       res.status(405).end();
       return;
     }
-    
-    const projectId = req.params.projectId;
+
+    const { projectId } = req.params;
     const project = server.projects[projectId];
     switch (project.status) {
       case project.STATUSES.process:
@@ -124,7 +120,7 @@ function ProjectRouter(server) {
 
   /** delete project */
   router.post('/delete', async (req, res) => {
-    const projectId = req.params.projectId;
+    const { projectId } = req.params;
     const project = server.projects[projectId];
     switch (project.status) {
       case project.STATUSES.process:

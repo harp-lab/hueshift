@@ -1,38 +1,39 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
+
 const { HS_CONSTS } = process.env;
 const {
   APP_PATH, EXTENSIONS_PATH, COMPONENTS_PATH, LIBRARY_PATH, STORE_PATH,
   version,
-  fext
+  fext,
 } = require(HS_CONSTS);
 
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
   template: path.resolve(APP_PATH, 'template.js'),
   templateParameters: {
     headTemplate: fext.webpack.headTemplate,
-    bodyTemplate: fext.webpack.bodyTemplate
-  }
+    bodyTemplate: fext.webpack.bodyTemplate,
+  },
 });
 const EnvironmentPluginConfig = new EnvironmentPlugin({
-  VERSION: version
+  VERSION: version,
 });
 
 module.exports = {
   entry: APP_PATH,
   resolve: {
     alias: {
-      'extensions': EXTENSIONS_PATH,
-      'components': COMPONENTS_PATH,
-      'library': LIBRARY_PATH,
-      'store': STORE_PATH,
-      'fext': fext.path,
+      extensions: EXTENSIONS_PATH,
+      components: COMPONENTS_PATH,
+      library: LIBRARY_PATH,
+      store: STORE_PATH,
+      fext: fext.path,
       'fext-config': fext.configPath,
       'fext-layouts': fext.layouts,
       'fext-store-hooks': fext.store.hooks,
-      'fext-store-reducers': fext.store.reducers
-    }
+      'fext-store-reducers': fext.store.reducers,
+    },
   },
   module: {
     rules: [
@@ -42,8 +43,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react']
-          }
+            presets: ['@babel/preset-react'],
+          },
         },
       },
       {
@@ -52,35 +53,35 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
-          'sass-loader'
-        ]
+          'sass-loader',
+        ],
       },
       {
         test: /\.css$/,
-        use: 'css-loader'
+        use: 'css-loader',
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: 'file-loader'
-      }
-    ]
+        use: 'file-loader',
+      },
+    ],
   },
   output: {
     filename: '[name].[contenthash].js',
     chunkFilename: '[name].[contenthash].js',
-    path: fext.webpack.build
+    path: fext.webpack.build,
   },
   optimization: {
     moduleIds: 'hashed',
     runtimeChunk: 'multiple',
     splitChunks: {
       chunks: 'all',
-      maxSize: 244000
+      maxSize: 244000,
     },
   },
   plugins: [
     HTMLWebpackPluginConfig,
-    EnvironmentPluginConfig
+    EnvironmentPluginConfig,
   ],
-  stats: 'minimal'
+  stats: 'minimal',
 };

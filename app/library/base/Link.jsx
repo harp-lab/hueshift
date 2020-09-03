@@ -2,21 +2,26 @@ import React from 'react';
 import { Link as MUILink, Tooltip, Typography } from '@material-ui/core';
 
 function Link(props) {
-  const { content, tooltip, onClick, style } = props;
+  const {
+    content, tooltip, onClick, style,
+  } = props;
   return (
-    <Tooltip title={ tooltip }>
+    <Tooltip title={tooltip}>
       <MUILink
-        onClick={ evt => {
+        onClick={(evt) => {
           evt.stopPropagation();
           onClick();
         }}
-        { ...{ style } }>
+        {...{ style }}
+      >
         <Typography
-          display='inline'
-          style={{ cursor: 'pointer' }}>
+          display="inline"
+          style={{ cursor: 'pointer' }}
+        >
           { content }
         </Typography>
       </MUILink>
-    </Tooltip>);
+    </Tooltip>
+  );
 }
 export default Link;

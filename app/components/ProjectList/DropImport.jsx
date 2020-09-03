@@ -5,7 +5,7 @@ import { LibraryAdd as LibraryAddIcon } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { importFiles } from 'store/actions';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   backdrop: {
     position: 'absolute',
     display: 'flex',
@@ -14,13 +14,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     backgroundColor: theme.palette.background.overlay,
     color: theme.palette.secondary.main,
-    zIndex: theme.zIndex.tooltip
-  }
+    zIndex: theme.zIndex.tooltip,
+  },
 }));
 
 /**
  * Adds file drop import functionality to children
- * @param {Object} props 
+ * @param {Object} props
  * @param {Array} props.children
  */
 function DropImport(props) {
@@ -28,28 +28,29 @@ function DropImport(props) {
   const [overlay, setOverlay] = useState(false);
   const dropElemCounter = useRef(0);
   const dispatch = useDispatch();
-  
+
   function updateDropOverlay() {
     setOverlay(dropElemCounter.current !== 0);
   }
 
   return (
     <div
-      onDragEnter={ evt => {
+      onDragEnter={(evt) => {
         evt.preventDefault();
         dropElemCounter.current += 1;
         updateDropOverlay();
       }}
-      onDragOver={ evt => {
+      onDragOver={(evt) => {
         evt.preventDefault();
         evt.stopPropagation();
+        /* eslint-disable no-param-reassign */
         evt.dataTransfer.dropEffect = 'copy';
       }}
-      onDragLeave={ evt => {
+      onDragLeave={() => {
         dropElemCounter.current -= 1;
         updateDropOverlay();
       }}
-      onDrop={ evt => {
+      onDrop={(evt) => {
         evt.preventDefault();
         dropElemCounter.current = 0;
         updateDropOverlay();
@@ -58,16 +59,18 @@ function DropImport(props) {
       style={{
         position: 'relative',
         flex: '1 1 auto',
-        overflow: 'hidden'
-      }}>
-      <DropOverlay open={ overlay } />
+        overflow: 'hidden',
+      }}
+    >
+      <DropOverlay open={overlay} />
       { children }
-    </div>);
+    </div>
+  );
 }
 
 /**
  * File drop import tooltip overlay
- * @param {Object} props 
+ * @param {Object} props
  * @param {Boolean} props.open display overlay
  */
 function DropOverlay(props) {
@@ -76,11 +79,13 @@ function DropOverlay(props) {
 
   return (
     <Backdrop
-      open={ open }
-      classes={{ root: classes.backdrop }}>
+      open={open}
+      classes={{ root: classes.backdrop }}
+    >
       <LibraryAddIcon />
       <Typography>Drop files here to import</Typography>
-    </Backdrop>);
+    </Backdrop>
+  );
 }
 
 export default DropImport;

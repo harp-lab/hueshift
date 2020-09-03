@@ -33,4 +33,3 @@ describe('reqAbsolutePath', () => {
     expect(reqAbsolutePath('/path')).toBe('/path');
   });
 });
-

@@ -10,17 +10,20 @@ function PaneMessage(props) {
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
-      }}>
+        alignItems: 'center',
+      }}
+    >
       <div style={{ display: 'flex' }}>
         <Typography
-          variant='h6'
-          style={{ margin: '0 1em' }}>
+          variant="h6"
+          style={{ margin: '0 1em' }}
+        >
           { content }
         </Typography>
         { buttons }
       </div>
-    </div>);
+    </div>
+  );
 }
 
 export default PaneMessage;

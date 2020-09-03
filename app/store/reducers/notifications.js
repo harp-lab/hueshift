@@ -1,27 +1,29 @@
-import { QUEUE_SNACKBAR, DEQUEUE_SNACKBAR, SET_LOADING, SET_DIALOG } from '../actionTypes';
+import {
+  QUEUE_SNACKBAR, DEQUEUE_SNACKBAR, SET_LOADING, SET_DIALOG,
+} from '../actionTypes';
 
 const initialState = {
   snackbars: [],
   dialogs: {},
-  loading: false
+  loading: false,
 };
 
-export default function(state = initialState, action) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case QUEUE_SNACKBAR: {
       const { text } = action.payload;
       const { snackbars } = state;
       return {
         ...state,
-        snackbars: [...snackbars, text]
+        snackbars: [...snackbars, text],
       };
     }
     case DEQUEUE_SNACKBAR: {
       const { snackbars } = state;
-      const text = snackbars.shift();
+      snackbars.shift();
       return {
         ...state,
-        snackbars: [...snackbars]
+        snackbars: [...snackbars],
       };
     }
     case SET_LOADING: {
@@ -35,8 +37,8 @@ export default function(state = initialState, action) {
         ...state,
         dialogs: {
           ...dialogs,
-          [dialogId]: data
-        }
+          [dialogId]: data,
+        },
       };
     }
     default: return state;

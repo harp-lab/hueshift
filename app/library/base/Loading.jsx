@@ -1,5 +1,7 @@
 import React from 'react';
-import { CircularProgress, Fade, LinearProgress, Typography } from '@material-ui/core';
+import {
+  CircularProgress, Fade, LinearProgress, Typography,
+} from '@material-ui/core';
 
 import { Pane } from 'library/base';
 
@@ -13,19 +15,22 @@ function Loading(props) {
         <Pane
           style={{
             justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+            alignItems: 'center',
+          }}
+        >
           <Fade in style={{ transitionDelay: '1000ms' }}>
             <CircularProgress />
           </Fade>
           <Fade in style={{ transitionDelay: '200ms' }}>
             <Typography
-              variant='h6'
-              style={{ marginTop: '2em' }}>
+              variant="h6"
+              style={{ marginTop: '2em' }}
+            >
               { status }
             </Typography>
           </Fade>
-        </Pane>);
+        </Pane>
+      );
       break;
     }
     case 'linear': {
@@ -33,17 +38,19 @@ function Loading(props) {
         <Pane>
           <LinearProgress />
           <Typography
-            variant='h6'
+            variant="h6"
             style={{
               flex: '1 1 auto',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'center'
-            }}>
+              alignItems: 'center',
+            }}
+          >
             { this.props.status }
           </Typography>
-        </Pane>);
+        </Pane>
+      );
       break;
     }
   }

@@ -1,15 +1,15 @@
 import { createSelector } from 'reselect';
 import { PROJECT_UNDEFINED_NAME } from 'store/consts';
-import { getSelectedProjectId } from 'store/selectors';
+import { getSelectedProjectId } from './app';
 
-export const getProjects = state => state.projects;
+export const getProjects = (state) => state.projects;
 export const getProjectIds = createSelector(
   getProjects,
-  projects => Object.keys(projects)
+  (projects) => Object.keys(projects),
 );
 
 /**
- * @param {Object} state 
+ * @param {Object} state
  * @param {String} [projectId] project id
  * @returns {Object} project
  */
@@ -19,12 +19,9 @@ export const getProject = createSelector(
   getProjects,
   (projectId, selectedProjectId, projects) => {
     let project;
-    if (projectId)
-      project = projects[projectId];
-    else
-      project = projects[selectedProjectId];
+    if (projectId) { project = projects[projectId]; } else { project = projects[selectedProjectId]; }
     return project;
-  }
+  },
 );
 
 /**
@@ -34,7 +31,7 @@ export const getProject = createSelector(
  */
 export const getProjectName = createSelector(
   getProject,
-  project => project ? project.name || PROJECT_UNDEFINED_NAME : undefined
+  (project) => (project ? project.name || PROJECT_UNDEFINED_NAME : undefined),
 );
 
 /**
@@ -44,7 +41,7 @@ export const getProjectName = createSelector(
  */
 export const getProjectAnalysisOutput = createSelector(
   getProject,
-  project => project.analysisOutput
+  (project) => project.analysisOutput,
 );
 
 export function getProjectServerStatus(store, projectId) {
@@ -59,7 +56,7 @@ export function getProjectServerStatus(store, projectId) {
  */
 export const getProjectMetadata = createSelector(
   getProject,
-  project => project.metadata
+  (project) => project.metadata,
 );
 
 /**
@@ -69,5 +66,5 @@ export const getProjectMetadata = createSelector(
  */
 export const getProjectClientStatus = createSelector(
   getProjectMetadata,
-  metadata => metadata.status.client
+  (metadata) => metadata.status.client,
 );

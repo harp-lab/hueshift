@@ -2,8 +2,7 @@ import { NODE_ENV, DEV_ENV } from 'store/consts';
 
 function notify(name, path) {
   const message = `[fext] '${name}' undefined in ${path}`;
-  if (NODE_ENV === DEV_ENV)
-    console.info(message);
+  if (NODE_ENV === DEV_ENV) { console.info(message); }
 }
 
 /**
@@ -33,7 +32,9 @@ export function reqFunction(namespace, functionName, fextPath) {
   let func = namespace[functionName];
   if (!func) {
     notify(functionName, fextPath);
-    func = function() {};
+    func = function emptyFunc() {
+      return null;
+    };
   }
   return func;
 }
@@ -49,8 +50,8 @@ export function reqFunctionFactory(namespace, factoryName, fextPath) {
   let factory = namespace[factoryName];
   if (!factory) {
     notify(factoryName, fextPath);
-    factory = function() {
-      return function() {};
+    factory = function emptyFactory() {
+      return () => {};
     };
   }
   return factory;
@@ -71,7 +72,7 @@ export function reqReactElement(namespace, elementName, fextPath) {
      * null React element
      * @returns null rendering
      */
-    element = function() {
+    element = function EmptyComponent() {
       return null;
     };
   }
@@ -92,8 +93,8 @@ export function reqReduxAction(namespace, actionName, fextPath) {
     /**
      * @returns {Function} dispatch
      */
-    action = function() {
-      return function(dispatch) {};
+    action = function emptyAction() {
+      return () => {};
     };
   }
   return action;
@@ -112,10 +113,9 @@ export function reqReduxReducer(namespace, reducerName, fextPath) {
     notify(reducerName, fextPath);
     /**
      * @param {Object} state current state
-     * @param {Object} action
      * @returns {Object} new state
      */
-    reducer = function(state = {}, action) {
+    reducer = function emptyReducer(state = {}) {
       return state;
     };
   }

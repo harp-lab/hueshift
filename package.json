@@ -63,7 +63,15 @@
     "node": ">=12.4.0"
   },
   "devDependencies": {
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-webpack": "^0.12.2",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.6",
     "jest": "^25.5.4",
+    "jest-runner-eslint": "^0.10.0",
     "supertest": "^4.0.2"
   }
 }

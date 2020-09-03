@@ -5,6 +5,6 @@ const CleanWebpackPluginConfig = new CleanWebpackPlugin();
 module.exports = {
   mode: 'production',
   plugins: [
-    CleanWebpackPluginConfig
-  ]
+    CleanWebpackPluginConfig,
+  ],
 };

@@ -1,15 +1,16 @@
 const path = require('path');
 const chalk = require('chalk');
+
 const { HS_CONSTS } = process.env;
 const {
   PACKAGE_PATH,
-  fext
+  fext,
 } = require(HS_CONSTS);
 const FEXT_CONFIG = fext.config;
 
 // environment
 exports.ENV = process.env.NODE_ENV || 'production';
-if (exports.ENV == 'development') {
+if (exports.ENV === 'development') {
   exports.INIT_DATA = false;
 } else {
   exports.INIT_DAtA = false;

@@ -8,7 +8,7 @@ import { isFocusedGraph } from 'store/selectors';
  * @param {String} graphId graph id
  */
 export default function useInput(cy, graphId) {
-  const focused = useSelector(state => isFocusedGraph(state, graphId));
+  const focused = useSelector((state) => isFocusedGraph(state, graphId));
   const enabledRef = useRef(focused);
 
   // synchronize focused with enabled ref
@@ -29,26 +29,30 @@ function useKeydownEvent(cy, enabledRef) {
     if (enabledRef.current) {
       const selectedNodes = cy.$('node:selected');
       switch (evt.key) {
-        case 'ArrowLeft':
+        case 'ArrowLeft': {
           const prevNodes = selectedNodes.incomers().nodes();
-          if (prevNodes.length == 1) {
+          if (prevNodes.length === 1) {
             selectedNodes.unselect();
             prevNodes.select();
           }
           break;
-        case 'ArrowRight':
+        }
+        case 'ArrowRight': {
           const nextNodes = selectedNodes.outgoers().nodes();
-          if (nextNodes.length == 1) {
+          if (nextNodes.length === 1) {
             selectedNodes.unselect();
             nextNodes.select();
           }
+          break;
+        }
+        default:
           break;
       }
     }
   }
 
   useEffect(() => {
-      document.addEventListener('keydown', keydown );
-      return () => { document.removeEventListener('keydown', keydown ); }
+    document.addEventListener('keydown', keydown);
+    return () => { document.removeEventListener('keydown', keydown); };
   }, []);
 }

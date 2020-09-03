@@ -3,14 +3,14 @@ import { CLIENT_WAITING_STATUS } from 'store/consts';
 
 /**
  * project status metadata state reducer
- * @param {Object} state 
- * @param {Object} action 
+ * @param {Object} state
+ * @param {Object} action
  * @param {String} action.type action type
  * @param {Object} action.payload action payload
  * @returns {Object} state
  */
 function statusReducer(state = {
-  client: CLIENT_WAITING_STATUS
+  client: CLIENT_WAITING_STATUS,
 }, action) {
   switch (action.type) {
     case SET_STATUS: {

@@ -1,4 +1,4 @@
-export const NODE_ENV = process.env.NODE_ENV;
+export const { NODE_ENV } = process.env;
 export const DEV_ENV = 'development';
 export const PROD_ENV = 'production';
 

@@ -1,13 +1,15 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { amber, blue, deepPurple, yellow } from '@material-ui/core/colors';
+import {
+  amber, blue, deepPurple, yellow,
+} from '@material-ui/core/colors';
 
 import { theme as fextTheme } from 'extensions/themes';
 
 const theme = createMuiTheme({
   mixins: {
     message: {
-      minHeight: 24
-    }
+      minHeight: 24,
+    },
   },
   palette: {
     secondary: {
@@ -17,23 +19,23 @@ const theme = createMuiTheme({
     },
     select: {
       light: blue[100],
-      main: blue[400]
+      main: blue[400],
     },
     hover: {
       light: deepPurple[100],
-      main: deepPurple[400]
+      main: deepPurple[400],
     },
     suggest: {
       main: yellow[400],
-      dark: yellow[700]
+      dark: yellow[700],
     },
     warn: {
       main: amber.A700,
-      contrastText: '#fff'
+      contrastText: '#fff',
     },
     background: {
-      overlay: 'rgba(255, 255, 255, 0.5)'
-    }
+      overlay: 'rgba(255, 255, 255, 0.5)',
+    },
   },
 }, fextTheme);
 

@@ -1,9 +1,9 @@
 import store from 'store';
 import { SET_GRAPH_METADATA } from 'store/actionTypes';
-import { setMetadata } from 'store/actions';
 import { getSelectedProjectId, getGraphViewers, getSelectedNodes } from 'store/selectors';
 
 import { nodeSelectHook, nodeUnselectHook } from 'extensions/store/hooks';
+import { setMetadata } from './projects';
 
 /**
  * @param {String} graphId graph id
@@ -40,28 +40,27 @@ export function setFocusedGraph(graphId) {
   const state = store.getState();
   const projectId = getSelectedProjectId(state);
   return setMetadata(projectId, {
-    focusedGraph: graphId
+    focusedGraph: graphId,
   });
 }
 
 /**
  * @param {String} graphId graph id
- * @param {Object} data 
+ * @param {Object} data
  * @param {String} [projectId = <current project id>]
  * @returns {Object} action
  */
 export function setGraphMetadata(graphId, data, projectId) {
   const state = store.getState();
-  if (!projectId)
-    projectId = getSelectedProjectId(state);
+  const currentProjectId = projectId || getSelectedProjectId(state);
   return {
     type: SET_GRAPH_METADATA,
-    payload: { projectId, graphId, data }
+    payload: { currentProjectId, graphId, data },
   };
 }
 
 /**
- * 
+ *
  * @param {String} graphId graph id
  * @param {Array} nodeIds node ids
  * @returns {Function} dispatch
@@ -72,7 +71,7 @@ export function selectNodes(graphId, nodeIds) {
     const selectedNodes = getSelectedNodes(state, graphId);
     const combinedNodes = new Set([...selectedNodes, ...nodeIds]);
     dispatch(setGraphMetadata(graphId, {
-      selectedNodes: [...combinedNodes]
+      selectedNodes: [...combinedNodes],
     }));
     dispatch(nodeSelectHook());
   };
@@ -88,9 +87,9 @@ export function unselectNodes(graphId, nodeIds) {
     const state = getState();
     const selectedNodes = getSelectedNodes(state, graphId);
     const combinedNodes = new Set(selectedNodes);
-    nodeIds.forEach(nodeId => combinedNodes.delete(nodeId));
+    nodeIds.forEach((nodeId) => combinedNodes.delete(nodeId));
     dispatch(setGraphMetadata(graphId, {
-      selectedNodes: [...combinedNodes]
+      selectedNodes: [...combinedNodes],
     }));
     dispatch(nodeUnselectHook());
   };
@@ -98,18 +97,18 @@ export function unselectNodes(graphId, nodeIds) {
 
 export function hoverNodes(graphId, nodeIds) {
   return setGraphMetadata(graphId, {
-    hoveredNodes: nodeIds
+    hoveredNodes: nodeIds,
   });
 }
 export function suggestNodes(graphId, nodeIds) {
   return setGraphMetadata(graphId, {
-    suggestedNodes: nodeIds
+    suggestedNodes: nodeIds,
   });
 }
 export function selectEdges(graphId, edgeIds) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(setGraphMetadata(graphId, {
-      selectedEdges: edgeIds
+      selectedEdges: edgeIds,
     }));
   };
 }

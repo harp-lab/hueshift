@@ -7,7 +7,8 @@ function PaneContent(props) {
   return (
     <Pane>
       { children }
-    </Pane>);
+    </Pane>
+  );
 }
 
 export default PaneContent;

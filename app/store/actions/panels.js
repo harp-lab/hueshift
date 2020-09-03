@@ -1,21 +1,8 @@
 import store from 'store';
-import { ADD_PANEL, SET_PANEL, SET_PANELS, REFRESH_PANELS } from 'store/actionTypes';
+import {
+  SET_PANEL, SET_PANELS, REFRESH_PANELS,
+} from 'store/actionTypes';
 import { getSelectedProjectId } from 'store/selectors';
-
-function addPanel(projectId, type, panelId, label) {
-  const state = store.getState();
-  if (!projectId)
-    projectId = getSelectedProjectId(state);
-  return {
-    type: ADD_PANEL,
-    payload: {
-      projectId,
-      type,
-      panelId,
-      label
-    }
-  };
-}
 
 function setPanel(type, panelId, data) {
   const state = store.getState();
@@ -26,9 +13,9 @@ function setPanel(type, panelId, data) {
       projectId,
       type,
       panelId,
-      data
-    }
-  }
+      data,
+    },
+  };
 }
 export function setPanels(projectId, type, data) {
   return {
@@ -36,9 +23,9 @@ export function setPanels(projectId, type, data) {
     payload: {
       projectId,
       type,
-      data
-    }
-  }
+      data,
+    },
+  };
 }
 export const hidePanel = (type, panelId) => setPanel(type, panelId, { hidden: true });
 export const showPanel = (type, panelId) => setPanel(type, panelId, { hidden: false });
@@ -55,8 +42,8 @@ export function refreshPanels(type, func) {
     payload: {
       projectId,
       type,
-      func
-    }
+      func,
+    },
   };
 }
 
@@ -65,6 +52,6 @@ export function defaultPanelState(label) {
     label,
     saved: false,
     hidden: true,
-    selected: false
+    selected: false,
   };
 }

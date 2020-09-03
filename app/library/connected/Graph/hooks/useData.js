@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPositions } from 'store/actions'
+import { setPositions } from 'store/actions';
 import { getGraph, getGraphPositions } from 'store/selectors';
 
 import { GraphData } from './data';
@@ -12,8 +12,8 @@ import { GraphData } from './data';
  * @param {Object} layout cytoscape layout config
  */
 export default function useData(cy, graphId, layout) {
-  const graphData = useSelector(state => getGraph(state, graphId));
-  const positions = useSelector(state => getGraphPositions(state, graphId));
+  const graphData = useSelector((state) => getGraph(state, graphId));
+  const positions = useSelector((state) => getGraphPositions(state, graphId));
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,19 +23,18 @@ export default function useData(cy, graphId, layout) {
     // load graph layout
     if (positions) {
       cy.nodes()
-        .positions(element => positions[element.data('id')]);
+        .positions((element) => positions[element.data('id')]);
       cy.fit();
-    } else
-      cy.layout(layout).run();
+    } else { cy.layout(layout).run(); }
 
     return () => {
       // save graph layout
-      const positions = {};
+      const graphPositions = {};
       for (const node of data) {
         const nodeId = node.data.id;
-        positions[nodeId] = cy.$id(nodeId).position();
+        graphPositions[nodeId] = cy.$id(nodeId).position();
       }
-      dispatch(setPositions(graphId, positions));
+      dispatch(setPositions(graphId, graphPositions));
 
       cy.nodes().remove(); // clear graph data
     };
