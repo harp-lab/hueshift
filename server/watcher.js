@@ -17,6 +17,7 @@ const WATCHER_LOG_TAG = chalk.blackBright('[wch]');
 function consoleLog(content) {
   const symbol = chalk.blue('i');
   const tag = `${symbol} ${WATCHER_LOG_TAG}`;
+  /* eslint-disable no-console */
   console.log(`${tag} ${content}`);
 }
 
@@ -27,6 +28,7 @@ function consoleError(content) {
   const symbol = chalk.red('!');
   const tag = `${symbol} ${WATCHER_LOG_TAG}`;
   const error = chalk.redBright('[error]');
+  /* eslint-disable no-console */
   console.error(`${tag} ${content} ${error}`);
 }
 

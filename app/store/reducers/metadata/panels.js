@@ -63,6 +63,7 @@ function panelReducer(state = {}, action) {
 function panelsReducer(state = {}, action) {
   if (action.payload && action.payload.type) {
     const reducerType = action.payload.type;
+    /* eslint-disable no-param-reassign */
     state[reducerType] = panelReducer(state[reducerType], action);
     return state;
   }

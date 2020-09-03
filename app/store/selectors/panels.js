@@ -7,7 +7,6 @@ import { getProjectMetadata } from './projects';
  * @returns {Object} <{String} panelId, {Object} panelData> hashmap
  */
 export const getPanels = createSelector(
-  (state, panelType) => getProjectMetadata(state),
-  (state, panelType) => panelType,
-  (metadata, panelType) => metadata.panels[panelType] || {},
+  (state, panelType) => [getProjectMetadata(state), panelType],
+  ([metadata, panelType]) => metadata.panels[panelType] || {},
 );

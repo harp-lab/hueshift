@@ -27,9 +27,8 @@ export const getGraphsMetadata = createSelector(
  * @returns {Object} metadata
  */
 export const getGraphMetadata = createSelector(
-  (state, graphId, projectId) => graphId,
-  (state, graphId, projectId) => getGraphsMetadata(state, projectId),
-  (graphId, metadata) => metadata[graphId] || {},
+  (state, graphId, projectId) => [graphId, getGraphsMetadata(state, projectId)],
+  ([graphId, metadata]) => metadata[graphId] || {},
 );
 
 /**
@@ -122,9 +121,8 @@ export const getFocusedGraph = createSelector(
  * @returns {Boolean} graph id is focused
  */
 export const isFocusedGraph = createSelector(
-  (state, graphId) => graphId,
-  (state, graphId) => getFocusedGraph(state),
-  (graphId, focusedGraphId) => graphId === focusedGraphId,
+  (state, graphId) => [graphId, getFocusedGraph(state)],
+  ([graphId, focusedGraphId]) => graphId === focusedGraphId,
 );
 
 /**
@@ -134,9 +132,8 @@ export const isFocusedGraph = createSelector(
  * @returns {Object} graph data
  */
 export const getGraph = createSelector(
-  (state, graphId) => getGraphs(state),
-  (state, graphId) => graphId,
-  (graphs, graphId) => graphs[graphId],
+  (state, graphId) => [getGraphs(state), graphId],
+  ([graphs, graphId]) => graphs[graphId],
 );
 
 export function getGraphNodes(store, graphId) {
@@ -156,9 +153,8 @@ export function getGraphNodes(store, graphId) {
  * @returns {Object} graph reference data
  */
 export const getGraphRefData = createSelector(
-  (state, graphId) => getProjectAnalysisOutput(state),
-  (state, graphId) => graphId,
-  (analysisOutput, graphId) => {
+  (state, graphId) => [getProjectAnalysisOutput(state), graphId],
+  ([analysisOutput, graphId]) => {
     switch (graphId) {
       case 'funcs':
         return analysisOutput.funcs;

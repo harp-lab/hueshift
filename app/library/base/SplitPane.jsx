@@ -58,6 +58,7 @@ function SplitPane(props) {
       onMouseMove={drag}
       onMouseUp={stopDrag}
       onMouseLeave={stopDrag}
+      role="presentation"
     >
       <SplitPaneContext.Provider value={{ [childProp]: `${size}%` }}>
         { pane1 }
@@ -94,6 +95,7 @@ function Resizer(props) {
         ...style,
       }}
       onMouseDown={onMouseDown}
+      role="presentation"
     />
   );
 }

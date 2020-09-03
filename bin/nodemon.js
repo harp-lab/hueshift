@@ -14,6 +14,7 @@ const NODEMON_LOG_TAG = chalk.blackBright('[ndm]');
 function consoleLog(content) {
   const symbol = chalk.blue('i');
   const tag = `${symbol} ${NODEMON_LOG_TAG}`;
+  /* eslint-disable no-console */
   console.log(`${tag} ${content}`);
 }
 
@@ -24,6 +25,7 @@ function consoleError(content) {
   const symbol = chalk.red('!');
   const tag = `${symbol} ${NODEMON_LOG_TAG}`;
   const error = chalk.redBright('[error]');
+  /* eslint-disable no-console */
   console.error(`${tag} ${content} ${error}`);
 }
 

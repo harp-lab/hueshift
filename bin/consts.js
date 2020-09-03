@@ -10,7 +10,7 @@ exports.EXTENSIONS_PATH = path.resolve(exports.FRAMEWORK_PATH, 'extensions');
 exports.LIBRARY_PATH = path.resolve(exports.APP_PATH, 'library');
 exports.STORE_PATH = path.resolve(exports.APP_PATH, 'store');
 exports.COMPONENTS_PATH = path.resolve(exports.APP_PATH, 'components');
-EMPTY_MODULE_PATH = path.resolve(exports.EXTENSIONS_PATH, 'empty');
+const EMPTY_MODULE_PATH = path.resolve(exports.EXTENSIONS_PATH, 'empty');
 
 /**
  * check module exists
