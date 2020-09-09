@@ -34,11 +34,12 @@ module.exports = {
       'fext-store-hooks': fext.store.hooks,
       'fext-store-reducers': fext.store.reducers,
     },
+    extensions: ['.wasm', '.mjs', '.js', '.jsx', '.json'],
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules\/(?!hueshift)/,
         use: {
           loader: 'babel-loader',
