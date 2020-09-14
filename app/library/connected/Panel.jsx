@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails,
+  Accordion, AccordionSummary, AccordionDetails,
   IconButton, Tooltip, Typography,
 } from '@material-ui/core';
 import {
@@ -122,7 +122,7 @@ const Panel = withStyles(() => ({
   );
 
   return (
-    <ExpansionPanel
+    <Accordion
       onMouseOver={() => {
         if (!hovered) {
           onMouseOver();
@@ -137,7 +137,7 @@ const Panel = withStyles(() => ({
       }}
       defaultExpanded={!saved}
     >
-      <ExpansionPanelSummary
+      <AccordionSummary
         expandIcon={<ExpandMore />}
         classes={{
           root: classes.panelRoot,
@@ -153,9 +153,9 @@ const Panel = withStyles(() => ({
         { saveButton }
         { deleteButton }
         <Typography>{ label }</Typography>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>{ children }</ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionSummary>
+      <AccordionDetails>{ children }</AccordionDetails>
+    </Accordion>
   );
 });
 

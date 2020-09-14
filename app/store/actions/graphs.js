@@ -55,7 +55,7 @@ export function setGraphMetadata(graphId, data, projectId) {
   const currentProjectId = projectId || getSelectedProjectId(state);
   return {
     type: SET_GRAPH_METADATA,
-    payload: { currentProjectId, graphId, data },
+    payload: { projectId: currentProjectId, graphId, data },
   };
 }
 
