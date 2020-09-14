@@ -7,9 +7,9 @@ function PanelTable({ labels, entries }) {
   const head = labels
     .map((label) => <TableCell key={label}>{ label }</TableCell>);
   const body = entries
-    .map((entry, row) => {
-      const fields = entry.map((field, cell) => <TableCell key={`${cell}: ${field}`}>{ field }</TableCell>);
-      return <TableRow key={`${row}: ${entry}`}>{ fields }</TableRow>;
+    .map((entry) => {
+      const fields = entry.map((field) => <TableCell key={field}>{ field }</TableCell>);
+      return <TableRow key={entry}>{ fields }</TableRow>;
     });
   return (
     <Table size="small">
