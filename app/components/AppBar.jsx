@@ -27,19 +27,6 @@ function AppBar() {
   let leftElems; let
     rightElems;
   switch (view) {
-    case LIST_VIEW:
-      leftElems = <ProjectListButton />;
-      rightElems = (
-        <>
-          <ImportButton />
-          <AppBarButton
-            content="new project"
-            onClick={() => dispatch(createProject())}
-          />
-          <LogoutButton />
-        </>
-      );
-      break;
     case PROJECT_VIEW:
       leftElems = <ProjectListButton />;
       rightElems = (
@@ -51,6 +38,20 @@ function AppBar() {
           <AppBarButton
             content="export project"
             onClick={() => dispatch(exportData(selectedProjectId))}
+          />
+          <LogoutButton />
+        </>
+      );
+      break;
+    case LIST_VIEW:
+    default:
+      leftElems = <ProjectListButton />;
+      rightElems = (
+        <>
+          <ImportButton />
+          <AppBarButton
+            content="new project"
+            onClick={() => dispatch(createProject())}
           />
           <LogoutButton />
         </>

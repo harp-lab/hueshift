@@ -98,6 +98,8 @@ class Server {
           project.import(projectData);
           break;
         }
+        default:
+          break;
       }
     });
     watcher.on('close', (code) => {

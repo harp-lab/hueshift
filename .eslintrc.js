@@ -14,7 +14,6 @@ module.exports = {
     'global-require': 'off',
     'no-restricted-syntax': 'off',
     'react/no-array-index-key': 'off',
-    'default-case': 'off',
 
     'no-use-before-define': ['error', { functions: false }],
     'max-len': ['error', { code: 120 }],

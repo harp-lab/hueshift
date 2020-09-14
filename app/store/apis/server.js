@@ -372,6 +372,8 @@ export function processAnalysisInput(projectId, analysisInput, options) {
         case 412:
           dispatch(queueSnackbar('Project process request rejected'));
           break;
+        default:
+          break;
       }
     }
     await projectRequest(projectId, localCallback, serverCallback);
@@ -399,6 +401,8 @@ export function cancelProcess(projectId) {
           dispatch(queueSnackbar(msg));
           break;
         }
+        default:
+          break;
       }
     }
     await projectRequest(projectId, localCallback, serverCallback);
@@ -429,6 +433,8 @@ export function getData(projectId) {
           break;
         case 412:
           dispatch(queueSnackbar('Project data request rejected'));
+          break;
+        default:
           break;
       }
     }

@@ -28,11 +28,12 @@ function App() {
     case LOGIN_VIEW:
       viewElem = <Login />;
       break;
-    case LIST_VIEW:
-      viewElem = <ProjectList />;
-      break;
     case PROJECT_VIEW:
       viewElem = <Project />;
+      break;
+    case LIST_VIEW:
+    default:
+      viewElem = <ProjectList />;
       break;
   }
 

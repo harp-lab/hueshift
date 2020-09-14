@@ -10,7 +10,28 @@ function Loading(props) {
 
   let element;
   switch (variant) {
-    case 'circular': {
+    case 'linear': {
+      element = (
+        <Pane>
+          <LinearProgress />
+          <Typography
+            variant="h6"
+            style={{
+              flex: '1 1 auto',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            { this.props.status }
+          </Typography>
+        </Pane>
+      );
+      break;
+    }
+    case 'circular':
+    default: {
       element = (
         <Pane
           style={{
@@ -29,26 +50,6 @@ function Loading(props) {
               { status }
             </Typography>
           </Fade>
-        </Pane>
-      );
-      break;
-    }
-    case 'linear': {
-      element = (
-        <Pane>
-          <LinearProgress />
-          <Typography
-            variant="h6"
-            style={{
-              flex: '1 1 auto',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            { this.props.status }
-          </Typography>
         </Pane>
       );
       break;

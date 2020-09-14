@@ -16,6 +16,7 @@ switch (HS_WEBPACK_MODE) {
     config = require(DEV_CONFIG_PATH);
     break;
   case 'production':
+  default:
     config = require(PROD_CONFIG_PATH);
     break;
 }

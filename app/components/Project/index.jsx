@@ -29,6 +29,8 @@ function Project() {
       case COMPLETE_STATUS:
         download();
         break;
+      default:
+        break;
     }
   }, [serverStatus]);
 
@@ -50,6 +52,7 @@ function Project() {
       viewElement = <VisualView />;
       break;
     case ERROR_STATUS:
+    default:
       viewElement = <EditorLayout error />;
       break;
   }
