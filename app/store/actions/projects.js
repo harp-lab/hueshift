@@ -80,9 +80,7 @@ export function selProject(projectId) {
 export function importFiles(files) {
   return (dispatch) => {
     if (files.length === 0) { dispatch(queueSnackbar('No files dropped')); }
-    for (const file of files) {
-      dispatch(importFile(file));
-    }
+    files.forEach((file) => dispatch(importFile(file)));
   };
 }
 
@@ -158,11 +156,11 @@ export function exportData(projectId) {
         // create blob
         const data = getProject(state, projectId);
         const filteredData = {};
-        for (const [key, value] of Object.entries(data)) {
+        Object.entries(data).forEach(([key, value]) => {
           if (['analysis', 'status', 'analysisInput', 'analysisOutput', 'processed'].includes(key)) {
             filteredData[key] = value;
           }
-        }
+        });
         const json = JSON.stringify(filteredData, null, 2);
         const blob = new Blob([json], { type: 'application/json' });
 

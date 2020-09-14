@@ -119,11 +119,11 @@ export function getList() {
     switch (res.status) {
       case 200: {
         const data = await res.json();
-        for (const [projectId, projectData] of Object.entries(data)) {
+        Object.entries(data).forEach(([projectId, projectData]) => {
           const { status, name, analysis } = projectData;
           dispatch(setProjectData(projectId, { status, name, analysis }));
           if (status === PROCESS_STATUS) { refresh = true; }
-        }
+        });
         break;
       }
       default:

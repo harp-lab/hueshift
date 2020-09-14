@@ -12,7 +12,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-cycle': 'off',
     'global-require': 'off',
-    'no-restricted-syntax': 'off',
+    // 'no-restricted-syntax': 'off',
 
     'no-use-before-define': ['error', { functions: false }],
     'max-len': ['error', { code: 120 }],

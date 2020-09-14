@@ -15,10 +15,10 @@ export default function useMetadata(cy, graphId, ignoreEvents) {
    */
   async function select(elemIds) {
     cy.batch(() => {
-      for (const elemId of elemIds) {
+      elemIds.forEach((elemId) => {
         cy.getElementById(elemId)
           .select();
-      }
+      });
     });
   }
 
@@ -27,10 +27,10 @@ export default function useMetadata(cy, graphId, ignoreEvents) {
    */
   async function unselect(elemIds) {
     cy.batch(() => {
-      for (const elemId of elemIds) {
+      elemIds.forEach((elemId) => {
         cy.getElementById(elemId)
           .unselect();
-      }
+      });
     });
   }
 
@@ -40,10 +40,10 @@ export default function useMetadata(cy, graphId, ignoreEvents) {
    */
   async function addClass(nodeIds, className) {
     cy.batch(() => {
-      for (const nodeId of nodeIds) {
+      nodeIds.forEach((nodeId) => {
         cy.getElementById(nodeId)
           .addClass(className);
-      }
+      });
     });
   }
 
@@ -53,10 +53,10 @@ export default function useMetadata(cy, graphId, ignoreEvents) {
    */
   async function removeClass(nodeIds, className) {
     cy.batch(() => {
-      for (const nodeId of nodeIds) {
+      nodeIds.forEach((nodeId) => {
         cy.getElementById(nodeId)
           .removeClass(className);
-      }
+      });
     });
   }
 

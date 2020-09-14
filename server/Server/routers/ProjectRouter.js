@@ -56,9 +56,9 @@ function ProjectRouter(server) {
     const data = req.body;
     const project = server.projects[projectId];
 
-    for (const key of Object.keys(data)) {
+    Object.keys(data).forEach((key) => {
       data[key] = undefined;
-    }
+    });
 
     switch (project.status) {
       case project.STATUSES.empty:

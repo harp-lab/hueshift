@@ -248,7 +248,7 @@ class Server {
    */
   getProjectList(userId) {
     const list = {};
-    for (const [id, project] of Object.entries(this.projects)) {
+    Object.entries(this.projects).forEach(([id, project]) => {
       if (project.userId === userId) {
         list[id] = {
           status: project.status,
@@ -256,7 +256,7 @@ class Server {
           analysis: project.analysis,
         };
       }
-    }
+    });
     return list;
   }
 }

@@ -38,14 +38,14 @@ function GraphData(graphId, graphData) {
     cyData.push(EdgeData(edgeId, parentId, childId, edgeData));
   }
 
-  for (const [parentId, children] of Object.entries(graph)) {
+  Object.entries(graph).forEach(([parentId, children]) => {
     exportNode(parentId);
 
-    for (const [childId, edgeData] of Object.entries(children)) {
+    Object.entries(children).forEach(([childId, edgeData]) => {
       if (!graph[childId]) { exportNode(childId); }
       exportEdge(parentId, childId, edgeData);
-    }
-  }
+    });
+  });
 
   return cyData;
 }

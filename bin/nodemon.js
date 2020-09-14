@@ -48,11 +48,11 @@ devServer.on('start', () => consoleLog('server started'));
 devServer.on('crash', () => consoleError('server crashed'));
 devServer.on('restart', (files) => {
   let message = 'server restarting...';
-  for (const filePath of files) {
+  message += files.map((filePath) => {
     const relPath = `./${path.relative(PACKAGE_PATH, filePath)}`;
     const coloredPath = chalk.bold(relPath);
-    message += `\n  ${coloredPath}`;
-  }
+    return `\n  ${coloredPath}`;
+  }).join('');
   consoleLog(message);
 });
 devServer.on('quit', () => {

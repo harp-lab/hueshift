@@ -99,10 +99,10 @@ export const getViewedGraphIds = createSelector(
   getGraphsMetadata,
   (graphs) => {
     const viewedGraphs = {};
-    for (const [graphId, metadata] of Object.entries(graphs)) {
+    Object.entries(graphs).forEach(([graphId, metadata]) => {
       const { viewers } = metadata;
       if (viewers > 0) { viewedGraphs[graphId] = true; }
-    }
+    });
     return viewedGraphs;
   },
 );
@@ -138,11 +138,9 @@ export const getGraph = createSelector(
 
 export function getGraphNodes(store, graphId) {
   const { graph } = getGraph(store, graphId);
-  const nodeIds = [];
-  for (const [nodeId, children] of Object.entries(graph)) {
-    nodeIds.push(nodeId);
-    nodeIds.concat(Object.keys(children));
-  }
+  const nodeIds = Object.entries(graph)
+    .map(([nodeId, children]) => [nodeId, Object.keys(children)])
+    .flat();
   return nodeIds;
 }
 

@@ -48,9 +48,9 @@ class Database {
   async initStage(stage) {
     const stagePath = this.stagePath(stage);
     const fileList = await fsp.readdir(stagePath);
-    for (const projectId of fileList) {
+    fileList.forEach((projectId) => {
       this.projects[projectId] = stage;
-    }
+    });
   }
 
   /**
@@ -108,9 +108,9 @@ class Database {
    */
   getStageProjectIds(stage) {
     const projectIds = {};
-    for (const [projectId, projectStage] of Object.entries(this.projects)) {
+    Object.entries(this.projects).forEach(([projectId, projectStage]) => {
       if (projectStage === stage) { projectIds[projectId] = stage; }
-    }
+    });
     return projectIds;
   }
 

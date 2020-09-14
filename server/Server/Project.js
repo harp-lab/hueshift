@@ -34,9 +34,9 @@ class Project {
    * @param {Object} data project data
    */
   import(data) {
-    for (const key of allowedDataKeys) {
+    allowedDataKeys.forEach((key) => {
       this[key] = data[key];
-    }
+    });
   }
 
   /**
@@ -77,9 +77,9 @@ class Project {
    */
   export() {
     const data = {};
-    for (const key of allowedDataKeys) {
+    allowedDataKeys.forEach((key) => {
       data[key] = this[key];
-    }
+    });
 
     return data;
   }

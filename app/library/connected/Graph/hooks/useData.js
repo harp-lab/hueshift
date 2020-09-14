@@ -30,10 +30,10 @@ export default function useData(cy, graphId, layout) {
     return () => {
       // save graph layout
       const graphPositions = {};
-      for (const node of data) {
+      data.forEach((node) => {
         const nodeId = node.data.id;
         graphPositions[nodeId] = cy.$id(nodeId).position();
-      }
+      });
       dispatch(setPositions(graphId, graphPositions));
 
       cy.nodes().remove(); // clear graph data

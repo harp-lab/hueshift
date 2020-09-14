@@ -87,14 +87,15 @@ class Watcher {
     let oldestFile; let
       oldestCtime;
     if (files.length > 0) {
-      for await (const file of files) {
+      const promises = files.map(async (file) => {
         const fileStats = await fsp.stat(path.resolve(Consts.INPUT_DIR, file));
         const ctime = fileStats.ctimeMs;
         if (!oldestFile || ctime < oldestCtime) {
           oldestFile = file;
           oldestCtime = ctime;
         }
-      }
+      });
+      await Promise.all(promises);
     }
     return oldestFile;
   }

@@ -42,10 +42,10 @@ function panelReducer(state = {}, action) {
     case REFRESH_PANELS: {
       const { func } = action.payload;
       const panels = {};
-      for (const [panelId, data] of Object.entries(state)) {
+      Object.entries(state).forEach(([panelId, data]) => {
         const newData = func(panelId, data);
         panels[panelId] = { ...data, ...newData };
-      }
+      });
       return panels;
     }
     default: return state;
