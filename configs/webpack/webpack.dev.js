@@ -1,5 +1,5 @@
 const { HS_CONSTS } = process.env;
-const { fext } = require(HS_CONSTS);
+const { fext } = require(HS_CONSTS); /* eslint-disable-line import/no-dynamic-require */
 
 module.exports = {
   devServer: {

@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const nodemon = require('nodemon');
 
 const { HS_CONSTS } = process.env;
-const { PACKAGE_PATH, FRAMEWORK_PATH } = require(HS_CONSTS);
+const { PACKAGE_PATH, FRAMEWORK_PATH } = require(HS_CONSTS); /* eslint-disable-line import/no-dynamic-require */
 
 const SERVER_DIR = path.resolve(FRAMEWORK_PATH, 'server');
 const NODEMON_LOG_TAG = chalk.blackBright('[ndm]');

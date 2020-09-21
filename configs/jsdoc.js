@@ -1,5 +1,5 @@
 const { HS_CONSTS } = process.env;
-const { LIBRARY_PATH, STORE_PATH } = require(HS_CONSTS);
+const { LIBRARY_PATH, STORE_PATH } = require(HS_CONSTS); /* eslint-disable-line import/no-dynamic-require */
 
 module.exports = {
   plugins: [

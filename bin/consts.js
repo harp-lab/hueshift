@@ -1,3 +1,4 @@
+/* eslint-disable import/no-dynamic-require */
 const path = require('path');
 
 const { HS_CONFIG } = process.env;

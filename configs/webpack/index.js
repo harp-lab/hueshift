@@ -1,18 +1,12 @@
 const { merge } = require('webpack-merge');
-const path = require('path');
 
 const { HS_CONSTS, HS_WEBPACK_MODE } = process.env;
-const { fext } = require(HS_CONSTS);
+const { fext } = require(HS_CONSTS); /* eslint-disable-line import/no-dynamic-require */
 const FEXT_WEBPACK_CONFIG = fext.webpack.config;
 
-const WEBPACK_CONFIG_PATH = path.resolve(__dirname);
-const BASE_CONFIG_PATH = path.resolve(WEBPACK_CONFIG_PATH, 'webpack.config');
-const DEV_CONFIG_PATH = path.resolve(WEBPACK_CONFIG_PATH, 'webpack.dev');
-const PROD_CONFIG_PATH = path.resolve(WEBPACK_CONFIG_PATH, 'webpack.prod');
-
-const webpackConfigBase = require(BASE_CONFIG_PATH);
-const webpackConfigDev = require(DEV_CONFIG_PATH);
-const webpackConfigProd = require(PROD_CONFIG_PATH);
+const webpackConfigBase = require('./webpack.config');
+const webpackConfigDev = require('./webpack.dev');
+const webpackConfigProd = require('./webpack.prod');
 
 let config;
 switch (HS_WEBPACK_MODE) {

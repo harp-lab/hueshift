@@ -5,7 +5,7 @@ const { HS_CONSTS } = process.env;
 const {
   PACKAGE_PATH,
   fext,
-} = require(HS_CONSTS);
+} = require(HS_CONSTS); /* eslint-disable-line import/no-dynamic-require */
 const FEXT_CONFIG = fext.config;
 
 // environment
