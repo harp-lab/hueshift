@@ -43,8 +43,7 @@ function DropImport(props) {
       onDragOver={(evt) => {
         evt.preventDefault();
         evt.stopPropagation();
-        /* eslint-disable no-param-reassign */
-        evt.dataTransfer.dropEffect = 'copy';
+        evt.dataTransfer.dropEffect = 'copy'; /* eslint-disable-line no-param-reassign */
       }}
       onDragLeave={() => {
         dropElemCounter.current -= 1;

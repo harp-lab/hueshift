@@ -1,4 +1,4 @@
-const base = require('./config.base');
+const base = require('./jest.config');
 
 const config = {
   ...base,

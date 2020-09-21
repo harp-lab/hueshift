@@ -17,8 +17,7 @@ const WATCHER_LOG_TAG = chalk.blackBright('[wch]');
 function consoleLog(content) {
   const symbol = chalk.blue('i');
   const tag = `${symbol} ${WATCHER_LOG_TAG}`;
-  /* eslint-disable no-console */
-  console.log(`${tag} ${content}`);
+  console.log(`${tag} ${content}`); /* eslint-disable-line no-console */
 }
 
 /**
@@ -28,8 +27,7 @@ function consoleError(content) {
   const symbol = chalk.red('!');
   const tag = `${symbol} ${WATCHER_LOG_TAG}`;
   const error = chalk.redBright('[error]');
-  /* eslint-disable no-console */
-  console.error(`${tag} ${content} ${error}`);
+  console.error(`${tag} ${content} ${error}`); /* eslint-disable-line no-console */
 }
 
 class Watcher {
@@ -194,5 +192,4 @@ class Watcher {
   }
 }
 
-/* eslint-disable no-unused-vars */
-const watcher = new Watcher();
+const watcher = new Watcher(); /* eslint-disable-line no-unused-vars */

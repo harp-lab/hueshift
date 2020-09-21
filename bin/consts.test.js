@@ -8,11 +8,14 @@ beforeEach(() => {
 });
 
 test('defaults without provided hueshift.config.js', () => {
+  /* eslint-disable-next-line global-require */
   const { getObjectValue, reqAbsolutePath } = require(path.resolve(frameworkPath, 'utilities'));
 
+  /* eslint-disable global-require */
   const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js'));
   const defaults = require(path.resolve(frameworkPath, 'configs', 'default.config.js'));
   const emptyExtensionPath = path.resolve(frameworkPath, 'extensions', 'empty');
+  /* eslint-enable global-require */
 
   const expected = {
     PACKAGE_PATH: __dirname,
@@ -55,7 +58,7 @@ test('required module paths resolve with provided hueshift.config.js', () => {
   // provide mocked test config
   process.env.HS_CONFIG = './hs_config';
   jest.mock('./hs_config', () => {
-    const scopePath = require('path');
+    const scopePath = require('path'); /* eslint-disable-line global-require */
     return {
       fext: {
         path: '/test/fext',
@@ -75,7 +78,7 @@ test('required module paths resolve with provided hueshift.config.js', () => {
   jest.mock('/test/store/hooks', () => ({}), { virtual: true });
   jest.mock('/test/store/reducers', () => ({}), { virtual: true });
 
-  const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js'));
+  const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js')); /* eslint-disable-line global-require */
   expect(consts).toMatchObject({
     fext: {
       path: '/test/fext',
@@ -93,7 +96,7 @@ test('engine enabled with provided hueshift.config.js', () => {
   // provide mocked test configs
   process.env.HS_CONFIG = './hs_config';
   jest.mock('./hs_config', () => {
-    const scopePath = require('path');
+    const scopePath = require('path'); /* eslint-disable-line global-require */
     return {
       fext: {
         config: scopePath.resolve('/test', 'fext.config.js'),
@@ -107,7 +110,7 @@ test('engine enabled with provided hueshift.config.js', () => {
     engine: () => {},
   }), { virtual: true });
 
-  const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js'));
+  const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js')); /* eslint-disable-line global-require */
   expect(consts).toMatchObject({
     fext: {
       engine: {

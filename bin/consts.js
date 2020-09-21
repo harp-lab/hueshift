@@ -20,7 +20,7 @@ const EMPTY_MODULE_PATH = path.resolve(exports.EXTENSIONS_PATH, 'empty');
 function moduleExists(modulePath) {
   const absolutePath = reqAbsolutePath(modulePath);
   try {
-    require(absolutePath);
+    require(absolutePath); /* eslint-disable-line global-require */
     return true;
   } catch (err) {
     const { code } = err;

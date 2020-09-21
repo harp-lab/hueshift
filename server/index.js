@@ -1,4 +1,3 @@
 const Server = require('./Server');
 
-/* eslint-disable no-unused-vars */
-const server = new Server();
+const server = new Server(); /* eslint-disable-line no-unused-vars */

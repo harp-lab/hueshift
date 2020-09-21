@@ -9,7 +9,7 @@ const config = {
   },
   rootDir: process.cwd(),
   setupFilesAfterEnv: [
-    path.resolve(__dirname, 'setup.js'),
+    path.resolve(__dirname, 'jest.setup'),
   ],
   testPathIgnorePatterns: [
     'node_modules',

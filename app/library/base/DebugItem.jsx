@@ -27,10 +27,9 @@ function DebugItem(props) {
   if (typeof debug === 'string') {
     content = <Typography>{ debug }</Typography>;
   } else if (debug instanceof Array) {
-    /* eslint-disable react/no-array-index-key */
     content = debug.map((debugString, index) => (
       <div
-        key={index}
+        key={index} /* eslint-disable-line react/no-array-index-key */
         style={{ display: 'flex' }}
       >
         <Typography
