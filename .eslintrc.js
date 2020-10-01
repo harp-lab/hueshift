@@ -8,8 +8,6 @@ module.exports = {
   extends: 'airbnb',
   rules: {
     // temporarily off
-    // 'import/no-dynamic-require': 'off',
-    'import/prefer-default-export': 'off',
     'import/no-cycle': 'off',
 
     'no-use-before-define': ['error', { functions: false }],
