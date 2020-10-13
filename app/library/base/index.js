@@ -1,6 +1,6 @@
-export { default as DropMenu } from './DropMenu';
 export { default as DebugItem } from './DebugItem';
 export { default as DebugPopover } from './DebugPopover';
+export { default as DropMenu } from './DropMenu';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as IconButton } from './IconButton';
 export { default as IconPopover } from './IconPopover';

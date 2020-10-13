@@ -3,7 +3,7 @@ import {
   CircularProgress, Fade, LinearProgress, Typography,
 } from '@material-ui/core';
 
-import { Pane } from 'library/base';
+import Pane from './Pane';
 
 function Loading(props) {
   const { status, variant = 'circular' } = props;

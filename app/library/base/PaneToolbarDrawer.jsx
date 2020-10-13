@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Paper, Fade } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { ErrorBoundary, PaneContext } from 'library/base';
+import ErrorBoundary from './ErrorBoundary';
+import PaneContext from './PaneContext';
 
 const useStyles = makeStyles((theme) => ({
   appbar: theme.mixins.toolbar,

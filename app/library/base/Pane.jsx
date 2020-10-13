@@ -1,5 +1,7 @@
 import React, { useContext, useState, useCallback } from 'react';
-import { ErrorBoundary, PaneContext, SplitPaneContext } from 'library/base';
+import ErrorBoundary from './ErrorBoundary';
+import PaneContext from './PaneContext';
+import SplitPaneContext from './SplitPaneContext';
 
 /**
  * base ui layout component

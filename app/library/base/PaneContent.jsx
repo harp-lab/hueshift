@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pane } from 'library/base';
+import Pane from './Pane';
 
 function PaneContent(props) {
   const { children } = props;

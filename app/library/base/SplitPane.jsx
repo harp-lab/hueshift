@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-
-import { SplitPaneContext } from 'library/base';
+import SplitPaneContext from './SplitPaneContext';
 
 function SplitPane(props) {
   const { horizontal, children, style } = props;
