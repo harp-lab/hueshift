@@ -1,22 +1,6 @@
-import { SET_USER, SET_TITLE } from 'store/actionTypes';
-import { selProject, delProjects } from './projects';
+import { SET_TITLE } from 'store/actionTypes';
 
-const setUser = (userId) => ({
-  type: SET_USER,
-  payload: { userId },
-});
-export function login(userId) {
-  return (dispatch) => {
-    dispatch(setUser(userId));
-  };
-}
-export function logout() {
-  return (dispatch) => {
-    dispatch(setUser(undefined));
-    dispatch(selProject(undefined));
-    dispatch(delProjects());
-  };
-}
+/* eslint-disable-next-line import/prefer-default-export */
 export const setTitle = (title) => ({
   type: SET_TITLE,
   payload: { title },

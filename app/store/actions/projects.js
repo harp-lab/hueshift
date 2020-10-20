@@ -1,5 +1,5 @@
 import store from 'store';
-import { downloadProject } from 'store/apis';
+import { downloadProject } from 'store/apis/server';
 import { PROCESS_STATUS, COMPLETE_STATUS, CLIENT_LOCAL_STATUS } from 'store/consts';
 import { getProject, getProjectServerStatus } from 'store/selectors';
 import {

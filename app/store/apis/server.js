@@ -1,10 +1,9 @@
 import store from 'store';
+import { queueSnackbar, consoleError } from 'store/actions/notifications';
 import {
   setProjectData, addProject, deleteProjectLocal, selProject, setClientStatus,
   generateMetadata,
-  queueSnackbar,
-  consoleError,
-} from 'store/actions';
+} from 'store/actions/projects';
 import {
   EMPTY_STATUS, EDIT_STATUS, PROCESS_STATUS, COMPLETE_STATUS, ERROR_STATUS,
   CLIENT_DOWNLOADED_STATUS, CLIENT_LOCAL_STATUS, CLIENT_WAITING_STATUS,
