@@ -277,6 +277,51 @@ export function downloadProject(projectId) {
 
 /**
  * @param {String} projectId project id
+ * @returns {Function} async dispatch
+ */
+export function exportData(projectId) {
+  return async function dispatcher(dispatch) {
+    await dispatch(downloadProject(projectId));
+    const state = store.getState();
+    const serverStatus = getProjectServerStatus(state, projectId);
+    switch (serverStatus) {
+      case PROCESS_STATUS:
+        dispatch(queueSnackbar('Project still processing'));
+        break;
+      default: {
+        // create blob
+        const data = getProject(state, projectId);
+        const filteredData = {};
+        Object.entries(data).forEach(([key, value]) => {
+          if (['analysis', 'status', 'analysisInput', 'analysisOutput', 'processed'].includes(key)) {
+            filteredData[key] = value;
+          }
+        });
+        const json = JSON.stringify(filteredData, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+
+        // create elem
+        const href = URL.createObjectURL(blob);
+        const file = `aam-vis-${projectId}.json`;
+        const elem = document.createElement('a');
+        Object.assign(elem, {
+          href,
+          download: file,
+        });
+        document.body.appendChild(elem);
+        elem.click();
+
+        // cleanup
+        elem.remove();
+        URL.revokeObjectURL(href);
+        break;
+      }
+    }
+  };
+}
+
+/**
+ * @param {String} projectId project id
  * @param {String} name project name
  * @returns {Function} async dispatch
  */

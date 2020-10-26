@@ -9,10 +9,10 @@ import {
 import { makeStyles } from '@material-ui/styles';
 import { DropMenu, IconButton } from 'library/base';
 import {
-  setRenameDialog, setDeleteDialog, selProject, exportData,
+  setRenameDialog, setDeleteDialog, selProject,
 } from 'store/actions';
 import {
-  cancelProcess, forkProject,
+  cancelProcess, forkProject, exportData,
 } from 'store/apis';
 import { getProject, getProjectServerStatus, getProjectClientStatus } from 'store/selectors';
 import { PROCESS_STATUS, CLIENT_LOCAL_STATUS } from 'store/consts';

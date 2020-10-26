@@ -4,9 +4,9 @@ import {
   AppBar as MUIAppBar, Button, Toolbar, Typography,
 } from '@material-ui/core';
 import { makeStyles, withTheme } from '@material-ui/styles';
-import { createProject, forkProject } from 'store/apis';
+import { createProject, forkProject, exportData } from 'store/apis';
 import {
-  logout, selProject, importFiles, exportData,
+  logout, selProject, importFiles,
 } from 'store/actions';
 import { LIST_VIEW, PROJECT_VIEW } from 'store/consts';
 import { getView, getTitle, getSelectedProjectId } from 'store/selectors';
