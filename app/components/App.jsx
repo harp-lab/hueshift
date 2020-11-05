@@ -48,7 +48,6 @@ function App() {
           evt.dataTransfer.dropEffect = 'none'; /* eslint-disable-line no-param-reassign */
         }}
         onDrop={(evt) => evt.preventDefault()}
-
         style={{
           display: 'flex',
           flexDirection: 'column',
