@@ -49,7 +49,7 @@ yargs /* eslint-disable-line no-unused-expressions */
     spawn(argv, 'node', [NODEMON_PATH]);
 
     // start dev client
-    spawn(argv, 'webpack-dev-server', ['--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'development' });
+    spawn(argv, 'webpack', ['serve', '--config', WEBPACK_CONFIG_PATH], { HS_WEBPACK_MODE: 'development' });
   })
   .command('docs', 'generate documentation', () => {}, (argv) => {
     spawn(argv, 'jsdoc', ['-c', JSDOC_CONFIG_PATH]);

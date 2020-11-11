@@ -8,20 +8,22 @@ test('dev environment without hueshift.config.js', async (done) => {
   const bin = childProcess.spawn(binPath, ['dev'], { cwd: __dirname });
 
   let stdout = '';
-  bin.stdout.on('data', (data) => {
+  bin.stdout.on('data', processOutput);
+  bin.stderr.on('data', processOutput);
+
+  function processOutput(data) {
     stdout += data;
-    if (data.toString().includes('Compiled successfully.')) {
+    if (data.toString().includes('Compiled')) {
       check();
     }
-  });
-  bin.stderr.on('data', () => check());
+  }
 
   function check() {
     bin.kill();
 
     const stdoutString = stdout.toString();
     expect(stdoutString).toContain('server listening');
-    expect(stdoutString).toContain('Compiled successfully.');
+    expect(stdoutString).toContain('Compiled');
 
     done();
   }
