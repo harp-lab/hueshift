@@ -65,6 +65,12 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: 'file-loader',
       },
+      { // temporary fix for @material-ui/core ModuleNotFound errors regarding strict ESM
+        test: /\.m?js$/,
+        resolve: {
+          fullySpecified: false
+        },
+      },
     ],
   },
   output: {
@@ -73,7 +79,7 @@ module.exports = {
     path: fext.webpack.build,
   },
   optimization: {
-    moduleIds: 'hashed',
+    moduleIds: 'deterministic',
     runtimeChunk: 'multiple',
     splitChunks: {
       chunks: 'all',
