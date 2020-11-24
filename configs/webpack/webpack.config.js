@@ -1,6 +1,6 @@
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const { EnvironmentPlugin } = require('webpack');
+const { EnvironmentPlugin, ProvidePlugin } = require('webpack');
 
 const { HS_CONSTS } = process.env;
 const {
@@ -89,6 +89,9 @@ module.exports = {
   plugins: [
     HTMLWebpackPluginConfig,
     EnvironmentPluginConfig,
+    new ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
   stats: 'minimal',
 };
