@@ -24,7 +24,7 @@
   "scripts": {
     "test": "jest --config 'configs/jest/jest.config.js'",
     "test:unit": "jest --config 'configs/jest/jest.unit.js'",
-    "asdf": "./bin/cli.js dev"
+    "develop": "./bin/cli.js dev"
   },
   "dependencies": {
     "@babel/core": "^7.12.9",

@@ -9,7 +9,7 @@ import {
   logout, selProject, importFiles,
 } from 'store/actions';
 import { LIST_VIEW, PROJECT_VIEW } from 'store/consts';
-import { getView, getTitle, getSelectedProjectId } from 'store/selectors';
+import { isLoggedIn, getView, getTitle, getSelectedProjectId } from 'store/selectors';
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -17,51 +17,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+/**
+ * Render global application bar.
+ * @returns {JSX.Element} component
+ */
 function AppBar() {
+  const loggedIn = useSelector(isLoggedIn);
   const view = useSelector(getView);
   const title = useSelector(getTitle);
   const selectedProjectId = useSelector(getSelectedProjectId);
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  let leftElems; let
-    rightElems;
-  switch (view) {
-    case PROJECT_VIEW:
-      leftElems = <ProjectListButton />;
-      rightElems = (
-        <>
-          <AppBarButton
-            content="fork project"
-            onClick={() => dispatch(forkProject(selectedProjectId))}
-          />
-          <AppBarButton
-            content="export project"
-            onClick={() => dispatch(exportData(selectedProjectId))}
-          />
-          <LogoutButton />
-        </>
-      );
-      break;
-    case LIST_VIEW:
-    default:
-      leftElems = <ProjectListButton />;
-      rightElems = (
-        <>
-          <ImportButton />
-          <AppBarButton
-            content="new project"
-            onClick={() => dispatch(createProject())}
-          />
-          <LogoutButton />
-        </>
-      );
-      break;
+  let leftElems;
+  let rightElems;
+  if (loggedIn) {
+    switch (view) {
+      case PROJECT_VIEW:
+        leftElems = <ProjectListButton />;
+        rightElems = (
+          <>
+            <AppBarButton
+              content="fork project"
+              onClick={() => dispatch(forkProject(selectedProjectId))}
+            />
+            <AppBarButton
+              content="export project"
+              onClick={() => dispatch(exportData(selectedProjectId))}
+            />
+            <LogoutButton />
+          </>
+        );
+        break;
+      case LIST_VIEW:
+      default:
+        leftElems = <ProjectListButton />;
+        rightElems = (
+          <>
+            <ImportButton />
+            <AppBarButton
+              content="new project"
+              onClick={() => dispatch(createProject())}
+            />
+            <LogoutButton />
+          </>
+        );
+        break;
+    }
   }
 
   const appbarElem = (
     <MUIAppBar
       position="static"
+      color="inherit"
+      variant="outlined"
       className={classes.appbar}
     >
       <Toolbar>
