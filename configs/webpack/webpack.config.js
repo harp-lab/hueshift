@@ -68,7 +68,7 @@ module.exports = {
       { // temporary fix for @material-ui/core ModuleNotFound errors regarding strict ESM
         test: /\.m?js$/,
         resolve: {
-          fullySpecified: false
+          fullySpecified: false,
         },
       },
     ],
