@@ -11,9 +11,7 @@ export const getUser = (state) => state.userId;
  */
 export const isLoggedIn = createSelector(
   getUser,
-  (userId) => {
-    return userId !== undefined;
-  },
+  (userId) => userId !== undefined,
 );
 
 export const getSelectedProjectId = (state) => state.selectedProjectId;
@@ -21,8 +19,8 @@ export const getSelectedProjectId = (state) => state.selectedProjectId;
 export const getView = createSelector(
   isLoggedIn,
   getSelectedProjectId,
-  (isLoggedIn, projectId) => {
-    if (!isLoggedIn) { return LOGIN_VIEW; }
+  (loggedIn, projectId) => {
+    if (!loggedIn) { return LOGIN_VIEW; }
     if (!projectId) { return LIST_VIEW; }
     return PROJECT_VIEW;
   },
