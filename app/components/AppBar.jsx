@@ -9,14 +9,15 @@ import {
   logout, selProject, importFiles,
 } from 'store/actions';
 import { LIST_VIEW, PROJECT_VIEW } from 'store/consts';
-import { isLoggedIn, getView, getTitle, getSelectedProjectId } from 'store/selectors';
+import {
+  isLoggedIn, getView, getTitle, getSelectedProjectId,
+} from 'store/selectors';
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
     zIndex: theme.zIndex.drawer + 1,
   },
 }));
-
 
 /**
  * Render global application bar.

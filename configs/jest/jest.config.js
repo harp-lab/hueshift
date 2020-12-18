@@ -14,6 +14,7 @@ const config = {
   testPathIgnorePatterns: [
     'node_modules',
   ],
+  transform: { '^.+\\.jsx?$': '<rootDir>/configs/jest/jest.transform.js' },
 };
 
 module.exports = {
