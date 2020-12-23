@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const nodemon = require('nodemon');
 
 const { HS_CONSTS } = process.env;
-const { PACKAGE_PATH, FRAMEWORK_PATH } = require(HS_CONSTS); /* eslint-disable-line import/no-dynamic-require */
+const { PACKAGE_PATH, FRAMEWORK_PATH } = require(HS_CONSTS); // eslint-disable-line import/no-dynamic-require
 
 const SERVER_DIR = path.resolve(FRAMEWORK_PATH, 'server');
 const NODEMON_LOG_TAG = chalk.blackBright('[ndm]');
@@ -14,7 +14,7 @@ const NODEMON_LOG_TAG = chalk.blackBright('[ndm]');
 function consoleLog(content) {
   const symbol = chalk.blue('i');
   const tag = `${symbol} ${NODEMON_LOG_TAG}`;
-  console.log(`${tag} ${content}`); /* eslint-disable-line no-console */
+  console.log(`${tag} ${content}`); // eslint-disable-line no-console
 }
 
 /**
@@ -24,7 +24,7 @@ function consoleError(content) {
   const symbol = chalk.red('!');
   const tag = `${symbol} ${NODEMON_LOG_TAG}`;
   const error = chalk.redBright('[error]');
-  console.error(`${tag} ${content} ${error}`); /* eslint-disable-line no-console */
+  console.error(`${tag} ${content} ${error}`); // eslint-disable-line no-console
 }
 
 // create nodemon instance

@@ -26,11 +26,17 @@ export const getView = createSelector(
   },
 );
 
+/**
+ * Get app title.
+ * @param {Object} state state
+ * @returns {String} app title
+ */
 export const getTitle = (state) => state.title;
 
 export const getLabel = (item) => item.label;
 
 /**
+ * Check if dev environment.
  * @returns {Boolean} dev env status
  */
 export const isDevEnv = createSelector(

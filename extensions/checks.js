@@ -2,7 +2,7 @@ import { NODE_ENV, DEV_ENV } from 'store/consts';
 
 function notify(name, path) {
   const message = `[fext] '${name}' undefined in ${path}`;
-  if (NODE_ENV === DEV_ENV) { console.info(message); } /* eslint-disable-line no-console */
+  if (NODE_ENV === DEV_ENV) { console.info(message); } // eslint-disable-line no-console
 }
 
 /**

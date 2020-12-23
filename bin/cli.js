@@ -37,7 +37,7 @@ function spawn(yargv, command, args = [], env = {}) {
   process.on('SIGTERM', (signal) => child.kill(signal));
 }
 
-yargs /* eslint-disable-line no-unused-expressions */
+yargs // eslint-disable-line no-unused-expressions
   .command('start', 'start application', () => {}, (argv) => {
     spawn(argv, 'node', [SERVER_PATH]);
   })

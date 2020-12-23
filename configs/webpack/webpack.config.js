@@ -7,7 +7,7 @@ const {
   APP_PATH, EXTENSIONS_PATH, COMPONENTS_PATH, LIBRARY_PATH, STORE_PATH,
   version,
   fext,
-} = require(HS_CONSTS); /* eslint-disable-line import/no-dynamic-require */
+} = require(HS_CONSTS); // eslint-disable-line import/no-dynamic-require
 
 const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
   template: path.resolve(APP_PATH, 'template.js'),

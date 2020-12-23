@@ -45,7 +45,7 @@ function App() {
         onDragEnter={(evt) => evt.preventDefault()}
         onDragOver={(evt) => {
           evt.preventDefault();
-          evt.dataTransfer.dropEffect = 'none'; /* eslint-disable-line no-param-reassign */
+          evt.dataTransfer.dropEffect = 'none'; // eslint-disable-line no-param-reassign
         }}
         onDrop={(evt) => evt.preventDefault()}
         style={{

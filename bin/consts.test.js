@@ -56,7 +56,7 @@ test('required module paths resolve with provided hueshift.config.js', () => {
   // provide mocked test config
   process.env.HS_CONFIG = './hs_config';
   jest.mock('./hs_config', () => {
-    /* eslint-disable-next-line global-require, import/no-dynamic-require */
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     const scopePath = require('path');
     return {
       fext: {
@@ -77,7 +77,7 @@ test('required module paths resolve with provided hueshift.config.js', () => {
   jest.mock('/test/store/hooks', () => ({}), { virtual: true });
   jest.mock('/test/store/reducers', () => ({}), { virtual: true });
 
-  /* eslint-disable-next-line global-require, import/no-dynamic-require */
+  // eslint-disable-next-line global-require, import/no-dynamic-require
   const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js'));
   expect(consts).toMatchObject({
     fext: {
@@ -96,7 +96,7 @@ test('engine enabled with provided hueshift.config.js', () => {
   // provide mocked test configs
   process.env.HS_CONFIG = './hs_config';
   jest.mock('./hs_config', () => {
-    const scopePath = require('path'); /* eslint-disable-line global-require */
+    const scopePath = require('path'); // eslint-disable-line global-require
     return {
       fext: {
         config: scopePath.resolve('/test', 'fext.config.js'),
@@ -110,7 +110,7 @@ test('engine enabled with provided hueshift.config.js', () => {
     engine: () => {},
   }), { virtual: true });
 
-  /* eslint-disable-next-line global-require, import/no-dynamic-require */
+  // eslint-disable-next-line global-require, import/no-dynamic-require
   const consts = require(path.resolve(frameworkPath, 'bin', 'consts.js'));
   expect(consts).toMatchObject({
     fext: {

@@ -20,7 +20,7 @@ export const dequeueSnackbar = () => ({
  */
 export function consoleLog(message) {
   return function dispatcher() {
-    console.log(`${message}`); /* eslint-disable-line no-console */
+    console.log(`${message}`); // eslint-disable-line no-console
   };
 }
 
@@ -32,7 +32,7 @@ export function consoleInfo(message) {
   return function dispatcher() {
     const state = store.getState();
     const devEnv = isDevEnv(state);
-    if (devEnv) { console.info(`${message}`); } /* eslint-disable-line no-console */
+    if (devEnv) { console.info(`${message}`); } // eslint-disable-line no-console
   };
 }
 
@@ -44,7 +44,7 @@ export function consoleWarn(message) {
   return function dispatcher() {
     const state = store.getState();
     const devEnv = isDevEnv(state);
-    if (devEnv) { console.warn(`${message}`); } /* eslint-disable-line no-console */
+    if (devEnv) { console.warn(`${message}`); } // eslint-disable-line no-console
   };
 }
 
@@ -54,7 +54,7 @@ export function consoleWarn(message) {
  */
 export function consoleError(message) {
   return function dispatcher() {
-    console.error(`${message}`); /* eslint-disable-line no-console */
+    console.error(`${message}`); // eslint-disable-line no-console
   };
 }
 

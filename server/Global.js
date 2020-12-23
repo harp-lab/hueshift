@@ -7,7 +7,7 @@ exports.consoleLog = function consoleLog(type, content) {
   const tag = `${symbol} ${SERVER_LOG_TAG}`;
   const msgTag = messageTag(type);
   const msgContent = messageContent(type, content);
-  console.log(`${tag} ${msgContent} ${msgTag}`); /* eslint-disable-line no-console */
+  console.log(`${tag} ${msgContent} ${msgTag}`); // eslint-disable-line no-console
 };
 
 exports.consoleError = function consoleError(type, content) {
@@ -16,7 +16,7 @@ exports.consoleError = function consoleError(type, content) {
   const msgTag = messageTag(type);
   const msgContent = messageContent(type, content);
   const error = chalk.redBright('[error]');
-  console.error(`${tag} ${msgContent} ${msgTag} ${error}`); /* eslint-disable-line no-console */
+  console.error(`${tag} ${msgContent} ${msgTag} ${error}`); // eslint-disable-line no-console
 };
 
 function messageTag(type) {

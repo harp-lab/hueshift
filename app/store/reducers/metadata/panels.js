@@ -63,7 +63,7 @@ function panelReducer(state = {}, action) {
 function panelsReducer(state = {}, action) {
   if (action.payload && action.payload.type) {
     const reducerType = action.payload.type;
-    state[reducerType] = panelReducer(state[reducerType], action); /* eslint-disable-line no-param-reassign */
+    state[reducerType] = panelReducer(state[reducerType], action); // eslint-disable-line no-param-reassign
     return state;
   }
   return state;
