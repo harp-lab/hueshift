@@ -1,9 +1,4 @@
-const base = require('./jest.config');
-
-const config = {
-  ...base,
-  testMatch: ['**/(*.)+unit.test.js'],
-};
+const config = require('./jest.config.base');
 
 module.exports = {
   projects: [
@@ -15,6 +10,9 @@ module.exports = {
       displayName: 'lint',
       runner: 'jest-runner-eslint',
       ...config,
+      testMatch: [
+        '<rootDir>/**/*.{js,jsx}',
+      ],
     },
   ],
 };

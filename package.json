@@ -22,8 +22,8 @@
   "bin": "./bin/cli.js",
   "repository": "github:harp-lab/hueshift",
   "scripts": {
-    "test": "jest --config 'configs/jest/jest.config.js'",
-    "test:unit": "jest --config 'configs/jest/jest.unit.js'",
+    "test": "jest --config 'configs/jest/jest.config.all.js'",
+    "test:unit": "jest --config 'configs/jest/jest.config.unit.js'",
     "develop": "./bin/cli.js dev"
   },
   "dependencies": {

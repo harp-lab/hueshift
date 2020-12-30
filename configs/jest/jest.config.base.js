@@ -17,19 +17,4 @@ const config = {
   transform: { '^.+\\.jsx?$': '<rootDir>/configs/jest/jest.transform.js' },
 };
 
-module.exports = {
-  projects: [
-    {
-      displayName: 'test',
-      ...config,
-    },
-    {
-      displayName: 'lint',
-      runner: 'jest-runner-eslint',
-      ...config,
-      testMatch: [
-        '<rootDir>/**/*.{js,jsx}',
-      ],
-    },
-  ],
-};
+module.exports = config;
