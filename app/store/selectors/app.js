@@ -3,6 +3,11 @@ import {
   NODE_ENV, DEV_ENV, LOGIN_VIEW, LIST_VIEW, PROJECT_VIEW,
 } from 'store/consts';
 
+/**
+ * Get current user id.
+ * @param {Object} state state
+ * @returns {String} user id
+ */
 export const getUser = (state) => state.userId;
 
 /**
@@ -14,8 +19,18 @@ export const isLoggedIn = createSelector(
   (userId) => userId !== undefined,
 );
 
+/**
+ * Get selected project id.
+ * @param {Object} state state
+ * @returns {String} selected project id
+ */
 export const getSelectedProjectId = (state) => state.selectedProjectId;
 
+/**
+ * Get application view.
+ * @param {Object} state state
+ * @returns {String} application view
+ */
 export const getView = createSelector(
   isLoggedIn,
   getSelectedProjectId,
@@ -33,6 +48,11 @@ export const getView = createSelector(
  */
 export const getTitle = (state) => state.title;
 
+/**
+ * Get state item lebel.
+ * @param {Object} item state item
+ * @returns {String} label
+ */
 export const getLabel = (item) => item.label;
 
 /**
