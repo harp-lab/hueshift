@@ -1,7 +1,7 @@
-import reducer from './projects';
 import {
   ADD_PROJECT, SET_PROJECT, DEL_PROJECT, DEL_PROJECTS,
-} from '../actionTypes';
+} from 'store/actionTypes';
+import reducer from './projects';
 
 jest.mock('./project', () => () => ({}));
 

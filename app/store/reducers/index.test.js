@@ -1,5 +1,5 @@
+import { SET_USER, SET_TITLE, SEL_PROJECT } from 'store/actionTypes';
 import reducer from './index';
-import { SET_USER, SET_TITLE, SEL_PROJECT } from '../actionTypes';
 
 jest.mock('./notifications', () => ({}));
 jest.mock('./projects', () => ({}));

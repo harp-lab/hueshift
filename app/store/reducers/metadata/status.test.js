@@ -1,12 +1,11 @@
-import { SET_PROJECT_DATA } from 'store/actionTypes';
-import reducer from './project';
-
-jest.mock('./metadata', () => () => ({}));
+import { SET_STATUS } from 'store/actionTypes';
+import { CLIENT_WAITING_STATUS } from 'store/consts';
+import reducer from './status';
 
 describe('reducer', () => {
-  test('handles SET_PROJECT_DATA', () => {
+  test('handles SET_STATUS', () => {
     let action = {
-      type: SET_PROJECT_DATA,
+      type: SET_STATUS,
       payload: {
         data: {
           key1: 'value1',
@@ -14,22 +13,23 @@ describe('reducer', () => {
       },
     };
     let expectedState = {
+      client: CLIENT_WAITING_STATUS,
       key1: 'value1',
     };
     let state = reducer(undefined, action);
     expect(state).toMatchObject(expectedState);
 
     action = {
-      type: SET_PROJECT_DATA,
+      type: SET_STATUS,
       payload: {
         data: {
-          key2: 'value2',
+          client: 'value2',
         },
       },
     };
     expectedState = {
+      client: 'value2',
       key1: 'value1',
-      key2: 'value2',
     };
     state = reducer(state, action);
     expect(state).toMatchObject(expectedState);

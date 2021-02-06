@@ -1,7 +1,7 @@
-import reducer from './notifications';
 import {
   QUEUE_SNACKBAR, DEQUEUE_SNACKBAR, SET_LOADING, SET_DIALOG,
-} from '../actionTypes';
+} from 'store/actionTypes';
+import reducer from './notifications';
 
 describe('reducer', () => {
   test('handles QUEUE_SNACKBAR', () => {
