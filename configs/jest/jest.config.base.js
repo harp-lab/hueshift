@@ -6,6 +6,7 @@ const config = {
     '^components/(.*)': '<rootDir>/app/components/$1',
     '^library/(.*)': '<rootDir>/app/library/$1',
     '^store/(.*)': '<rootDir>/app/store/$1',
+    '^store': '<rootDir>/app/store',
   },
   rootDir: process.cwd(),
   setupFilesAfterEnv: [
