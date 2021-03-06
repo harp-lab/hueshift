@@ -24,7 +24,7 @@ describe('actions', () => {
     ];
     const store = mockStore();
     store.dispatch(login('userid'));
-    expect(store.getActions()).toMatchObject(expectedActions);
+    expect(store.getActions()).toEqual(expectedActions);
   });
   it('removes projects on logout', () => {
     const expectedActions = [
@@ -37,6 +37,6 @@ describe('actions', () => {
     ];
     const store = mockStore();
     store.dispatch(logout());
-    expect(store.getActions()).toMatchObject(expectedActions);
+    expect(store.getActions()).toEqual(expectedActions);
   });
 });
