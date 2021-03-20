@@ -56,6 +56,11 @@ export const delProjects = () => ({
  */
 export function selProject(projectId) {
   return (dispatch) => {
+    dispatch({
+      type: SEL_PROJECT,
+      payload: { projectId },
+    });
+
     if (projectId) {
       const state = store.getState();
       const { name } = getProject(state, projectId);
@@ -63,11 +68,6 @@ export function selProject(projectId) {
     } else {
       dispatch(setTitle(undefined));
     }
-
-    dispatch({
-      type: SEL_PROJECT,
-      payload: { projectId },
-    });
   };
 }
 

@@ -1,11 +1,11 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {
-  ADD_PROJECT, DEL_PROJECT, DEL_PROJECTS,
+  ADD_PROJECT, DEL_PROJECT, DEL_PROJECTS, SEL_PROJECT,
   SET_PROJECT_DATA, SET_STATUS,
 } from 'store/actionTypes';
 import {
-  addProject, deleteProjectLocal, delProjects,
+  addProject, deleteProjectLocal, delProjects, selProject,
   setClientStatus, setProjectData, setStatus,
 } from './projects';
 
@@ -16,7 +16,12 @@ const MOCKED_QUEUE_SNACKBAR = 'queueSnackbar';
 jest.mock('extensions/store/hooks', () => ({
   generateMetadataHook: () => ({ type: MOCKED_GENERATE_METADATA_HOOK }),
 }));
-jest.mock('store', () => {});
+jest.mock('store', () => ({
+  getState: () => ({}),
+}));
+jest.mock('store/selectors', () => ({
+  getProject: () => ({}),
+}));
 jest.mock('./app', () => ({
   setTitle: () => ({ type: MOCKED_SET_TITLE }),
 }));
@@ -100,6 +105,18 @@ describe('actions', () => {
     ];
     const store = mockStore();
     store.dispatch(delProjects());
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('sets project id as app title when selected', () => {
+    const expectedActions = [
+      {
+        type: SEL_PROJECT,
+        payload: { projectId: 'projectid' },
+      },
+      { type: MOCKED_SET_TITLE },
+    ];
+    const store = mockStore();
+    store.dispatch(selProject('projectid'));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });
