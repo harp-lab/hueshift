@@ -2,11 +2,14 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {
   ADD_PROJECT, DEL_PROJECT, DEL_PROJECTS, SEL_PROJECT,
-  SET_PROJECT_DATA, SET_STATUS,
+  SET_PROJECT_DATA, SET_STATUS, SET_METADATA,
 } from 'store/actionTypes';
+import { COMPLETE_STATUS, CLIENT_LOCAL_STATUS } from 'store/consts';
 import {
   addProject, deleteProjectLocal, delProjects, selProject,
-  setClientStatus, setProjectData, setStatus,
+  setClientStatus, setStatus,
+  generateMetadata, setMetadata,
+  setProjectData, importData,
 } from './projects';
 
 const MOCKED_GENERATE_METADATA_HOOK = 'generateMetadataHook';
@@ -117,6 +120,62 @@ describe('actions', () => {
     ];
     const store = mockStore();
     store.dispatch(selProject('projectid'));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('imports project data', () => {
+    const projectId = 'projectid';
+    const data = 'data';
+    const expectedActions = [
+      {
+        type: ADD_PROJECT,
+        payload: { projectId },
+      },
+      {
+        type: SET_PROJECT_DATA,
+        payload: { projectId, data },
+      },
+      {
+        type: SET_STATUS,
+        payload: {
+          projectId,
+          data: COMPLETE_STATUS,
+        },
+      },
+      {
+        type: SET_STATUS,
+        payload: {
+          projectId,
+          data: {
+            client: CLIENT_LOCAL_STATUS,
+          },
+        },
+      },
+      { type: MOCKED_GENERATE_METADATA_HOOK },
+    ];
+    const store = mockStore();
+    store.dispatch(importData('projectid', 'data'));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('calls FEXT hook to generate metadata', () => {
+    const expectedActions = [
+      { type: MOCKED_GENERATE_METADATA_HOOK },
+    ];
+    const store = mockStore();
+    store.dispatch(generateMetadata('projectid'));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('sets project metadata', () => {
+    const expectedActions = [
+      {
+        type: SET_METADATA,
+        payload: {
+          projectId: 'projectid',
+          data: 'data',
+        },
+      },
+    ];
+    const store = mockStore();
+    store.dispatch(setMetadata('projectid', 'data'));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });
