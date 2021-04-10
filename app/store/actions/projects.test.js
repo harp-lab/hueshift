@@ -10,7 +10,7 @@ import {
   setClientStatus, setStatus,
   generateMetadata, setMetadata,
   setProjectData, importData,
-  importFile,
+  importFile, importFiles,
 } from './projects';
 
 const MOCKED_GENERATE_METADATA_HOOK = 'generateMetadataHook';
@@ -230,6 +230,94 @@ describe('actions', () => {
         .mockImplementation(() => mockedFileReader);
 
       store.dispatch(importFile(file));
+    });
+    it('notifies on invalid json', async (done) => {
+      // create mock file
+      const projectId = 'projectid';
+      const json = 'invalid json:';
+      const blob = new Blob([json], { type: 'application/json' });
+      const file = new File(
+        [blob],
+        `${projectId}.json`,
+      );
+
+      const expectedActions = [
+        { type: MOCKED_QUEUE_SNACKBAR },
+      ];
+      const store = mockStore();
+
+      // create mock file reader for test on callback
+      const mockedFileReader = new FileReader();
+      mockedFileReader.onloadend = () => {
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      };
+      jest.spyOn(global, 'FileReader')
+        .mockImplementation(() => mockedFileReader);
+
+      store.dispatch(importFile(file));
+    });
+    it('imports filelist', async (done) => {
+      // create mock file
+      const projectId = 'projectid';
+      const data = { key: 'value' };
+      const json = JSON.stringify(data, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const files = [
+        new File(
+          [blob],
+          `${projectId}.json`,
+        ),
+      ];
+
+      const expectedActions = [
+        {
+          type: ADD_PROJECT,
+          payload: { projectId },
+        },
+        {
+          type: SET_PROJECT_DATA,
+          payload: { projectId, data },
+        },
+        {
+          type: SET_STATUS,
+          payload: {
+            projectId,
+            data: COMPLETE_STATUS,
+          },
+        },
+        {
+          type: SET_STATUS,
+          payload: {
+            projectId,
+            data: {
+              client: CLIENT_LOCAL_STATUS,
+            },
+          },
+        },
+        { type: MOCKED_GENERATE_METADATA_HOOK },
+      ];
+      const store = mockStore();
+
+      // create mock file reader for test on callback
+      const mockedFileReader = new FileReader();
+      mockedFileReader.onloadend = () => {
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      };
+      jest.spyOn(global, 'FileReader')
+        .mockImplementation(() => mockedFileReader);
+
+      store.dispatch(importFiles(files));
+    });
+    it('notifies on importing empty filelist', () => {
+      const files = [];
+      const expectedActions = [
+        { type: MOCKED_QUEUE_SNACKBAR },
+      ];
+      const store = mockStore();
+      store.dispatch(importFiles(files));
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });
